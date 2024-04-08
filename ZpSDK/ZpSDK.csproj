@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyVersion>1.0.39.0959</AssemblyVersion>
+    <FileVersion>1.0.39.0959</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Jars\zpSDK-debug.aar" />
+  </ItemGroup>
+</Project>

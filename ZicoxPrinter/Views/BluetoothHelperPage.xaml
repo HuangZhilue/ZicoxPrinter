@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZicoxPrinter.Views.BluetoothHelperPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
+    x:DataType="vm:BluetoothHelperViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+            <Button Command="{Binding CheckBluetoothAvailableCommand}" Text="检查蓝牙是否可用">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsBluetoothAvailable}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="BackgroundColor" Value="Green" />
+                                <Setter Property="Text" Value="蓝牙可用" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding IsBluetoothAvailable}"
+                                TargetType="Button"
+                                Value="false">
+                                <Setter Property="BackgroundColor" Value="Red" />
+                                <Setter Property="Text" Value="蓝牙不可用" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding CheckBluetoothEnableCommand}" Text="检查蓝牙是否开启">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsBluetoothEnabled}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="BackgroundColor" Value="Green" />
+                                <Setter Property="Text" Value="蓝牙开启" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding IsBluetoothEnabled}"
+                                TargetType="Button"
+                                Value="false">
+                                <Setter Property="BackgroundColor" Value="Red" />
+                                <Setter Property="Text" Value="蓝牙关闭" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding TryEnableBluetoothCommand}" Text="尝试打开蓝牙" />
+            <Button Command="{Binding TryDisableBluetoothCommand}" Text="尝试关闭蓝牙" />
+            <Button Command="{Binding GetBondedDevicesCommand}" Text="获取配对设备" />
+            <ListView ItemsSource="{Binding BondedDevices}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Mac}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Command="{Binding ScanClassicDevicesCommand}" Text="扫描蓝牙设备">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsScanning}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="Text" Value="扫描中..." />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <ListView ItemsSource="{Binding NotBondedDevices}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
+                        <ViewCell>
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding Name}" />
+                                    <Label Text="{Binding Mac}" />
+                                </StackLayout>
+                                <Button
+                                    Command="{Binding Path=BindingContext.ConnectToDeviceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                    CommandParameter="{Binding Mac}"
+                                    Text="配对"
+                                    WidthRequest="100" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

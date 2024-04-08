@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ZicoxPrinter.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ZicoxPrinter"
+    xmlns:views="clr-namespace:ZicoxPrinter.Views">
+    <TabBar>
+        <Tab
+            Title="Bluetooth"
+            Icon="iconblank.png"
+            IsVisible="{OnPlatform Default=false,
+                                   Android=true}">
+            <ShellContent ContentTemplate="{DataTemplate views:BluetoothHelperPage}" />
+        </Tab>
+        <Tab Title="Main" Icon="iconblank.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
+        <Tab Title="独立打印大图" Icon="iconsample.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ImagePrinterPage}" />
+        </Tab>
+    </TabBar>
+</Shell>
