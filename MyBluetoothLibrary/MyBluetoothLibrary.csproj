@@ -4,10 +4,10 @@
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.44.0946</AssemblyVersion>
-    <FileVersion>1.0.44.0946</FileVersion>
+    <AssemblyVersion>1.0.18.0946</AssemblyVersion>
+    <FileVersion>1.0.18.0946</FileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Jars\zpSDK-debug.aar" />
+    <None Remove="Jars\mybluetoothlibrary-release.aar" />
   </ItemGroup>
 </Project>

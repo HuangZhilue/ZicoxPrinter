@@ -6,10 +6,7 @@
     xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
     x:DataType="vm:ImagePrinterViewModel">
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25"
-            VerticalOptions="Center">
+        <VerticalStackLayout Padding="30,0" Spacing="25">
             <Image
                 HorizontalOptions="Fill"
                 Source="{Binding Image}"

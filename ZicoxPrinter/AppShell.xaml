@@ -4,19 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ZicoxPrinter"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:views="clr-namespace:ZicoxPrinter.Views">
     <TabBar>
-        <Tab
-            Title="Bluetooth"
-            Icon="iconblank.png"
-            IsVisible="{OnPlatform Default=false,
-                                   Android=true}">
+        <Tab Title="Bluetooth" IsVisible="{OnPlatform Default=true, Android=true}">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Bluetooth}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:BluetoothHelperPage}" />
         </Tab>
-        <Tab Title="Main" Icon="iconblank.png">
+        <Tab Title="Main">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Home}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
-        <Tab Title="独立打印大图" Icon="iconsample.png">
+        <Tab Title="独立打印大图">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ImagePrinterPage}" />
         </Tab>
     </TabBar>

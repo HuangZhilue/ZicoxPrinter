@@ -1,4 +1,5 @@
-﻿using ZicoxPrinter.Views;
+﻿using UraniumUI;
+using ZicoxPrinter.Views;
 
 namespace ZicoxPrinter;
 
@@ -10,6 +11,8 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseUraniumUI()
+            .UseUraniumUIMaterial()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("FontAwesome6FreeBrands.otf", "FontAwesomeBrands");
@@ -17,6 +20,7 @@ public static class MauiProgram
                 fonts.AddFont("FontAwesome6FreeSolid.otf", "FontAwesomeSolid");
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddMaterialIconFonts();
             });
 
         builder.Services.AddSingleton<MainViewModel>();

@@ -27,7 +27,7 @@ public partial class ImagePrinterViewModel : BaseViewModel
             Image = ImageSource.FromFile(newFile);
 
             using MemoryStream memoryStream = new();
-            FileStream fileStream = File.OpenRead(newFile);
+            using FileStream fileStream = File.OpenRead(newFile);
             fileStream.CopyTo(memoryStream);
             byte[] bytes = memoryStream.ToArray();
             ImageBase64 = Convert.ToBase64String(bytes);

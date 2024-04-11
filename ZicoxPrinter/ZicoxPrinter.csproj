@@ -53,7 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -62,10 +62,14 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="UraniumUI" Version="2.8.1" />
+		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.8.1" />
+		<PackageReference Include="UraniumUI.Material" Version="2.8.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MyBluetoothLibrary\MyBluetoothLibrary.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 	  <ProjectReference Include="..\ZpSDK\ZpSDK.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+	  <ProjectReference Include="..\Zp_CPCL_New\Zp_CPCL_New.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,8 +88,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.0.107.1001</AssemblyVersion>
-		<FileVersion>1.0.107.1001</FileVersion>
+		<AssemblyVersion>1.0.175.0946</AssemblyVersion>
+		<FileVersion>1.0.175.0946</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

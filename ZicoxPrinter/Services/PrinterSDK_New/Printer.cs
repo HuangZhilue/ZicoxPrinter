@@ -8,10 +8,10 @@ using Android.Graphics;
 using Android.OS;
 using Android.Util;
 using Android.Widget;
-using Com.Api.ZpSDK;
+using ZpSDK.ZpSDK;
 using Base64 = Android.Util.Base64;
 
-namespace ZicoxPrinter.Services.PrinterSDK;
+namespace ZicoxPrinter.Services.PrinterSDK_New;
 
 public class Printer
 {
@@ -160,7 +160,7 @@ public class Printer
                             string base64 = jsonObject2.Base64;
                             byte[]? decodedString = Base64.Decode(base64, Base64Flags.Default);
                             Bitmap? decodedByte = BitmapFactory.DecodeByteArray(decodedString, 0, decodedString?.Length ?? 0);
-                            zpSDK.DrawGraphic(start_x, start_y, bmp_size_w_percentage, bmp_size_h_percentage, rotate, dithering_type, threshold, decodedByte);
+                            zpSDK.DrawGraphic(start_x, start_y, bmp_size_w_percentage, bmp_size_h_percentage, decodedByte);
                             //zpSDK.Draw_Page_Bitmap_(decodedByte,0);
                             break;
                         }
@@ -196,7 +196,7 @@ public class Printer
                             matrix.PostRotate(rotate);
                             decodedByte = Bitmap.CreateBitmap(decodedByte, 0, 0, w, h, matrix, true);
 
-                            using Dithering dithering = new(threshold);
+                            using Com.Api.ZpSDK.Dithering dithering = new(threshold);
 
                             switch (dithering_type)
                             {
@@ -250,8 +250,9 @@ public class Printer
                                     break;
                             }
 
-
-                            zpSDK.Draw_Page_Bitmap_(decodedByte, 0);
+                            // TODO 无法打印大图，字节限制了
+                            if (decodedByte != null)
+                                zpSDK.DrawGraphic(0, 0, decodedByte.Width, decodedByte.Height, decodedByte);
                             break;
                         }
                 }

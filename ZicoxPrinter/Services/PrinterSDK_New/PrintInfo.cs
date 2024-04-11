@@ -1,4 +1,4 @@
-﻿namespace ZicoxPrinter.Services.PrinterSDK;
+﻿namespace ZicoxPrinter.Services.PrinterSDK_New;
 
 /// <summary>
 /// 打印信息
@@ -13,7 +13,7 @@ public class PrintInfo
 
 public abstract class PrintParametersBase
 {
-    public DrawType DrawType { get; protected set; }
+    public DrawType DrawType { get; set; }
 }
 
 public enum DrawType

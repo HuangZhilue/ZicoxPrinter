@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 
 #if ANDROID
-using ZicoxPrinter.Services.BluetoothHelper;
+//using ZicoxPrinter.Services.BluetoothHelper;
+using Com.Api.MyBluetoothLibrary;
 #endif
 
 namespace ZicoxPrinter.ViewModels;
@@ -16,6 +17,9 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     private bool isScanning;
     public ObservableCollection<SampleBluetoothDevice> BondedDevices { get; set; } = [];
     public ObservableCollection<SampleBluetoothDevice> NotBondedDevices { get; set; } = [];
+#if ANDROID
+    private MyBluetoothHelper BluetoothScanner { get; set; } = new(Platform.AppContext, Platform.CurrentActivity);
+#endif
 
     public BluetoothHelperViewModel()
     {
@@ -30,7 +34,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     public void CheckBluetoothAvailable()
     {
 #if ANDROID
-        IsBluetoothAvailable = BluetoothScanner.IsBluetoothAvailable();
+        IsBluetoothAvailable = BluetoothScanner.IsBluetoothAvailable;
         if (IsBluetoothAvailable)
             CheckBluetoothEnable();
 #endif
@@ -40,7 +44,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     public void CheckBluetoothEnable()
     {
 #if ANDROID
-        IsBluetoothEnabled = BluetoothScanner.IsBluetoothEnabled();
+        IsBluetoothEnabled = BluetoothScanner.IsBluetoothEnabled;
 #endif
     }
 
@@ -77,7 +81,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
         BondedDevices.Clear();
 
         // 搜索蓝牙设备
-        Dictionary<string, string> devices = BluetoothScanner.GetBondedDevices();
+        Dictionary<string, string> devices = BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? [];//.GetBondedDevices();
         foreach (var device in devices)
         {
             BondedDevices.Add(new(device.Key, device.Value));
@@ -89,31 +93,46 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     public void ScanClassicDevices()
     {
 #if ANDROID
-        if (BluetoothScanner.ScanClassicDevices())
+        try
         {
-            IsScanning = true;
+            //_ = Application.Current!.MainPage!.DisplayAlert("Info", "Try to scan", "OK");
+            BluetoothScanner.UnregisterReceiver();
+            BluetoothScanner.RegisterReceiver();
             NotBondedDevices.Clear();
-            Task.Run(async () =>
+            if (BluetoothScanner.ScanClassicDevices())
             {
-                DateTime startTime = DateTime.Now;
-                while (startTime.AddSeconds(12) > DateTime.Now)
+                IsScanning = true;
+                Task.Run(async () =>
                 {
-                    Dictionary<string, string> devices = BluetoothScanner.FoundClassicDevices();
-                    foreach (var device in devices)
+                    DateTime startTime = DateTime.Now;
+                    while (startTime.AddSeconds(12) > DateTime.Now)
                     {
-                        if (!NotBondedDevices.Any(d => d.Name == device.Key && d.Mac == device.Value))
-                            NotBondedDevices.Add(new(device.Key, device.Value));
+                        Dictionary<string, string> devices = BluetoothScanner.FoundClassicDevices()?.ToDictionary(x => x.Key, x => x.Value) ?? [];
+                        foreach (var device in devices)
+                        {
+                            if (!NotBondedDevices.Any(d => d.Name == device.Key && d.Mac == device.Value))
+                                NotBondedDevices.Add(new(device.Key, device.Value));
+                        }
+                        await Task.Delay(1000).ConfigureAwait(false);
                     }
-                    await Task.Delay(1000).ConfigureAwait(false);
-                }
-                IsScanning = false;
-            });
+                    IsScanning = false;
+                    BluetoothScanner.UnregisterReceiver();
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            _ = Application.Current!.MainPage!.DisplayAlert("Error", "Scan Failed!\t" + ex.Message, "OK");
+        }
+        finally
+        {
+            //BluetoothScanner.UnregisterReceiver();
         }
 #endif
     }
 
     [RelayCommand]
-    public static async Task ConnectToDeviceAsync(string mac)
+    public void ConnectToDevice(string mac)
     {
 #if ANDROID
         try
@@ -123,7 +142,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
         catch (Exception ex)
         {
             // 连接失败，处理异常
-            await Application.Current!.MainPage!.DisplayAlert("Error", "Failed to connect: " + ex.Message, "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert("Error", "Failed to connect: " + ex.Message, "OK");
         }
 #endif
     }
@@ -133,6 +152,7 @@ public class SampleBluetoothDevice
 {
     public string Name { get; set; } = string.Empty;
     public string Mac { get; set; } = string.Empty;
+    public string DisplayName => $"{Name} ({Mac})";
 
     public SampleBluetoothDevice()
     {
