@@ -4,8 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prSDK="clr-namespace:ZicoxPrinter.Services.PrinterSDK"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
     x:DataType="vm:MainViewModel">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding WhenViewModelReloadCommand}" EventName="Loaded" />
+    </ContentPage.Behaviors>
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
             <StackLayout Orientation="Horizontal">
@@ -33,25 +37,34 @@
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="1"
-                    Margin="25,0"
-                    Keyboard="Numeric"
-                    Text="{Binding PrintInfo.PageWidth}" />
+                    Margin="25,0,25,0"
+                    Text="{Binding PrintInfo.PageWidth}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
                 <Label
                     Grid.Column="2"
                     Text="页高"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="3"
-                    Margin="25,0"
+                    Margin="25,0,0,0"
                     Keyboard="Numeric"
-                    Text="{Binding PrintInfo.PageHeight}" />
+                    Text="{Binding PrintInfo.PageHeight}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
             </Grid>
-            <Grid>
+            <Grid RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -68,9 +81,13 @@
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="1"
-                    Margin="25,0"
+                    Margin="25,0,0,0"
                     Keyboard="Numeric"
-                    Text="{Binding DrawBigGraphicParameters.StartX}" />
+                    Text="{Binding DrawBigGraphicParameters.StartX}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
@@ -79,9 +96,13 @@
                 <Entry
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="25,0"
+                    Margin="25,0,0,0"
                     Keyboard="Numeric"
-                    Text="{Binding DrawBigGraphicParameters.StartY}" />
+                    Text="{Binding DrawBigGraphicParameters.StartY}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
                 <Label
                     Grid.Row="2"
                     Grid.Column="0"
@@ -90,75 +111,153 @@
                 <Entry
                     Grid.Row="2"
                     Grid.Column="1"
-                    Margin="25,0"
+                    Margin="25,0,0,0"
                     Keyboard="Numeric"
-                    Text="{Binding DrawBigGraphicParameters.BmpSizeWPercentage}" />
+                    Text="{Binding DrawBigGraphicParameters.BmpSizeWPercentage}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
                 <Label
                     Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Bmp Size W : "
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="25,10"
+                    Text="{Binding TipsBmpSizeW}"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="4"
                     Grid.Column="0"
                     Text="Bmp Size H Percentage"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="25,0"
-                    Keyboard="Numeric"
-                    Text="{Binding DrawBigGraphicParameters.BmpSizeHPercentage}" />
-                <Label
                     Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="25,0,0,0"
+                    Keyboard="Numeric"
+                    Text="{Binding DrawBigGraphicParameters.BmpSizeHPercentage}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Text="Bmp Size H : "
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="25,10"
+                    Text="{Binding TipsBmpSizeH}"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="6"
                     Grid.Column="0"
                     Text="Rotate"
                     VerticalOptions="CenterAndExpand" />
                 <Label
-                    Grid.Row="4"
+                    Grid.Row="6"
                     Grid.Column="1"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding Path=Value, Source={x:Reference RotateSlider}, StringFormat='{}{0:0}'}"
                     VerticalOptions="CenterAndExpand" />
                 <Slider
                     x:Name="RotateSlider"
-                    Grid.Row="5"
+                    Grid.Row="7"
                     Grid.ColumnSpan="2"
                     Margin="25,10"
                     Maximum="360"
                     Minimum="0"
-                    Value="{Binding DrawBigGraphicParameters.Rotate}" />
+                    Value="{Binding DrawBigGraphicParameters.Rotate}">
+                    <Slider.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="ValueChanged" />
+                    </Slider.Behaviors>
+                </Slider>
                 <Label
-                    Grid.Row="6"
+                    Grid.Row="8"
                     Grid.Column="0"
                     Text="Threshold"
                     VerticalOptions="CenterAndExpand" />
                 <Label
-                    Grid.Row="6"
+                    Grid.Row="8"
                     Grid.Column="1"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding Path=Value, Source={x:Reference ThresholdSlider}, StringFormat='{}{0:0}'}"
                     VerticalOptions="CenterAndExpand" />
                 <Slider
                     x:Name="ThresholdSlider"
-                    Grid.Row="7"
+                    Grid.Row="9"
                     Grid.ColumnSpan="2"
                     Margin="25,10"
                     Maximum="255"
                     Minimum="0"
-                    Value="{Binding DrawBigGraphicParameters.Threshold}" />
+                    Value="{Binding DrawBigGraphicParameters.Threshold}">
+                    <Slider.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="ValueChanged" />
+                    </Slider.Behaviors>
+                </Slider>
                 <Label
-                    Grid.Row="8"
+                    Grid.Row="10"
                     Grid.Column="0"
                     Text="DitheringType"
                     VerticalOptions="CenterAndExpand" />
                 <Picker
-                    Grid.Row="8"
+                    Grid.Row="10"
                     Grid.Column="1"
                     ItemsSource="{Binding DitheringTypes}"
-                    SelectedItem="{Binding DrawBigGraphicParameters.DitheringType}" />
+                    SelectedItem="{Binding DrawBigGraphicParameters.DitheringType}">
+                    <Picker.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="SelectedIndexChanged" />
+                    </Picker.Behaviors>
+                </Picker>
             </Grid>
             <Image
                 HorizontalOptions="Fill"
                 Source="{Binding Image}"
                 VerticalOptions="Fill" />
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Label Text="图片高度：" />
+                <Label Text="{Binding ImageHeight}" />
+                <Label Text="图片宽度：" />
+                <Label Text="{Binding ImageWidth}" />
+            </StackLayout>
+            <StackLayout
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Label Text="打印预览" VerticalOptions="Center" />
+                <Button Command="{Binding AutoFillCommand}" Text="自适应高宽" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Label Text="打印预览高度：" />
+                <Label Text="{Binding IPreviewImage.Height}" />
+                <Label Text="打印预览宽度：" />
+                <Label Text="{Binding IPreviewImage.Width}" />
+            </StackLayout>
+            <Image
+                HorizontalOptions="Fill"
+                Source="{Binding PreviewImage}"
+                VerticalOptions="Fill" />
             <Button Command="{Binding PickAndShowCommand}" Text="选择图片" />
-            <Button Command="{Binding PrintCommand}" Text="打印" />
+            <Button Command="{Binding PrintCommand}" Text="打印">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsPrinting}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

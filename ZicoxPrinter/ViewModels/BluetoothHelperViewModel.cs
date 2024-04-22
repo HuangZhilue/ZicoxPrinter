@@ -1,10 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 
-#if ANDROID
-//using ZicoxPrinter.Services.BluetoothHelper;
-using Com.Api.MyBluetoothLibrary;
-#endif
-
 namespace ZicoxPrinter.ViewModels;
 
 public partial class BluetoothHelperViewModel : BaseViewModel
@@ -17,9 +12,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     private bool isScanning;
     public ObservableCollection<SampleBluetoothDevice> BondedDevices { get; set; } = [];
     public ObservableCollection<SampleBluetoothDevice> NotBondedDevices { get; set; } = [];
-#if ANDROID
-    private MyBluetoothHelper BluetoothScanner { get; set; } = new(Platform.AppContext, Platform.CurrentActivity);
-#endif
+
 
     public BluetoothHelperViewModel()
     {

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZicoxPrinter.Views.CustomJsonPrinterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
+    x:DataType="vm:CustomJsonPrinterViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="选择打印机" VerticalOptions="CenterAndExpand" />
+                <Button
+                    Margin="15,0"
+                    Command="{Binding GetBondedDevicesCommand}"
+                    Text="刷新" />
+            </StackLayout>
+            <Picker
+                x:DataType="vm:SampleBluetoothDevice"
+                ItemDisplayBinding="{Binding DisplayName}"
+                ItemsSource="{Binding Path=BindingContext.BondedDevices, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                SelectedIndex="{Binding Path=BindingContext.SelectedBondedDeviceIndex, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    Text="页宽"
+                    VerticalOptions="CenterAndExpand" />
+                <Entry
+                    Grid.Column="1"
+                    Margin="25,0"
+                    Keyboard="Numeric"
+                    Text="{Binding PrintInfo.PageWidth}" />
+                <Label
+                    Grid.Column="2"
+                    Text="页高"
+                    VerticalOptions="CenterAndExpand" />
+                <Entry
+                    Grid.Column="3"
+                    Margin="25,0"
+                    Keyboard="Numeric"
+                    Text="{Binding PrintInfo.PageHeight}" />
+            </Grid>
+            <Editor
+                HeightRequest="360"
+                HorizontalTextAlignment="Start"
+                Text="{Binding CustomPrintParametersJsonString}"
+                VerticalTextAlignment="Start" />
+            <Button Command="{Binding PrintCommand}" Text="打印">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsPrinting}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding PrintCPCLRulerCommand}" Text="打印CPCL尺子">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsPrinting}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Label Text="{Binding LastPrintData}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

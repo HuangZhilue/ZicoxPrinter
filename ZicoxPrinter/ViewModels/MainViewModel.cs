@@ -1,9 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Maui.Graphics.Platform;
+using System.Collections.ObjectModel;
 using ZicoxPrinter.Services.PrinterSDK;
-#if ANDROID
-//using ZicoxPrinter.Services.BluetoothHelper;
-using Com.Api.MyBluetoothLibrary;
-#endif
 
 namespace ZicoxPrinter.ViewModels;
 
@@ -14,6 +11,12 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private ImageSource image = null!;
     [ObservableProperty]
+    private ImageSource previewImage = null!;
+    [ObservableProperty]
+    private int imageHeight = 0;
+    [ObservableProperty]
+    private int imageWidth = 0;
+    [ObservableProperty]
     private DrawBigGraphicParameters drawBigGraphicParameters = new()
     {
         StartX = 0,
@@ -22,22 +25,27 @@ public partial class MainViewModel : BaseViewModel
         BmpSizeWPercentage = 100,
         Rotate = 0,
         Threshold = 128,
-        DitheringType = DitheringType.Burkes
+        DitheringType = DitheringType.Sierra
     };
     [ObservableProperty]
     private PrintInfo printInfo = new()
     {
-        PageHeight = 200,
-        PageWidth = 200
+        PageHeight = 300,
+        PageWidth = 576
     };
+    [ObservableProperty]
+    private string tipsBmpSizeW = string.Empty;
+    [ObservableProperty]
+    private string tipsBmpSizeH = string.Empty;
+    [ObservableProperty]
+    private bool isPrinting = false;
 
     public ObservableCollection<SampleBluetoothDevice> BondedDevices { get; set; } = [];
     public ObservableCollection<DitheringType> DitheringTypes { get; } = new([.. Enum.GetValues<DitheringType>()]);
 
     private string ImageBase64 { get; set; } = string.Empty;
-#if ANDROID
-    private MyBluetoothHelper BluetoothScanner { get; set; } = new(Platform.AppContext, Platform.CurrentActivity);
-#endif
+    [ObservableProperty]
+    public Microsoft.Maui.Graphics.IImage iPreviewImage /*{ get; set; }*/ = null!;
 
     public MainViewModel()
     {
@@ -49,7 +57,20 @@ public partial class MainViewModel : BaseViewModel
             new SampleBluetoothDevice("qwsedrfg", "CC3-1234-5678"),
             new SampleBluetoothDevice("Honeywell", "CC3-1234-5678")
             ];
+#else
+        GetBondedDevices();
 #endif
+    }
+
+    [RelayCommand]
+    public void WhenViewModelReload()
+    {
+        ImageSource image2 = Image;
+        ImageSource previewImage2 = PreviewImage;
+        Image = null!;
+        PreviewImage = null!;
+        Image = image2;
+        PreviewImage = previewImage2;
     }
 
     [RelayCommand]
@@ -79,6 +100,10 @@ public partial class MainViewModel : BaseViewModel
             using (var newStream = File.OpenWrite(newFile))
             {
                 await stream.CopyToAsync(newStream);
+                stream.Position = 0;
+                Microsoft.Maui.Graphics.IImage image = PlatformImage.FromStream(stream);
+                ImageHeight = (int)image.Height;
+                ImageWidth = (int)image.Width;
             }
 
             Image = ImageSource.FromFile(newFile);
@@ -88,6 +113,7 @@ public partial class MainViewModel : BaseViewModel
             fileStream.CopyTo(memoryStream);
             byte[] bytes = memoryStream.ToArray();
             ImageBase64 = Convert.ToBase64String(bytes);
+            await PrinterImagePreview().ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -98,9 +124,115 @@ public partial class MainViewModel : BaseViewModel
         }
     }
 
+    private CancellationTokenSource CancellationTokenSource { get; set; } = null!;
+
+    [RelayCommand]
+    public async Task PrinterImagePreview()
+    {
+        try
+        {
+            try
+            {
+                CancellationTokenSource?.Cancel();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
+            }
+
+            CancellationTokenSource = new CancellationTokenSource();
+
+            // 处理请求的逻辑
+            await Task.Delay(1000);
+
+            // 检查请求是否已被取消
+            CancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+            await Task.Run(() =>
+            {
+                try
+                {
+#if ANDROID
+                    string? previewImage = Com.Api.MyZpSDK.PrinterCore.ProcessImageToBase64(
+                        PrintInfo.PageWidth,
+                        PrintInfo.PageHeight,
+                        DrawBigGraphicParameters.StartX,
+                        DrawBigGraphicParameters.StartY,
+                        DrawBigGraphicParameters.BmpSizeWPercentage,
+                        DrawBigGraphicParameters.BmpSizeHPercentage,
+                        DrawBigGraphicParameters.Rotate,
+                        DrawBigGraphicParameters.Threshold,
+                        Com.Api.MyZpSDK.PrinterCore.DitheringType.Values()![(int)DrawBigGraphicParameters.DitheringType],
+                        ImageBase64);
+                    if (string.IsNullOrWhiteSpace(previewImage))
+                    {
+                        PreviewImage = Image;
+                        return;
+                    }
+
+                    byte[] bytes = Convert.FromBase64String(previewImage);
+                    // 创建一个ImageSource对象
+                    PreviewImage = ImageSource.FromStream(() => new MemoryStream(bytes));
+                    IPreviewImage = PlatformImage.FromStream(new MemoryStream(bytes));
+#else
+                    PreviewImage = Image;
+                    IPreviewImage = PlatformImage.FromStream(new MemoryStream(Convert.FromBase64String(ImageBase64)));
+#endif
+                    Application.Current!.Dispatcher.Dispatch(() =>
+                    {
+                        TipsBmpSizeW = $"≈ {(int)(ImageWidth * ((double)DrawBigGraphicParameters.BmpSizeWPercentage / 100))} / {ImageWidth}";
+                        TipsBmpSizeH = $"≈ {(int)(ImageHeight * ((double)DrawBigGraphicParameters.BmpSizeHPercentage / 100))} / {ImageHeight}";
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"FilePicker Error: {ex.Message}");
+                    // The user canceled or something went wrong
+                    Application.Current!.Dispatcher.Dispatch(() =>
+                    {
+                        if (Application.Current is null || Application.Current.MainPage is null) return;
+                        _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+                    });
+                }
+            }).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
+            // The user canceled or something went wrong
+            Application.Current!.Dispatcher.Dispatch(() =>
+            {
+                if (Application.Current is null || Application.Current.MainPage is null) return;
+                _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+            });
+        }
+        finally
+        {
+            try
+            {
+                CancellationTokenSource.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
+                // The user canceled or something went wrong
+                Application.Current!.Dispatcher.Dispatch(() =>
+                {
+                    if (Application.Current is null || Application.Current.MainPage is null) return;
+                    _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+                });
+            }
+        }
+    }
+
     [RelayCommand]
     public void Print()
     {
+        if (BondedDevices == null || BondedDevices.Count == 0)
+        {
+            _ = Application.Current!.MainPage!.DisplayAlert("错误", "没有可用的设备", "OK");
+            return;
+        }
         if (SelectedBondedDeviceIndex < 0)
         {
             _ = Application.Current!.MainPage!.DisplayAlert("错误", "请选择设备", "OK");
@@ -120,12 +252,35 @@ public partial class MainViewModel : BaseViewModel
             PrintInfo.Address = BondedDevices[SelectedBondedDeviceIndex].Mac;
 
 #if ANDROID
-            Printer.Print(PrintInfo);
+            Task.Run(() =>
+            {
+                IsPrinting = true;
+                Printer.Print(PrintInfo);
+                IsPrinting = false;
+            });
 #endif
         }
         catch (Exception ex)
         {
             _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+            IsPrinting = false;
         }
+    }
+
+    [RelayCommand]
+    public void AutoFill()
+    {
+        if (ImageWidth <= 0 || ImageHeight <= 0) return;
+        DrawBigGraphicParameters.BmpSizeWPercentage = (int)(PrintInfo.PageWidth / (double)ImageWidth * 100);
+        if (PrintInfo.PageHeight <= 0)
+        {
+            DrawBigGraphicParameters.BmpSizeHPercentage = DrawBigGraphicParameters.BmpSizeWPercentage;
+        }
+        else
+        {
+            DrawBigGraphicParameters.BmpSizeHPercentage = (int)(PrintInfo.PageHeight / (double)ImageHeight * 100);
+        }
+
+        OnPropertyChanged(nameof(DrawBigGraphicParameters));
     }
 }

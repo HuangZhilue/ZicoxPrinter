@@ -7,23 +7,23 @@
     xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:views="clr-namespace:ZicoxPrinter.Views">
     <TabBar>
-        <Tab Title="Bluetooth" IsVisible="{OnPlatform Default=true, Android=true}">
+        <Tab Title="打印大图">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
+        <Tab Title="自定义Json">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:CustomJsonPrinterPage}" />
+        </Tab>
+        <Tab Title="Bluetooth">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Bluetooth}" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:BluetoothHelperPage}" />
-        </Tab>
-        <Tab Title="Main">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Home}" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
-        </Tab>
-        <Tab Title="独立打印大图">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:ImagePrinterPage}" />
         </Tab>
     </TabBar>
 </Shell>
