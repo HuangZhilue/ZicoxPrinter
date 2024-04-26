@@ -3,9 +3,9 @@
     x:Class="ZicoxPrinter.Views.CustomJsonPrinterPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:ZicoxPrinter.Views.Components"
     xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
     x:DataType="vm:CustomJsonPrinterViewModel">
-
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
             <StackLayout Orientation="Horizontal">
@@ -46,11 +46,14 @@
                     Keyboard="Numeric"
                     Text="{Binding PrintInfo.PageHeight}" />
             </Grid>
-            <Editor
+            <StackLayout Orientation="Vertical">
+                <components:DrawParametersContent CustomPrintParameters="{Binding CustomPrintParameters}" />
+            </StackLayout>
+            <!--<Editor
                 HeightRequest="360"
                 HorizontalTextAlignment="Start"
                 Text="{Binding CustomPrintParametersJsonString}"
-                VerticalTextAlignment="Start" />
+                VerticalTextAlignment="Start" />-->
             <Button Command="{Binding PrintCommand}" Text="打印">
                 <Button.Style>
                     <Style TargetType="Button">

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ZicoxPrinter.Views.Components.PrintParameters.DrawBarCodeContent"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="this">
+    <StackLayout
+        BindingContext="{x:Reference this}"
+        Orientation="Vertical"
+        Spacing="5">
+        <Grid
+            ColumnSpacing="15"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="DrawType"
+                VerticalOptions="Center" />
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand">
+                <Label
+                    HorizontalOptions="Start"
+                    Text="{Binding Parameters.DrawType}"
+                    VerticalOptions="Center" />
+                <Button
+                    Padding="10,5"
+                    Command="{Binding RemoveThisCommand}"
+                    HorizontalOptions="End"
+                    MinimumHeightRequest="0"
+                    MinimumWidthRequest="0"
+                    Text="移除"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="StartX"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Text="{Binding Parameters.StartX}"
+                TextChanged="Entry_TextChanged" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="StartY"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                Grid.Row="2"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Text="{Binding Parameters.StartY}"
+                TextChanged="Entry_TextChanged" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="Type"
+                VerticalOptions="CenterAndExpand" />
+            <Picker
+                Grid.Row="3"
+                Grid.Column="1"
+                ItemsSource="{Binding BarcodeTypes}"
+                SelectedIndexChanged="Picker_SelectedIndexChanged"
+                SelectedItem="{Binding Parameters.Type}" />
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="Text"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="{Binding Parameters.Text}"
+                TextChanged="Entry_TextChanged" />
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="LineWidth"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                Grid.Row="5"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Text="{Binding Parameters.LineWidth}"
+                TextChanged="Entry_TextChanged" />
+
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="Height"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                Grid.Row="6"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Text="{Binding Parameters.Height}"
+                TextChanged="Entry_TextChanged" />
+
+            <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                HorizontalOptions="EndAndExpand"
+                Text="Rotate"
+                VerticalOptions="CenterAndExpand" />
+            <CheckBox
+                Grid.Row="7"
+                Grid.Column="1"
+                CheckedChanged="CheckBox_CheckedChanged"
+                HorizontalOptions="EndAndExpand"
+                IsChecked="{Binding Parameters.Rotate}" />
+        </Grid>
+    </StackLayout>
+</ContentView>

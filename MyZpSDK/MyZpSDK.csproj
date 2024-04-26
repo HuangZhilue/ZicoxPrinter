@@ -4,7 +4,7 @@
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.76.0221</AssemblyVersion>
-    <FileVersion>1.0.76.0221</FileVersion>
+    <AssemblyVersion>1.0.89.0228</AssemblyVersion>
+    <FileVersion>1.0.89.0228</FileVersion>
   </PropertyGroup>
 </Project>

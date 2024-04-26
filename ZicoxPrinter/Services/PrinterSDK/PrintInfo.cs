@@ -88,7 +88,7 @@ public enum DitheringType
 
 public class DrawBoxParameters : PrintParametersBase
 {
-    public int LineWidth { get; set; }
+    public int LineWidth { get; set; } = 1;
     public int TopLeftX { get; set; }
     public int TopLeftY { get; set; }
     public int BottomRightX { get; set; }
@@ -102,7 +102,7 @@ public class DrawBoxParameters : PrintParametersBase
 
 public class DrawLineParameters : PrintParametersBase
 {
-    public int LineWidth { get; set; }
+    public int LineWidth { get; set; } = 1;
     public int StartX { get; set; }
     public int StartY { get; set; }
     public int EndX { get; set; }
@@ -119,8 +119,8 @@ public class DrawText1Parameters : PrintParametersBase
     public int TextX { get; set; }
     public int TextY { get; set; }
     public string Text { get; set; } = string.Empty;
-    public TextFont FontSize { get; set; }
-    public TextRotate Rotate { get; set; }
+    public TextFont FontSize { get; set; } = TextFont.EN0;
+    public TextRotate Rotate { get; set; } = TextRotate.T;
     public bool Bold { get; set; }
     public bool Reverse { get; set; }
     public bool Underline { get; set; }
@@ -138,8 +138,8 @@ public class DrawText2Parameters : PrintParametersBase
     public int Width { get; set; }
     public int Height { get; set; }
     public string Text { get; set; } = string.Empty;
-    public TextFont FontSize { get; set; }
-    public TextRotate Rotate { get; set; }
+    public TextFont FontSize { get; set; } = TextFont.EN1;
+    public TextRotate Rotate { get; set; } = TextRotate.T;
     public bool Bold { get; set; }
     public bool Reverse { get; set; }
     public bool Underline { get; set; }
@@ -156,8 +156,8 @@ public class DrawBarCodeParameters : PrintParametersBase
     public int StartY { get; set; }
     public BarcodeType Type { get; set; } = BarcodeType.Code39;
     public string Text { get; set; } = string.Empty;
-    public int LineWidth { get; set; }
-    public int Height { get; set; }
+    public int LineWidth { get; set; } = 2;
+    public int Height { get; set; } = 80;
     public bool Rotate { get; set; }
 
     public DrawBarCodeParameters()
@@ -170,7 +170,7 @@ public class DrawQrCodeParameters : PrintParametersBase
 {
     public int StartX { get; set; }
     public int StartY { get; set; }
-    public int Ver { get; set; }
+    public int Ver { get; set; } = 3;
     public string Text { get; set; } = string.Empty;
 
     public DrawQrCodeParameters()
@@ -181,15 +181,15 @@ public class DrawQrCodeParameters : PrintParametersBase
 
 public class DrawGraphicParameters : PrintParametersBase
 {
-    public int WidthLimit { get; set; }
-    public int HeightLimit { get; set; }
+    public int WidthLimit { get; set; } = -1;
+    public int HeightLimit { get; set; } = -1;
     public int StartX { get; set; }
     public int StartY { get; set; }
-    public int BmpSizeWPercentage { get; set; }
-    public int BmpSizeHPercentage { get; set; }
+    public int BmpSizeWPercentage { get; set; } = 100;
+    public int BmpSizeHPercentage { get; set; } = 100;
     public int Rotate { get; set; }
     public int Threshold { get; set; } = 128;
-    public DitheringType DitheringType { get; set; } = DitheringType.None;
+    public DitheringType DitheringType { get; set; } = DitheringType.SimpleThreshold;
     public string Base64 { get; set; } = string.Empty;
 
     public DrawGraphicParameters()

@@ -49,7 +49,6 @@
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="3"
-                    Margin="25,0,0,0"
                     Keyboard="Numeric"
                     Text="{Binding PrintInfo.PageHeight}">
                     <Entry.Behaviors>
@@ -57,7 +56,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Grid>
-            <Grid RowSpacing="10">
+            <Grid ColumnSpacing="25" RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -77,11 +76,11 @@
                 </Grid.RowDefinitions>
                 <Label
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Start X"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="1"
-                    Margin="25,0,0,0"
                     Keyboard="Numeric"
                     Text="{Binding DrawBigGraphicParameters.StartX}">
                     <Entry.Behaviors>
@@ -91,12 +90,12 @@
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Start Y"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="25,0,0,0"
                     Keyboard="Numeric"
                     Text="{Binding DrawBigGraphicParameters.StartY}">
                     <Entry.Behaviors>
@@ -106,12 +105,12 @@
                 <Label
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="Bmp Size W Percentage"
+                    HorizontalOptions="EndAndExpand"
+                    Text="Bmp Size W %"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Row="2"
                     Grid.Column="1"
-                    Margin="25,0,0,0"
                     Keyboard="Numeric"
                     Text="{Binding DrawBigGraphicParameters.BmpSizeWPercentage}">
                     <Entry.Behaviors>
@@ -121,23 +120,24 @@
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Bmp Size W : "
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="3"
                     Grid.Column="1"
-                    Margin="25,10"
+                    Margin="0,10"
                     Text="{Binding TipsBmpSizeW}"
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="0"
-                    Text="Bmp Size H Percentage"
+                    HorizontalOptions="EndAndExpand"
+                    Text="Bmp Size H %"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Row="4"
                     Grid.Column="1"
-                    Margin="25,0,0,0"
                     Keyboard="Numeric"
                     Text="{Binding DrawBigGraphicParameters.BmpSizeHPercentage}">
                     <Entry.Behaviors>
@@ -147,30 +147,32 @@
                 <Label
                     Grid.Row="5"
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Bmp Size H : "
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="5"
                     Grid.Column="1"
-                    Margin="25,10"
+                    Margin="0,10"
                     Text="{Binding TipsBmpSizeH}"
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="6"
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Rotate"
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="6"
                     Grid.Column="1"
-                    HorizontalOptions="CenterAndExpand"
+                    HorizontalOptions="StartAndExpand"
                     Text="{Binding Path=Value, Source={x:Reference RotateSlider}, StringFormat='{}{0:0}'}"
                     VerticalOptions="CenterAndExpand" />
                 <Slider
                     x:Name="RotateSlider"
                     Grid.Row="7"
                     Grid.ColumnSpan="2"
-                    Margin="25,10"
+                    Margin="0,10"
                     Maximum="360"
                     Minimum="0"
                     Value="{Binding DrawBigGraphicParameters.Rotate}">
@@ -181,19 +183,20 @@
                 <Label
                     Grid.Row="8"
                     Grid.Column="0"
+                    HorizontalOptions="EndAndExpand"
                     Text="Threshold"
                     VerticalOptions="CenterAndExpand" />
                 <Label
                     Grid.Row="8"
                     Grid.Column="1"
-                    HorizontalOptions="CenterAndExpand"
+                    HorizontalOptions="StartAndExpand"
                     Text="{Binding Path=Value, Source={x:Reference ThresholdSlider}, StringFormat='{}{0:0}'}"
                     VerticalOptions="CenterAndExpand" />
                 <Slider
                     x:Name="ThresholdSlider"
                     Grid.Row="9"
                     Grid.ColumnSpan="2"
-                    Margin="25,10"
+                    Margin="0,10"
                     Maximum="255"
                     Minimum="0"
                     Value="{Binding DrawBigGraphicParameters.Threshold}">

@@ -45,7 +45,7 @@ public partial class MainViewModel : BaseViewModel
 
     private string ImageBase64 { get; set; } = string.Empty;
     [ObservableProperty]
-    public Microsoft.Maui.Graphics.IImage iPreviewImage /*{ get; set; }*/ = null!;
+    private Microsoft.Maui.Graphics.IImage iPreviewImage /*{ get; set; }*/ = null!;
 
     public MainViewModel()
     {
@@ -58,7 +58,7 @@ public partial class MainViewModel : BaseViewModel
             new SampleBluetoothDevice("Honeywell", "CC3-1234-5678")
             ];
 #else
-        GetBondedDevices();
+        //GetBondedDevices();
 #endif
     }
 
@@ -78,6 +78,21 @@ public partial class MainViewModel : BaseViewModel
     {
 #if ANDROID
         BondedDevices.Clear();
+        if (!BluetoothScanner.IsBluetoothAvailable)
+        {
+            _ = Application.Current!.MainPage!.DisplayAlert("错误", "当前设备的蓝牙不可用", "OK");
+            return;
+        }
+
+        if (!BluetoothScanner.IsBluetoothEnabled)
+        {
+            //_ = Application.Current!.MainPage!.DisplayAlert("提示", "尝试打开蓝牙", "OK");
+            Task.Run(() =>
+            {
+                BluetoothScanner.TryEnableBluetooth();
+            });
+            return;
+        }
 
         // 搜索蓝牙设备
         Dictionary<string, string> devices = BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? [];

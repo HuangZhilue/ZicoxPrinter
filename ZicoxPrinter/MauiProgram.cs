@@ -38,10 +38,10 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<BluetoothHelperPage>();
 
-//#if ANDROID
-//        MyBluetoothHelper bluetoothScanner = new(Platform.AppContext, Platform.CurrentActivity);
-//        builder.Services.AddSingleton(bluetoothScanner);
-//#endif
+        //#if ANDROID
+        //        MyBluetoothHelper bluetoothScanner = new(Platform.AppContext, Platform.CurrentActivity);
+        //        builder.Services.AddSingleton(bluetoothScanner);
+        //#endif
 
         return builder.Build();
     }
