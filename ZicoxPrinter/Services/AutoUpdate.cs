@@ -62,7 +62,13 @@ public class AutoUpdate
 
             if (NewVersion <= AppInfo.Current.Version || Application.Current is null || Application.Current.MainPage is null) return false;
 
-            string action = await Application.Current!.MainPage!.DisplayActionSheet("发现新版本：" + NewVersion.ToString(), null, null, "立即更新", "暂不更新", "忽略该更新");
+            TaskCompletionSource<string> tcs = new();
+            Application.Current!.Dispatcher.Dispatch(async () =>
+            {
+                string action = await Application.Current!.MainPage!.DisplayActionSheet("发现新版本：" + NewVersion.ToString(), null, null, "立即更新", "暂不更新", "忽略该更新");
+                tcs.SetResult(action);
+            });
+            string action = await tcs.Task;
 
             if (string.IsNullOrWhiteSpace(action) || action == "暂不更新") return false;
             if (action == "忽略该更新")
@@ -100,9 +106,7 @@ public class AutoUpdate
             if (string.IsNullOrWhiteSpace(downloadUrl)) return;
 
             // 下载更新包 && 下载进度显示
-            // 下载目录处理
             NewReleaseFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "temp", assets.Name); // 临时文件路径
-            //bool canRefeshUI = true;
             IsDownloadingUpdate = true;
             await DownloadFileAsync(downloadUrl, NewReleaseFilePath, (p) =>
             {
