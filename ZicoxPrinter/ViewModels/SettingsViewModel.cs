@@ -86,7 +86,7 @@ public partial class SettingsViewModel : BaseViewModel
             });
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
-            //if (!needUpdate) return;
+            if (!needUpdate) return;
 
             bool canRefeshUI = true;
             AutoUpdate.DownloadProgressChanged += (sender, p) =>
