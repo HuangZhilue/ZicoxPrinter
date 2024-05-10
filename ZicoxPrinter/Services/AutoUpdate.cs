@@ -11,8 +11,12 @@ public class AutoUpdate
 {
     public static bool IsCheckingUpdate { get; private set; } = false;
     public static bool IsDownloadingUpdate { get; private set; } = false;
+    public static bool IsInstallingUpdate { get; private set; } = false;
 
     public static event EventHandler<double>? DownloadProgressChanged;
+    public static event EventHandler<bool>? IsCheckingUpdateChanged;
+    public static event EventHandler<bool>? IsDownloadingUpdateChanged;
+    public static event EventHandler<bool>? IsInstallingUpdateChanged;
 
     private static Octokit.Release NewRelease { get; set; } = null!;
     private static Version NewVersion { get; set; } = null!;
@@ -25,6 +29,7 @@ public class AutoUpdate
         try
         {
             IsCheckingUpdate = true;
+            IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
 
             Octokit.GitHubClient client = new(new Octokit.ProductHeaderValue("ZicoxPrinter"));
             NewRelease = await client.Repository.Release.GetLatest("HuangZhilue", "ZicoxPrinter");
@@ -47,20 +52,28 @@ public class AutoUpdate
         finally
         {
             IsCheckingUpdate = false;
+            IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
         }
 
         return null;
     }
 
-    public static async Task<bool> ReadyDownloadNewVersion()
+    public static async Task<bool> ReadyDownloadNewVersion(bool checkIgnore = false)
     {
         if (IsCheckingUpdate || NewRelease is null || NewVersion is null) return false;
 
         try
         {
             IsCheckingUpdate = true;
+            IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
 
             if (NewVersion <= AppInfo.Current.Version || Application.Current is null || Application.Current.MainPage is null) return false;
+            if (checkIgnore)
+            {
+                string ignoreUpdate = Preferences.Default.Get("IgnoreUpdate", "0.0.0");
+                Version ignoreVersion = new(ignoreUpdate);
+                if (ignoreVersion >= NewVersion) return false;
+            }
 
             TaskCompletionSource<string> tcs = new();
             Application.Current!.Dispatcher.Dispatch(async () =>
@@ -90,6 +103,7 @@ public class AutoUpdate
         finally
         {
             IsCheckingUpdate = false;
+            IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
         }
         return false;
     }
@@ -108,6 +122,8 @@ public class AutoUpdate
             // 下载更新包 && 下载进度显示
             NewReleaseFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "temp", assets.Name); // 临时文件路径
             IsDownloadingUpdate = true;
+            IsDownloadingUpdateChanged?.Invoke(null, IsDownloadingUpdate);
+
             await DownloadFileAsync(downloadUrl, NewReleaseFilePath, (p) =>
             {
                 double localP = p;
@@ -137,15 +153,18 @@ public class AutoUpdate
         finally
         {
             IsDownloadingUpdate = false;
+            IsDownloadingUpdateChanged?.Invoke(null, IsDownloadingUpdate);
         }
     }
 
     public static void InstallNewVersion()
     {
-        if (!File.Exists(NewReleaseFilePath)) return;
+        if (!File.Exists(NewReleaseFilePath) || IsInstallingUpdate) return;
         try
         {
 #if ANDROID
+            IsInstallingUpdate = true;
+            IsInstallingUpdateChanged?.Invoke(null, IsInstallingUpdate);
             if (Application.Current is null || Application.Current.MainPage is null || Platform.CurrentActivity is null || Platform.AppContext.ApplicationContext is null) return;
             Java.IO.File apkFile = new(NewReleaseFilePath);
 
@@ -172,6 +191,8 @@ public class AutoUpdate
         finally
         {
             //IsDownloadingUpdate = false;
+            IsInstallingUpdate = false;
+            IsInstallingUpdateChanged?.Invoke(null, IsInstallingUpdate);
         }
     }
 
@@ -185,8 +206,6 @@ public class AutoUpdate
 
     private static async Task DownloadFileAsync(string url, string savePath, Action<double> progressCallback, CancellationToken cancellationToken)
     {
-        if (File.Exists(savePath)) return;
-
         // Step 1 : Get call
         using HttpResponseMessage response = await new HttpClient().GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 
@@ -195,6 +214,12 @@ public class AutoUpdate
 
         // Step 3 : Get total of data
         long totalData = response.Content.Headers.ContentLength.GetValueOrDefault(-1L);
+        if (File.Exists(savePath) && totalData == new FileInfo(savePath).Length)
+        {
+            progressCallback?.Invoke(1);
+            return;
+        }
+
         bool canSendProgress = totalData != -1L;
 
         // Step 5 : Download data

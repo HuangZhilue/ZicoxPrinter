@@ -114,8 +114,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.0.596.0400</AssemblyVersion>
-		<FileVersion>1.0.596.0400</FileVersion>
+		<AssemblyVersion>1.0.610.0728</AssemblyVersion>
+		<FileVersion>1.0.610.0728</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

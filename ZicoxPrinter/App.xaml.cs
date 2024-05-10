@@ -31,47 +31,43 @@ public partial class App : Application
                 }
             };
         }
-
-        InitCacheDirectory(["image_manager_disk_cache"]);//, "update_apk"]);
-        InitDataCacheDirectory(["temp"]);
+        Task.Run(() =>
+        {
+            InitCacheDirectories(["image_manager_disk_cache"], FileSystem.CacheDirectory);
+            InitCacheDirectories(["temp"], FileSystem.AppDataDirectory);
+        });
     }
 
-    private static void InitCacheDirectory(string[] dirNames)
+    private static void InitCacheDirectories(string[] dirNames, string baseDirectory)
     {
-        for (int i = 0; i < dirNames.Length; i++)
+        foreach (var dirName in dirNames)
         {
-            string imageManagerDiskCache = Path.Combine(FileSystem.CacheDirectory, dirNames[i]);
+            string cacheDir = Path.Combine(baseDirectory, dirName);
 
-            if (Directory.Exists(imageManagerDiskCache))
+            if (Directory.Exists(cacheDir))
             {
-                foreach (var imageCacheFile in Directory.EnumerateFiles(imageManagerDiskCache))
+                foreach (var cacheFile in Directory.EnumerateFiles(cacheDir))
                 {
-                    File.Delete(imageCacheFile);
+                    try
+                    {
+                        File.Delete(cacheFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
             }
             else
             {
-                Directory.CreateDirectory(imageManagerDiskCache);
-            }
-        }
-    }
-
-    private static void InitDataCacheDirectory(string[] dirNames)
-    {
-        for (int i = 0; i < dirNames.Length; i++)
-        {
-            string imageManagerDiskCache = Path.Combine(FileSystem.AppDataDirectory, dirNames[i]);
-
-            if (Directory.Exists(imageManagerDiskCache))
-            {
-                foreach (var imageCacheFile in Directory.EnumerateFiles(imageManagerDiskCache))
+                try
                 {
-                    File.Delete(imageCacheFile);
+                    Directory.CreateDirectory(cacheDir);
                 }
-            }
-            else
-            {
-                Directory.CreateDirectory(imageManagerDiskCache);
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
             }
         }
     }

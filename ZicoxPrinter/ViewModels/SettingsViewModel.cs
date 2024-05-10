@@ -23,6 +23,8 @@ public partial class SettingsViewModel : BaseViewModel
 
     public ObservableCollection<string> AppThemes { get; } = [];
 
+    private bool CanRefeshUI { get; set; } = true;
+
     public SettingsViewModel()
     {
         AppThemes = new(
@@ -47,6 +49,53 @@ public partial class SettingsViewModel : BaseViewModel
             Preferences.Default.Set(nameof(AppTheme), AppTheme.Unspecified.ToString());
             CurrentTheme = AppThemeString_Unspecified;
         }
+
+        IsCheckingUpdate = AutoUpdate.IsCheckingUpdate;
+        IsDownloadingUpdate = AutoUpdate.IsDownloadingUpdate;
+        AutoUpdate.IsCheckingUpdateChanged += (sender, change) =>
+        {
+            IsCheckingUpdate = change;
+        };
+        AutoUpdate.IsDownloadingUpdateChanged += (sender, change) =>
+        {
+            IsDownloadingUpdate = change;
+        };
+        AutoUpdate.DownloadProgressChanged += (sender, p) =>
+        {
+            try
+            {
+                double localP = p;
+
+                IsDownloadingUpdate = localP < 1;
+                if (localP == 1)
+                {
+                    DownloadProgressString = $"{localP * 100:N2}%";
+                    DownloadProgress = localP;
+                    Debug.WriteLine("Download complete!");
+                    // 安装更新包
+                    AutoUpdate.InstallNewVersion();
+                }
+
+                if (!CanRefeshUI) return;
+                CanRefeshUI = false;
+                Task.Run(async () =>
+                {
+                    DownloadProgressString = $"{localP * 100:N2}%";
+                    DownloadProgress = localP;
+                    Debug.WriteLine($"Download progress: {localP * 100:N2}%");
+                    await Task.Delay(100).ConfigureAwait(false);
+                    CanRefeshUI = true;
+                });
+            }
+            catch (Exception ex)
+            {
+                Application.Current!.Dispatcher.Dispatch(() =>
+                {
+                    _ = Toast.Make($"更新下载失败：{ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
+                });
+                Debug.WriteLine($"Download Error: {ex.Message}");
+            }
+        };
     }
 
     [RelayCommand]
@@ -74,8 +123,8 @@ public partial class SettingsViewModel : BaseViewModel
     {
         try
         {
-            IsCheckingUpdate = true;
-            IsDownloadingUpdate = false;
+            //IsCheckingUpdate = true;
+            //IsDownloadingUpdate = false;
 
             Version? version = await AutoUpdate.GetNewVersion().ConfigureAwait(false);
             if (version is null) return;
@@ -86,29 +135,11 @@ public partial class SettingsViewModel : BaseViewModel
             });
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
+#if !DEBUG
             if (!needUpdate) return;
-
-            bool canRefeshUI = true;
-            AutoUpdate.DownloadProgressChanged += (sender, p) =>
-            {
-                double localP = p;
-                if (!canRefeshUI) return;
-                canRefeshUI = false;
-                Task.Run(async () =>
-                {
-                    DownloadProgressString = $"{localP * 100:N2}%";
-                    DownloadProgress = localP;
-                    Debug.WriteLine($"Download progress: {localP * 100:N2}%");
-                    await Task.Delay(100).ConfigureAwait(false);
-                    canRefeshUI = true;
-                });
-            };
+#endif
             IsDownloadingUpdate = true;
             await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
-
-            Debug.WriteLine("Download complete!");
-            // 安装更新包
-            AutoUpdate.InstallNewVersion();
         }
         catch (Exception ex)
         {
@@ -120,8 +151,8 @@ public partial class SettingsViewModel : BaseViewModel
         }
         finally
         {
-            IsCheckingUpdate = false;
-            IsDownloadingUpdate = false;
+            //IsCheckingUpdate = false;
+            //IsDownloadingUpdate = false;
         }
     }
 }
