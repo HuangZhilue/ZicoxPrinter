@@ -19,8 +19,9 @@ public partial class AppShell : Shell
             });
 #endif
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion(true).ConfigureAwait(false);
+#if !DEBUG
             if (!needUpdate) return;
-
+#endif
             await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
 
             Debug.WriteLine("Download complete!");

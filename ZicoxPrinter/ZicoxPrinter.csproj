@@ -17,8 +17,8 @@
 		<ApplicationId>com.huangzl.ZicoxPrinter</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<!--<ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<ApplicationVersion>$(VersionBuild)</ApplicationVersion>-->
 
 		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>-->
 		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>-->
@@ -114,10 +114,17 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.0.610.0728</AssemblyVersion>
-		<FileVersion>1.0.610.0728</FileVersion>
+		<AssemblyVersion>1.3.631.0931</AssemblyVersion>
+		<FileVersion>1.3.631.0931</FileVersion>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<VersionMajor>$([System.Version]::Parse($(AssemblyVersion)).Major)</VersionMajor>
+		<VersionMinor>$([System.Version]::Parse($(AssemblyVersion)).Minor)</VersionMinor>
+		<VersionBuild>$([System.Version]::Parse($(AssemblyVersion)).Build)</VersionBuild>
+		<FirstThreeNumbers>$(VersionMajor).$(VersionMinor).$(VersionBuild)</FirstThreeNumbers>
+	</PropertyGroup>
+	
 	<PropertyGroup>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
 	</PropertyGroup>
@@ -133,20 +140,22 @@
 	  <UpdatePackageVersion>False</UpdatePackageVersion>
 	  <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
 	  <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <AndroidKeyStore>False</AndroidKeyStore>
-	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+	  <ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+	  <ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 </Project>
