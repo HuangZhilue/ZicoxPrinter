@@ -114,8 +114,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.0.594.0353</AssemblyVersion>
-		<FileVersion>1.0.594.0353</FileVersion>
+		<AssemblyVersion>1.0.596.0400</AssemblyVersion>
+		<FileVersion>1.0.596.0400</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -133,20 +133,20 @@
 	  <UpdatePackageVersion>False</UpdatePackageVersion>
 	  <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
 	  <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-	  <ApplicationDisplayVersion>1.3.1</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <AndroidKeyStore>False</AndroidKeyStore>
-	  <ApplicationDisplayVersion>1.3.1</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.3.1</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.3.1</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 </Project>
