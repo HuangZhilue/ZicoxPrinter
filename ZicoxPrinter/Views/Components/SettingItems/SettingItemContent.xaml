@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ZicoxPrinter.Views.Components.SettingItems.SettingItemContent"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="this">
+    <!--<ContentView.ControlTemplate>
+        <ControlTemplate>-->
+    <StackLayout
+        Padding="0"
+        BindingContext="{x:Reference this}"
+        HorizontalOptions="FillAndExpand"
+        Orientation="Horizontal">
+        <Border
+            Margin="0"
+            Padding="15,15"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                              Dark={StaticResource Gray600}}"
+            HorizontalOptions="FillAndExpand"
+            StrokeShape="RoundRectangle 5"
+            StrokeThickness="0">
+            <Grid ColumnSpacing="15" HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Source="{Binding IconSource}" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    Text="{Binding Title}"
+                    VerticalOptions="CenterAndExpand" />
+                <ContentView
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Content="{Binding RightContent}"
+                    HorizontalOptions="End"
+                    MinimumHeightRequest="30"
+                    VerticalOptions="Center" />
+                <ContentView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Content="{Binding BottomContent}"
+                    HorizontalOptions="FillAndExpand"
+                    MinimumHeightRequest="0"
+                    VerticalOptions="FillAndExpand" />
+            </Grid>
+        </Border>
+    </StackLayout>
+    <!--</ControlTemplate>
+    </ContentView.ControlTemplate>-->
+</ContentView>

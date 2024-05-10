@@ -7,7 +7,7 @@ public partial class DrawBarCodeContent : ContentView
 {
     public ObservableCollection<BarcodeType> BarcodeTypes { get; set; } = new(Enum.GetValues(typeof(BarcodeType)).Cast<BarcodeType>());
 
-    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawBarCodeParameters), typeof(DrawBarCodeParameters), new DrawBarCodeParameters());
+    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawBarCodeParameters), typeof(DrawBarCodeContent), new DrawBarCodeParameters());
 
     public event EventHandler<EventArgs> ParametersChanged = null!;
 

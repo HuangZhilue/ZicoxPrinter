@@ -25,5 +25,11 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:BluetoothHelperPage}" />
         </Tab>
+        <Tab Title="Settings">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Settings}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
     </TabBar>
 </Shell>

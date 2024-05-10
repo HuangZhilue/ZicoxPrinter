@@ -53,15 +53,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
+	  <None Remove="Resources\xml\file_paths.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Include="Resources\xml\file_paths.xml">
+	    <Generator></Generator>
+	  </AndroidResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.21" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="8.0.20" />
+		<PackageReference Include="MyBluetoothLibrary" Version="1.0.145.125" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+		<PackageReference Include="MyZpSDK" Version="1.0.128.126" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Octokit" Version="11.0.1" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="UraniumUI" Version="2.8.1" />
 		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.8.1" />
@@ -69,11 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MyBluetoothLibrary\MyBluetoothLibrary.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
-		<ProjectReference Include="..\MyZpSDK\MyZpSDK.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<Compile Update="Views\SettingsPage.xaml.cs">
+		  <DependentUpon>SettingsPage.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\BluetoothHelperPage.xaml.cs">
 			<DependentUpon>BluetoothHelperPage.xaml</DependentUpon>
 		</Compile>
@@ -83,6 +93,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Resources\Styles\MyDarkThemeColor.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\MyLightThemeColor.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Components\SettingItems\SettingItemContent.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SettingsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\BluetoothHelperPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -92,8 +114,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.0.407.0228</AssemblyVersion>
-		<FileVersion>1.0.407.0228</FileVersion>
+		<AssemblyVersion>1.0.579.0302</AssemblyVersion>
+		<FileVersion>1.0.579.0302</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

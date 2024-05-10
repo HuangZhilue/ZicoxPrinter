@@ -8,7 +8,7 @@ public partial class CustomJsonPrinterPage : ContentPage
         BindingContext = viewModel;
     }
 
-    private async void DrawParametersContent_CustomPrintParametersChanged(object sender, EventArgs e)
+    private void DrawParametersContent_CustomPrintParametersChanged(object sender, EventArgs e)
     {
         //if (sender == null) return;
         //if (sender is not PrintParametersBase parameter) return;

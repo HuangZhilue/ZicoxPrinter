@@ -4,7 +4,7 @@ namespace ZicoxPrinter.Views.Components.PrintParameters;
 
 public partial class DrawLineContent : ContentView
 {
-    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawLineParameters), typeof(DrawLineParameters), new DrawLineParameters());
+    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawLineParameters), typeof(DrawLineContent), new DrawLineParameters());
 
     public DrawLineParameters Parameters
     {

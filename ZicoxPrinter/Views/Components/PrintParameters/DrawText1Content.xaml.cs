@@ -8,7 +8,7 @@ public partial class DrawText1Content : ContentView
     public ObservableCollection<TextFont> TextFonts { get; set; } = new(Enum.GetValues(typeof(TextFont)).Cast<TextFont>());
     public ObservableCollection<TextRotate> TextRotates { get; set; } = new(Enum.GetValues(typeof(TextRotate)).Cast<TextRotate>());
 
-    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawText1Parameters), typeof(DrawText1Parameters), new DrawText1Parameters());
+    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawText1Parameters), typeof(DrawText1Content), new DrawText1Parameters());
 
     public DrawText1Parameters Parameters
     {

@@ -8,7 +8,7 @@ public partial class DrawGraphicContent : ContentView
 {
     public ObservableCollection<DitheringType> DitheringTypes { get; set; } = new(Enum.GetValues(typeof(DitheringType)).Cast<DitheringType>());
 
-    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawGraphicParameters), typeof(DrawGraphicParameters), new DrawGraphicParameters());
+    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawGraphicParameters), typeof(DrawGraphicContent), new DrawGraphicParameters());
 
     public DrawGraphicParameters Parameters
     {

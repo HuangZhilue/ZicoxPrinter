@@ -7,7 +7,7 @@ public partial class DrawBoxContent : ContentView
     public static readonly BindableProperty ParametersProperty = BindableProperty.Create(
         nameof(Parameters),
         typeof(DrawBoxParameters),
-        typeof(DrawBoxParameters),
+        typeof(DrawBoxContent),
         new DrawBoxParameters());
 
     public event EventHandler<EventArgs> ParametersChanged = null!;

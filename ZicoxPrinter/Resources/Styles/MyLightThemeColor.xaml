@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="ZicoxPrinter.Resources.Styles.MyLightThemeColor"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!--<Color x:Key="Primary">#6750A4</Color>
+    <Color x:Key="PrimaryContainer">#EADDFF</Color>
+
+    <Color x:Key="Secondary">#625B71</Color>
+    <Color x:Key="SecondaryContainer">#E8DEF8</Color>
+
+    <Color x:Key="Tertiary">#7D5260</Color>
+    <Color x:Key="TertiaryContainer">#FFD8E4</Color>
+
+    <Color x:Key="Surface">#FFFBFE</Color>
+
+    <Color x:Key="SurfaceVariant">#E7E0EC</Color>
+
+    <Color x:Key="Background">#FFFBFE</Color>
+
+    <Color x:Key="Error">#B3261E</Color>
+    <Color x:Key="ErrorContainer">#F9DEDC</Color>
+
+    <Color x:Key="OnPrimary">#FFFFFF</Color>
+    <Color x:Key="OnPrimaryContainer">#21005E</Color>
+
+    <Color x:Key="OnSecondary">#FFFFFF</Color>
+    <Color x:Key="OnSecondaryContainer">#1E192B</Color>
+
+    <Color x:Key="OnTertiary">#FFFFFF</Color>
+    <Color x:Key="OnTertiaryContainer">#370B1E</Color>
+
+    <Color x:Key="OnSurface">#1C1B1F</Color>
+
+    <Color x:Key="OnSurfaceVariant">#49454E</Color>
+
+    <Color x:Key="OnError">#FFFFFF</Color>
+    <Color x:Key="OnErrorContainer">#370B1E</Color>
+
+    <Color x:Key="OnBackground">#1C1B1F</Color>
+
+    <Color x:Key="Outline">#79747E</Color>
+
+    <Color x:Key="OutlineVariant">#C4C7C5</Color>
+
+    <Color x:Key="Shadow">#000000</Color>
+
+    <Color x:Key="SurfaceTint">#6750A4</Color>
+
+    <Color x:Key="InverseSurface">#313033</Color>
+    <Color x:Key="InverseOnSurface">#F4EFF4</Color>
+
+    <Color x:Key="InversePrimary">#D0BCFF</Color>
+
+    <Color x:Key="Scrim">#000000</Color>-->
+
+</ResourceDictionary>

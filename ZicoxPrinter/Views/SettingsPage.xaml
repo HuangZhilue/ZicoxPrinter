@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZicoxPrinter.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+    xmlns:settingComponents="clr-namespace:ZicoxPrinter.Views.Components.SettingItems"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
+    x:DataType="vm:SettingsViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+            <settingComponents:SettingItemContent Title="应用主题">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Color_lens}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <Picker
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        HorizontalOptions="End"
+                        ItemsSource="{Binding AppThemes}"
+                        MinimumHeightRequest="30"
+                        MinimumWidthRequest="150"
+                        SelectedItem="{Binding CurrentTheme}"
+                        WidthRequest="150">
+                        <Picker.Behaviors>
+                            <toolkit:EventToCommandBehavior Command="{Binding SetAppThemeCommand}" EventName="SelectedIndexChanged" />
+                        </Picker.Behaviors>
+                    </Picker>
+                </settingComponents:SettingItemContent.RightContent>
+            </settingComponents:SettingItemContent>
+            <settingComponents:SettingItemContent Title="应用版本">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Apps}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <StackLayout
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        Orientation="Horizontal"
+                        Spacing="15">
+                        <Label Text="{Binding AppVersion}" />
+                        <Button
+                            Margin="0"
+                            Padding="15,0"
+                            Command="{Binding CheckVersionCommand}"
+                            MinimumHeightRequest="0"
+                            MinimumWidthRequest="0"
+                            Text="检查更新">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsCheckingUpdate}"
+                                            TargetType="Button"
+                                            Value="true">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding IsDownloadingUpdate}"
+                                            TargetType="Button"
+                                            Value="true">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackLayout>
+                </settingComponents:SettingItemContent.RightContent>
+                <settingComponents:SettingItemContent.BottomContent>
+                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" IsVisible="False">
+                        <StackLayout.Style>
+                            <Style TargetType="StackLayout">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsDownloadingUpdate}"
+                                        TargetType="StackLayout"
+                                        Value="true">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackLayout.Style>
+                        <Grid
+                            Margin="0,15,0,0"
+                            ColumnSpacing="15"
+                            IsVisible="False">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsDownloadingUpdate}"
+                                            TargetType="Grid"
+                                            Value="true">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="正在下载更新：">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding DownloadProgress}"
+                                                    TargetType="Label"
+                                                    Value="1">
+                                                    <Setter Property="Text" Value="下载完成：" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label Text="{Binding DownloadProgressString}" />
+                            </StackLayout>
+                            <ProgressBar
+                                Grid.Column="1"
+                                HorizontalOptions="FillAndExpand"
+                                Progress="{Binding DownloadProgress}" />
+                        </Grid>
+                    </StackLayout>
+                </settingComponents:SettingItemContent.BottomContent>
+            </settingComponents:SettingItemContent>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

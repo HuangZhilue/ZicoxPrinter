@@ -3,7 +3,7 @@
     x:Class="ZicoxPrinter.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ZicoxPrinter"
+    xmlns:local="clr-namespace:ZicoxPrinter.Resources.Styles"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,9 +12,13 @@
 				<ResourceDictionary Source="Resources/Styles/Styles.xaml" />
 			</ResourceDictionary.MergedDictionaries>-->
             <ResourceDictionary.MergedDictionaries>
+                <material:ColorResource />
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
+                <!--<local:MyDarkThemeColor />-->
+                <material:StyleResource />
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
                 <!--<material:StyleResource BasedOn="{x:Reference appStyles}" ColorsOverride="{x:Reference appColors}" />-->
+                <!--<material:StyleResource BasedOn="{x:Reference appStyles}" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

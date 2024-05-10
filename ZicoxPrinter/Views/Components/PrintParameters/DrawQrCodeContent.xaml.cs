@@ -4,7 +4,7 @@ namespace ZicoxPrinter.Views.Components.PrintParameters;
 
 public partial class DrawQrCodeContent : ContentView
 {
-    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawQrCodeParameters), typeof(DrawQrCodeParameters), new DrawQrCodeParameters());
+    public static readonly BindableProperty ParametersProperty = BindableProperty.Create(nameof(Parameters), typeof(DrawQrCodeParameters), typeof(DrawQrCodeContent), new DrawQrCodeParameters());
 
     public DrawQrCodeParameters Parameters
     {
