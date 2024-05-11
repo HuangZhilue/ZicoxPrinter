@@ -120,7 +120,7 @@ public class AutoUpdate
             if (string.IsNullOrWhiteSpace(downloadUrl)) return;
 
             // 下载更新包 && 下载进度显示
-            NewReleaseFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "temp", assets.Name); // 临时文件路径
+            NewReleaseFilePath = Path.Combine(CacheService.TempDataDirectory, assets.Name); // 临时文件路径
             IsDownloadingUpdate = true;
             IsDownloadingUpdateChanged?.Invoke(null, IsDownloadingUpdate);
 

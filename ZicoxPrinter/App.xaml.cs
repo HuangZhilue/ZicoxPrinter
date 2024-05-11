@@ -1,4 +1,6 @@
-﻿namespace ZicoxPrinter;
+﻿using ZicoxPrinter.Services;
+
+namespace ZicoxPrinter;
 
 public partial class App : Application
 {
@@ -33,42 +35,7 @@ public partial class App : Application
         }
         Task.Run(() =>
         {
-            InitCacheDirectories(["image_manager_disk_cache"], FileSystem.CacheDirectory);
-            InitCacheDirectories(["temp"], FileSystem.AppDataDirectory);
+            CacheService.InitAllCacheDirectories();
         });
-    }
-
-    private static void InitCacheDirectories(string[] dirNames, string baseDirectory)
-    {
-        foreach (var dirName in dirNames)
-        {
-            string cacheDir = Path.Combine(baseDirectory, dirName);
-
-            if (Directory.Exists(cacheDir))
-            {
-                foreach (var cacheFile in Directory.EnumerateFiles(cacheDir))
-                {
-                    try
-                    {
-                        File.Delete(cacheFile);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    Directory.CreateDirectory(cacheDir);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            }
-        }
     }
 }

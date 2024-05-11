@@ -1,0 +1,28 @@
+[versions]
+agp = "8.3.2"
+appcompatV7 = "28.0.0"
+espressoCoreVersion = "3.0.2"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+core = "1.13.1"
+monitor = "1.6.1"
+runner = "1.0.2"
+
+[libraries]
+android-espresso-core = { module = "com.android.support.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "appcompatV7" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+core = { group = "androidx.core", name = "core", version.ref = "core" }
+monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+runner = { module = "com.android.support.test:runner", version.ref = "runner" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+

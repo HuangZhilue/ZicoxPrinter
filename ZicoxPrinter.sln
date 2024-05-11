@@ -17,6 +17,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBluetoothLibrary", "MyBlu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyZpSDK", "MyZpSDK\MyZpSDK.csproj", "{613AD1BB-94B3-45E6-AD7A-AE705067E262}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{BB1B1AA2-453E-402E-A417-B39CCC69857E}"
+	ProjectSection(SolutionItems) = preProject
+		Sample\sample_01.png = Sample\sample_01.png
+		Sample\sample_02.png = Sample\sample_02.png
+		Sample\sample_03.png = Sample\sample_03.png
+		Sample\sample_04.png = Sample\sample_04.png
+		Sample\sample_05.png = Sample\sample_05.png
+		Sample\sample_06.png = Sample\sample_06.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AB191127-6255-43AA-82F9-EEA391644A2B} = {6B887B08-DA91-4B09-8BC2-011BB2D19EF9}
 		{613AD1BB-94B3-45E6-AD7A-AE705067E262} = {6B887B08-DA91-4B09-8BC2-011BB2D19EF9}
+		{BB1B1AA2-453E-402E-A417-B39CCC69857E} = {4503BD43-5633-466B-A26E-E7C63FC0F786}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7330560-2766-42C3-A299-0A410CFEA488}

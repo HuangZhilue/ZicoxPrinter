@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Graphics.Platform;
 using System.Collections.ObjectModel;
+using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
 
 namespace ZicoxPrinter.ViewModels;
@@ -110,7 +111,7 @@ public partial class MainViewModel : BaseViewModel
         {
             FileResult? photo = await MediaPicker.PickPhotoAsync();
             if (photo == null) return;
-            string newFile = Path.Combine(FileSystem.CacheDirectory, "image_manager_disk_cache", photo.FileName);
+            string newFile = Path.Combine(CacheService.ImageManagerDiskCacheDirectory, photo.FileName);
             using (var stream = await photo.OpenReadAsync())
             using (var newStream = File.OpenWrite(newFile))
             {
@@ -134,8 +135,7 @@ public partial class MainViewModel : BaseViewModel
         {
             Debug.WriteLine($"FilePicker Error: {ex.Message}");
             // The user canceled or something went wrong
-            if (Application.Current is null || Application.Current.MainPage is null) return;
-            _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
         }
     }
 
@@ -260,26 +260,29 @@ public partial class MainViewModel : BaseViewModel
             return;
         }
 
-        try
+        Task.Run(() =>
         {
-            DrawBigGraphicParameters.Base64 = ImageBase64;
-            PrintInfo.PrintParameters = [DrawBigGraphicParameters];
-            PrintInfo.Address = BondedDevices[SelectedBondedDeviceIndex].Mac;
+            try
+            {
+                DrawBigGraphicParameters.Base64 = ImageBase64;
+                PrintInfo.PrintParameters = [DrawBigGraphicParameters];
+                PrintInfo.Address = BondedDevices[SelectedBondedDeviceIndex].Mac;
 
 #if ANDROID
-            Task.Run(() =>
-            {
                 IsPrinting = true;
                 Printer.Print(PrintInfo);
                 IsPrinting = false;
-            });
 #endif
-        }
-        catch (Exception ex)
-        {
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
-            IsPrinting = false;
-        }
+            }
+            catch (Exception ex)
+            {
+                Application.Current!.Dispatcher.Dispatch(() =>
+                {
+                    _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                });
+                IsPrinting = false;
+            }
+        });
     }
 
     [RelayCommand]

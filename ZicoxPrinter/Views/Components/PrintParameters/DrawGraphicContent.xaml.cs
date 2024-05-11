@@ -1,5 +1,6 @@
 using Microsoft.Maui.Graphics.Platform;
 using System.Collections.ObjectModel;
+using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
 
 namespace ZicoxPrinter.Views.Components.PrintParameters;
@@ -46,7 +47,7 @@ public partial class DrawGraphicContent : ContentView
         {
             FileResult? photo = await MediaPicker.PickPhotoAsync();
             if (photo == null) return;
-            string newFile = Path.Combine(FileSystem.CacheDirectory, "image_manager_disk_cache", photo.FileName);
+            string newFile = Path.Combine(CacheService.ImageManagerDiskCacheDirectory, photo.FileName);
             using (var stream = await photo.OpenReadAsync())
             using (var newStream = File.OpenWrite(newFile))
             {
