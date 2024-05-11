@@ -91,7 +91,7 @@ Using .Net Core MAUI develop Zicox CPCL printer App
     <br/>
     Because it is a .Net Core MAUI project, it needs to be packaged into a .Net usable class library through [.Net Android binding library](MyZpSDK) again.
 
-- [```MyBluetoothLibrary```](AndroidSoure/MyApplication/MyBluetoothLibrary)
+- [```MyBluetoothLibrary```](AndroidSoure/MyApplication/mybluetoothlibrary)
     - 自行编写的安卓蓝牙简易功能库，仅支持经典蓝牙的搜索与配对功能，不支持蓝牙数据的传输相关的功能
     <br/>
     The self-written Android Bluetooth simple function library only supports search and pairing functions of classic Bluetooth and does not support functions related to Bluetooth data transmission.
