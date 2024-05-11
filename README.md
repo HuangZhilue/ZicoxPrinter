@@ -78,20 +78,20 @@ Using .Net Core MAUI develop Zicox CPCL printer App
     <br/>
     An Android App developed using ```.Net Core``` ```MAUI```
 
-- [```MyZpSDK```](AndroidSoure\MyApplication\MyZpSDK)
+- [```MyZpSDK```](AndroidSoure/MyApplication/MyZpSDK)
     - 自行二次封装的Zicox CPCL SDK，并加入了一些自定义的功能
     <br/>
     Self-packaged Zicox CPCL SDK and added some custom functions
 
-    - 基础的Zicox CPCL SDK是Zicox官方提供的 [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure\MyApplication\MyZpSDK\libs\zp_cpcl_new_common_bigimage.jar)
+    - 基础的Zicox CPCL SDK是Zicox官方提供的 [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
     <br/>
-	The basic Zicox CPCL SDK is the Zicox official provided [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure\MyApplication\MyZpSDK\libs\zp_cpcl_new_common_bigimage.jar)
+	The basic Zicox CPCL SDK is the Zicox official provided [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
 
     - 因为是.Net Core MAUI的项目，故还需要再次通过[ .Net 的安卓绑定库](MyZpSDK)封装成.Net可使用的类库
     <br/>
     Because it is a .Net Core MAUI project, it needs to be packaged into a .Net usable class library through [.Net Android binding library](MyZpSDK) again.
 
-- [```MyBluetoothLibrary```](AndroidSoure\MyApplication\MyBluetoothLibrary)
+- [```MyBluetoothLibrary```](AndroidSoure/MyApplication/MyBluetoothLibrary)
     - 自行编写的安卓蓝牙简易功能库，仅支持经典蓝牙的搜索与配对功能，不支持蓝牙数据的传输相关的功能
     <br/>
     The self-written Android Bluetooth simple function library only supports search and pairing functions of classic Bluetooth and does not support functions related to Bluetooth data transmission.
