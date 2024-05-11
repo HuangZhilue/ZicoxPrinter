@@ -84,8 +84,7 @@ Using .Net Core MAUI develop Zicox CPCL printer App
     Self-packaged Zicox CPCL SDK and added some custom functions
 
     - 基础的Zicox CPCL SDK是Zicox官方提供的 [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
-    <br/>
-	The basic Zicox CPCL SDK is the Zicox official provided [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
+    <br/>The basic Zicox CPCL SDK is the Zicox official provided [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
 
     - 因为是.Net Core MAUI的项目，故还需要再次通过[ .Net 的安卓绑定库](MyZpSDK)封装成.Net可使用的类库
     <br/>
