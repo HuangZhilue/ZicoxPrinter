@@ -25,9 +25,9 @@ public partial class DrawParametersContent : ContentView
     [RelayCommand]
     public async Task AddNewParameterAsync()
     {
-        string action = await Application.Current!.MainPage!.DisplayActionSheet("新增参数", "取消", null, DrawTypes.Select(t => t.ToString()).ToArray());
+        string action = await Application.Current!.MainPage!.DisplayActionSheet(AppResources.新增参数, AppResources.取消, null, DrawTypes.Select(t => t.ToString()).ToArray());
         Debug.WriteLine("Action: " + action);
-        if (string.IsNullOrWhiteSpace(action) || action == "取消") return;
+        if (string.IsNullOrWhiteSpace(action) || action == AppResources.取消) return;
         if (!Enum.TryParse(typeof(DrawType), action, true, out object? obj))
             return;
         if (obj == null || obj is not DrawType drawType) return;
@@ -80,7 +80,7 @@ public partial class DrawParametersContent : ContentView
     {
         if (sender == null) return;
         if (sender is not PrintParametersBase parameter) return;
-        bool answer = await Application.Current!.MainPage!.DisplayAlert("提示?", "确定移除该参数:" + parameter.DrawType.ToString(), "是", "否");
+        bool answer = await Application.Current!.MainPage!.DisplayAlert(AppResources.提示, $"{AppResources.确定移除该参数}: {parameter.DrawType}", AppResources.是, AppResources.否);
         Debug.WriteLine("Answer: " + answer);
         if (answer)
         {

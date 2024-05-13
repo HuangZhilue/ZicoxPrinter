@@ -6,141 +6,65 @@
     xmlns:components="clr-namespace:ZicoxPrinter.Views.Components.PrintParameters"
     xmlns:local="clr-namespace:ZicoxPrinter.Views.Components"
     xmlns:printInfo="clr-namespace:ZicoxPrinter.Services.PrinterSDK"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Name="this">
     <ContentView.Resources>
         <DataTemplate x:Key="DrawBarCodeTemplate">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawBarCodeContent
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawBarCodeContent
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawBoxTemplate">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawBoxContent
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawBoxContent
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawGraphicTemplate">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawGraphicContent
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawGraphicContent
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawLineTemplate">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawLineContent
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawLineContent
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawQrCodeTemplate">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawQrCodeContent
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawQrCodeContent
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawText1Template">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawText1Content
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawText1Content
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="DrawText2Template">
-            <SwipeView>
-                <SwipeView.RightItems>
-                    <SwipeItems>
-                        <SwipeItem
-                            BackgroundColor="Red"
-                            Command="{Binding Path=DeleteParameterCommand, Source={x:Reference this}}"
-                            CommandParameter="{Binding}"
-                            Text="Delete" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <Border Padding="5,10">
-                    <components:DrawText2Content
-                        Parameters="{Binding}"
-                        ParametersChanged="DrawContent_ParametersChanged"
-                        ParametersRemoving="DrawContent_ParametersRemoving" />
-                </Border>
-            </SwipeView>
+            <Border Padding="5,10">
+                <components:DrawText2Content
+                    Parameters="{Binding}"
+                    ParametersChanged="DrawContent_ParametersChanged"
+                    ParametersRemoving="DrawContent_ParametersRemoving" />
+            </Border>
         </DataTemplate>
         <local:DrawTypeTemplateSelector
             x:Key="DrawTypeTemplateSelector"
@@ -159,7 +83,7 @@
             <Button
                 Command="{Binding AddNewParameterCommand}"
                 HorizontalOptions="CenterAndExpand"
-                Text="增加新的打印参数" />
+                Text="{x:Static properties:AppResources.增加新的打印参数}" />
         </StackLayout>
     </StackLayout>
 </ContentView>

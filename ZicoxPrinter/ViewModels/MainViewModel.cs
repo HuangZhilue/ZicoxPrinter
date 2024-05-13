@@ -81,13 +81,12 @@ public partial class MainViewModel : BaseViewModel
         BondedDevices.Clear();
         if (!BluetoothScanner.IsBluetoothAvailable)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", "当前设备的蓝牙不可用", "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
         if (!BluetoothScanner.IsBluetoothEnabled)
         {
-            //_ = Application.Current!.MainPage!.DisplayAlert("提示", "尝试打开蓝牙", "OK");
             Task.Run(() =>
             {
                 BluetoothScanner.TryEnableBluetooth();
@@ -135,7 +134,7 @@ public partial class MainViewModel : BaseViewModel
         {
             Debug.WriteLine($"FilePicker Error: {ex.Message}");
             // The user canceled or something went wrong
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
         }
     }
 
@@ -206,7 +205,7 @@ public partial class MainViewModel : BaseViewModel
                     Application.Current!.Dispatcher.Dispatch(() =>
                     {
                         if (Application.Current is null || Application.Current.MainPage is null) return;
-                        _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+                        _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
                     });
                 }
             }).ConfigureAwait(false);
@@ -218,7 +217,7 @@ public partial class MainViewModel : BaseViewModel
             Application.Current!.Dispatcher.Dispatch(() =>
             {
                 if (Application.Current is null || Application.Current.MainPage is null) return;
-                _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+                _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
             });
         }
         finally
@@ -234,7 +233,7 @@ public partial class MainViewModel : BaseViewModel
                 Application.Current!.Dispatcher.Dispatch(() =>
                 {
                     if (Application.Current is null || Application.Current.MainPage is null) return;
-                    _ = Application.Current.MainPage.DisplayAlert("错误", ex.Message, "OK");
+                    _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
                 });
             }
         }
@@ -245,18 +244,18 @@ public partial class MainViewModel : BaseViewModel
     {
         if (BondedDevices == null || BondedDevices.Count == 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", "没有可用的设备", "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.没有可用的设备, "OK");
             return;
         }
         if (SelectedBondedDeviceIndex < 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", "请选择设备", "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.请选择设备, "OK");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(ImageBase64))
         {
-            _ = Application.Current!.MainPage!.DisplayAlert("错误", "请选择图片", "OK");
+            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.请选择图片, "OK");
             return;
         }
 
@@ -278,7 +277,7 @@ public partial class MainViewModel : BaseViewModel
             {
                 Application.Current!.Dispatcher.Dispatch(() =>
                 {
-                    _ = Application.Current!.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                    _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
                 });
                 IsPrinting = false;
             }

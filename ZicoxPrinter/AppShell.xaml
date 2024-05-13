@@ -5,27 +5,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ZicoxPrinter"
     xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
     xmlns:views="clr-namespace:ZicoxPrinter.Views">
     <TabBar>
-        <Tab Title="打印大图">
+        <Tab Title="{x:Static properties:AppResources.打印大图}">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
-        <Tab Title="自定义Json">
+        <Tab Title="{x:Static properties:AppResources.自定义打印参数}">
             <Tab.Icon>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Image}" />
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Draw}" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CustomJsonPrinterPage}" />
         </Tab>
-        <Tab Title="Bluetooth">
+        <Tab Title="{x:Static properties:AppResources.自定义CPCL指令}">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Code}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:CustomCommandPage}" />
+        </Tab>
+        <Tab Title="{x:Static properties:AppResources.蓝牙}">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Bluetooth}" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:BluetoothHelperPage}" />
         </Tab>
-        <Tab Title="Settings">
+        <Tab Title="{x:Static properties:AppResources.设置}">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Settings}" />
             </Tab.Icon>

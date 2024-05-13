@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prSDK="clr-namespace:ZicoxPrinter.Services.PrinterSDK"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
     x:DataType="vm:MainViewModel">
@@ -13,11 +14,11 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
             <StackLayout Orientation="Horizontal">
-                <Label Text="选择打印机" VerticalOptions="CenterAndExpand" />
+                <Label Text="{x:Static properties:AppResources.选择打印机}" VerticalOptions="CenterAndExpand" />
                 <Button
                     Margin="15,0"
                     Command="{Binding GetBondedDevicesCommand}"
-                    Text="刷新" />
+                    Text="{x:Static properties:AppResources.刷新}" />
             </StackLayout>
             <Picker
                 x:DataType="vm:SampleBluetoothDevice"
@@ -33,7 +34,7 @@
                 </Grid.ColumnDefinitions>
                 <Label
                     Grid.Column="0"
-                    Text="页宽"
+                    Text="{x:Static properties:AppResources.页宽}"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="1"
@@ -45,7 +46,7 @@
                 </Entry>
                 <Label
                     Grid.Column="2"
-                    Text="页高"
+                    Text="{x:Static properties:AppResources.页高}"
                     VerticalOptions="CenterAndExpand" />
                 <Entry
                     Grid.Column="3"
@@ -224,30 +225,30 @@
                 Source="{Binding Image}"
                 VerticalOptions="Fill" />
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Label Text="图片高度：" />
+                <Label Text="{x:Static properties:AppResources.图片高度}" />
                 <Label Text="{Binding ImageHeight}" />
-                <Label Text="图片宽度：" />
+                <Label Text="{x:Static properties:AppResources.图片宽度}" />
                 <Label Text="{Binding ImageWidth}" />
             </StackLayout>
             <StackLayout
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal"
                 Spacing="10">
-                <Label Text="打印预览" VerticalOptions="Center" />
-                <Button Command="{Binding AutoFillCommand}" Text="自适应高宽" />
+                <Label Text="{x:Static properties:AppResources.打印预览}" VerticalOptions="Center" />
+                <Button Command="{Binding AutoFillCommand}" Text="{x:Static properties:AppResources.自适应高宽}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Label Text="打印预览高度：" />
+                <Label Text="{x:Static properties:AppResources.打印预览高度}" />
                 <Label Text="{Binding IPreviewImage.Height}" />
-                <Label Text="打印预览宽度：" />
+                <Label Text="{x:Static properties:AppResources.打印预览宽度}" />
                 <Label Text="{Binding IPreviewImage.Width}" />
             </StackLayout>
             <Image
                 HorizontalOptions="Fill"
                 Source="{Binding PreviewImage}"
                 VerticalOptions="Fill" />
-            <Button Command="{Binding PickAndShowCommand}" Text="选择图片" />
-            <Button Command="{Binding PrintCommand}" Text="打印">
+            <Button Command="{Binding PickAndShowCommand}" Text="{x:Static properties:AppResources.选择图片}" />
+            <Button Command="{Binding PrintCommand}" Text="{x:Static properties:AppResources.打印}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>

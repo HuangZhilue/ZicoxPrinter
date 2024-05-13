@@ -1,4 +1,5 @@
-﻿using UraniumUI;
+﻿using System.Globalization;
+using UraniumUI;
 using ZicoxPrinter.Views;
 
 namespace ZicoxPrinter;
@@ -31,6 +32,10 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CustomJsonPrinterPage>();
 
+        builder.Services.AddSingleton<CustomCommandViewModel>();
+
+        builder.Services.AddSingleton<CustomCommandPage>();
+
         builder.Services.AddSingleton<BluetoothHelperViewModel>();
 
         builder.Services.AddSingleton<BluetoothHelperPage>();
@@ -43,6 +48,11 @@ public static class MauiProgram
         //        MyBluetoothHelper bluetoothScanner = new(Platform.AppContext, Platform.CurrentActivity);
         //        builder.Services.AddSingleton(bluetoothScanner);
         //#endif
+
+#if DEBUG
+        //CultureInfo.CurrentCulture = new CultureInfo("en", false);
+        //CultureInfo.CurrentUICulture = new CultureInfo("en", false);
+#endif
 
         return builder.Build();
     }

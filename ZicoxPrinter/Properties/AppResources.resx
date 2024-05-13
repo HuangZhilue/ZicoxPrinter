@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="打印大图" xml:space="preserve">
+    <value>Print Image</value>
+  </data>
+  <data name="自定义打印参数" xml:space="preserve">
+    <value>Print More</value>
+  </data>
+  <data name="自定义CPCL指令" xml:space="preserve">
+    <value>Print CPCL</value>
+  </data>
+  <data name="蓝牙" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="设置" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="当前版本" xml:space="preserve">
+    <value>Current version</value>
+  </data>
+  <data name="最新版本" xml:space="preserve">
+    <value>Latest version</value>
+  </data>
+  <data name="检查更新失败" xml:space="preserve">
+    <value>Check the update failure</value>
+  </data>
+  <data name="发现新版本" xml:space="preserve">
+    <value>Found new version</value>
+  </data>
+  <data name="立即更新" xml:space="preserve">
+    <value>Update immediately</value>
+  </data>
+  <data name="暂不更新" xml:space="preserve">
+    <value>No update</value>
+  </data>
+  <data name="忽略该更新" xml:space="preserve">
+    <value>Ignore the update</value>
+  </data>
+  <data name="准备下载更新失败" xml:space="preserve">
+    <value>Ready to download and update failed</value>
+  </data>
+  <data name="下载更新失败" xml:space="preserve">
+    <value>Download update failure</value>
+  </data>
+  <data name="安装更新失败" xml:space="preserve">
+    <value>Installation and update failed</value>
+  </data>
+  <data name="错误" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SDK初始化失败" xml:space="preserve">
+    <value>SDK initialization failed</value>
+  </data>
+  <data name="蓝牙打印机连接失败" xml:space="preserve">
+    <value>Bluetooth printer connection fails</value>
+  </data>
+  <data name="无法打印打印机缺纸" xml:space="preserve">
+    <value>Can't print, printers are short of paper!</value>
+  </data>
+  <data name="无法打印打印机开盖" xml:space="preserve">
+    <value>Can't print, the printer cover is opened!</value>
+  </data>
+  <data name="打印失败" xml:space="preserve">
+    <value>Print failed</value>
+  </data>
+  <data name="初始化蓝牙模块失败" xml:space="preserve">
+    <value>Initialized Bluetooth module failed</value>
+  </data>
+  <data name="当前设备的蓝牙不可用" xml:space="preserve">
+    <value>Bluetooth is not available for the current device</value>
+  </data>
+  <data name="没有可用的设备" xml:space="preserve">
+    <value>No equipment</value>
+  </data>
+  <data name="请选择设备" xml:space="preserve">
+    <value>Please select the device</value>
+  </data>
+  <data name="尝试打开蓝牙" xml:space="preserve">
+    <value>Try to open Bluetooth</value>
+  </data>
+  <data name="没有有效的打印参数" xml:space="preserve">
+    <value>No effective print parameters</value>
+  </data>
+  <data name="请选择图片" xml:space="preserve">
+    <value>Please select pictures</value>
+  </data>
+  <data name="跟随系统" xml:space="preserve">
+    <value>Follow the system</value>
+  </data>
+  <data name="更新下载失败" xml:space="preserve">
+    <value>Update download failed</value>
+  </data>
+  <data name="检查蓝牙是否可用" xml:space="preserve">
+    <value>Check whether Bluetooth is available</value>
+  </data>
+  <data name="蓝牙可用" xml:space="preserve">
+    <value>Bluetooth available</value>
+  </data>
+  <data name="蓝牙不可用" xml:space="preserve">
+    <value>Bluetooth unavailable</value>
+  </data>
+  <data name="检查蓝牙是否开启" xml:space="preserve">
+    <value>Check whether Bluetooth opens</value>
+  </data>
+  <data name="蓝牙开启" xml:space="preserve">
+    <value>Bluetooth opening</value>
+  </data>
+  <data name="蓝牙关闭" xml:space="preserve">
+    <value>Bluetooth closure</value>
+  </data>
+  <data name="尝试关闭蓝牙" xml:space="preserve">
+    <value>Try to close Bluetooth</value>
+  </data>
+  <data name="获取配对设备" xml:space="preserve">
+    <value>Get Bluetooth paired devices</value>
+  </data>
+  <data name="扫描蓝牙设备" xml:space="preserve">
+    <value>Scanning Bluetooth equipment</value>
+  </data>
+  <data name="扫描中" xml:space="preserve">
+    <value>Scanning ...</value>
+  </data>
+  <data name="配对" xml:space="preserve">
+    <value>Pair</value>
+  </data>
+  <data name="增加新的打印参数" xml:space="preserve">
+    <value>Add new print parameters</value>
+  </data>
+  <data name="新增参数" xml:space="preserve">
+    <value>New parameter</value>
+  </data>
+  <data name="取消" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="提示" xml:space="preserve">
+    <value>hint</value>
+  </data>
+  <data name="确定移除该参数" xml:space="preserve">
+    <value>OK to remove this parameter</value>
+  </data>
+  <data name="是" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="否" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="移除" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="图片高度" xml:space="preserve">
+    <value>Picture height</value>
+  </data>
+  <data name="图片宽度" xml:space="preserve">
+    <value>Picture width</value>
+  </data>
+  <data name="打印预览" xml:space="preserve">
+    <value>Print preview</value>
+  </data>
+  <data name="打印预览高度" xml:space="preserve">
+    <value>Print preview high</value>
+  </data>
+  <data name="打印预览宽度" xml:space="preserve">
+    <value>Print preview width</value>
+  </data>
+  <data name="选择图片" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="选择打印机" xml:space="preserve">
+    <value>Choose a printer</value>
+  </data>
+  <data name="刷新" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="加载CPCL示例" xml:space="preserve">
+    <value>Load CPCL example</value>
+  </data>
+  <data name="打印" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="页宽" xml:space="preserve">
+    <value>Page width</value>
+  </data>
+  <data name="页高" xml:space="preserve">
+    <value>Page high</value>
+  </data>
+  <data name="打印CPCL尺子" xml:space="preserve">
+    <value>Print CPCL ruler</value>
+  </data>
+  <data name="自适应高宽" xml:space="preserve">
+    <value>Adaptive high and width</value>
+  </data>
+  <data name="应用主题" xml:space="preserve">
+    <value>Application theme</value>
+  </data>
+  <data name="应用版本" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="检查更新" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="正在下载更新" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="下载完成" xml:space="preserve">
+    <value>Download completed</value>
+  </data>
+  <data name="CPCL尺子" xml:space="preserve">
+    <value>CPCL ruler</value>
+  </data>
+  <data name="HelloWorld" xml:space="preserve">
+    <value>Hello World</value>
+  </data>
+  <data name="发送指令" xml:space="preserve">
+    <value>Send Command</value>
+  </data>
+</root>

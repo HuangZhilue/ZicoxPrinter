@@ -14,23 +14,23 @@ public class Printer
         {
             if (status == -2)
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", "SDK初始化失败", "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.SDK初始化失败, "OK");
             }
             else if (status == -1)
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", "蓝牙打印机连接失败", "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.蓝牙打印机连接失败, "OK");
             }
             else if (status == 1)
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", "无法打印，打印机缺纸！", "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.无法打印打印机缺纸, "OK");
             }
             else if (status == 2)
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", "无法打印，打印机开盖！", "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.无法打印打印机开盖, "OK");
             }
             else
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", "打印失败", "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.打印失败, "OK");
             }
         });
     }
@@ -47,7 +47,7 @@ public class Printer
         {
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
             });
             return false;
         }
@@ -203,7 +203,7 @@ public class Printer
         {
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
             });
             return false;
         }
@@ -221,7 +221,7 @@ public class Printer
         {
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
             });
             return false;
         }
@@ -239,7 +239,7 @@ public class Printer
         {
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Application.Current.MainPage!.DisplayAlert("错误", ex.Message, "OK");
+                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
             });
             return false;
         }

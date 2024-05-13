@@ -75,7 +75,7 @@ public partial class DrawGraphicContent : ContentView
             Debug.WriteLine($"FilePicker Error: {ex.Message}");
             // The user canceled or something went wrong
             if (Application.Current is null || Application.Current.MainPage is null) return;
-            _ = Application.Current.MainPage.DisplayAlert("´íÎó", ex.Message, "OK");
+            _ = Application.Current.MainPage.DisplayAlert(AppResources.´íÎó, ex.Message, "OK");
         }
     }
 
@@ -152,7 +152,7 @@ public partial class DrawGraphicContent : ContentView
                     Application.Current!.Dispatcher.Dispatch(() =>
                     {
                         if (Application.Current is null || Application.Current.MainPage is null) return;
-                        _ = Application.Current.MainPage.DisplayAlert("´íÎó", ex.Message, "OK");
+                        _ = Application.Current.MainPage.DisplayAlert(AppResources.´íÎó, ex.Message, "OK");
                     });
                 }
             }).ConfigureAwait(false);
@@ -164,7 +164,7 @@ public partial class DrawGraphicContent : ContentView
             Application.Current!.Dispatcher.Dispatch(() =>
             {
                 if (Application.Current is null || Application.Current.MainPage is null) return;
-                _ = Application.Current.MainPage.DisplayAlert("´íÎó", ex.Message, "OK");
+                _ = Application.Current.MainPage.DisplayAlert(AppResources.´íÎó, ex.Message, "OK");
             });
         }
         finally
@@ -180,7 +180,7 @@ public partial class DrawGraphicContent : ContentView
                 Application.Current!.Dispatcher.Dispatch(() =>
                 {
                     if (Application.Current is null || Application.Current.MainPage is null) return;
-                    _ = Application.Current.MainPage.DisplayAlert("´íÎó", ex.Message, "OK");
+                    _ = Application.Current.MainPage.DisplayAlert(AppResources.´íÎó, ex.Message, "OK");
                 });
             }
         }

@@ -6,10 +6,8 @@ namespace ZicoxPrinter.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
 {
-    private const string AppThemeString_Unspecified = "跟随系统";
-
     [ObservableProperty]
-    private string currentTheme = AppThemeString_Unspecified;
+    private string currentTheme = AppResources.跟随系统;
     [ObservableProperty]
     private string appVersion = AppInfo.Current.VersionString;
     [ObservableProperty]
@@ -34,7 +32,7 @@ public partial class SettingsViewModel : BaseViewModel
             {
                 if (x == AppTheme.Unspecified)
                 {
-                    return AppThemeString_Unspecified;
+                    return AppResources.跟随系统;
                 }
                 return x.ToString();
             })
@@ -42,12 +40,12 @@ public partial class SettingsViewModel : BaseViewModel
         if (Preferences.Default.ContainsKey(nameof(AppTheme)))
         {
             AppTheme appTheme = Enum.TryParse<AppTheme>(Preferences.Default.Get(nameof(AppTheme), AppTheme.Unspecified.ToString()), out appTheme) ? appTheme : AppTheme.Unspecified;
-            CurrentTheme = appTheme == AppTheme.Unspecified ? AppThemeString_Unspecified : appTheme.ToString();
+            CurrentTheme = appTheme == AppTheme.Unspecified ? AppResources.跟随系统 : appTheme.ToString();
         }
         else
         {
             Preferences.Default.Set(nameof(AppTheme), AppTheme.Unspecified.ToString());
-            CurrentTheme = AppThemeString_Unspecified;
+            CurrentTheme = AppResources.跟随系统;
         }
 
         IsCheckingUpdate = AutoUpdate.IsCheckingUpdate;
@@ -91,7 +89,7 @@ public partial class SettingsViewModel : BaseViewModel
             {
                 Application.Current!.Dispatcher.Dispatch(() =>
                 {
-                    _ = Toast.Make($"更新下载失败：{ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
+                    _ = Toast.Make($"{AppResources.更新下载失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
                 });
                 Debug.WriteLine($"Download Error: {ex.Message}");
             }
@@ -102,7 +100,7 @@ public partial class SettingsViewModel : BaseViewModel
     public void SetAppTheme()
     {
         if (Application.Current is null) return;
-        if (CurrentTheme == AppThemeString_Unspecified)
+        if (CurrentTheme == AppResources.跟随系统)
         {
             Application.Current.UserAppTheme = AppTheme.Unspecified;
         }
@@ -131,7 +129,7 @@ public partial class SettingsViewModel : BaseViewModel
 
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Toast.Make($"当前版本：{AppInfo.Current.VersionString}，最新版本：{version}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
+                _ = Toast.Make($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
             });
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
@@ -145,7 +143,7 @@ public partial class SettingsViewModel : BaseViewModel
         {
             Application.Current!.Dispatcher.Dispatch(() =>
             {
-                _ = Toast.Make($"检查更新失败：{ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
+                _ = Toast.Make($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
             });
             Debug.WriteLine($"CheckVersion Error: {ex.Message}");
         }

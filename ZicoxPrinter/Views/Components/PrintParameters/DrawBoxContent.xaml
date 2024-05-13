@@ -3,6 +3,7 @@
     x:Class="ZicoxPrinter.Views.Components.PrintParameters.DrawBoxContent"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
     x:Name="this">
     <StackLayout
         BindingContext="{x:Reference this}"
@@ -44,7 +45,7 @@
                     HorizontalOptions="End"
                     MinimumHeightRequest="0"
                     MinimumWidthRequest="0"
-                    Text="移除"
+                    Text="{x:Static properties:AppResources.移除}"
                     VerticalOptions="Center" />
             </Grid>
 

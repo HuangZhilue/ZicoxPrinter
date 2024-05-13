@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZicoxPrinter.Views.CustomCommandPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
+    xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
+    x:DataType="vm:CustomCommandViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{x:Static properties:AppResources.选择打印机}" VerticalOptions="CenterAndExpand" />
+                <Button
+                    Margin="15,0"
+                    Command="{Binding GetBondedDevicesCommand}"
+                    Text="{x:Static properties:AppResources.刷新}" />
+            </StackLayout>
+            <Picker
+                x:DataType="vm:SampleBluetoothDevice"
+                ItemDisplayBinding="{Binding DisplayName}"
+                ItemsSource="{Binding Path=BindingContext.BondedDevices, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                SelectedIndex="{Binding Path=BindingContext.SelectedBondedDeviceIndex, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <Button Command="{Binding LoadCPCLExampleCommand}" Text="{x:Static properties:AppResources.加载CPCL示例}" />
+            <Editor
+                AutoSize="TextChanges"
+                HorizontalTextAlignment="Start"
+                IsSpellCheckEnabled="false"
+                IsTextPredictionEnabled="false"
+                Text="{Binding CustomCommand}"
+                VerticalTextAlignment="Start" />
+            <Button Command="{Binding PrintCommand}" Text="{x:Static properties:AppResources.发送指令}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsPrinting}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

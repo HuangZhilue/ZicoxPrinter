@@ -3,6 +3,7 @@
     x:Class="ZicoxPrinter.Views.Components.PrintParameters.DrawGraphicContent"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Name="this">
     <StackLayout
@@ -51,7 +52,7 @@
                     HorizontalOptions="End"
                     MinimumHeightRequest="0"
                     MinimumWidthRequest="0"
-                    Text="移除"
+                    Text="{x:Static properties:AppResources.移除}"
                     VerticalOptions="Center" />
             </Grid>
             <Label
@@ -206,28 +207,28 @@
             Source="{Binding Image}"
             VerticalOptions="Fill" />
         <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="图片高度：" />
+            <Label Text="{x:Static properties:AppResources.图片高度}" />
             <Label Text="{Binding ImageHeight}" />
-            <Label Text="图片宽度：" />
+            <Label Text="{x:Static properties:AppResources.图片宽度}" />
             <Label Text="{Binding ImageWidth}" />
         </StackLayout>
         <StackLayout
             HorizontalOptions="FillAndExpand"
             Orientation="Horizontal"
             Spacing="10">
-            <Label Text="打印预览" VerticalOptions="Center" />
+            <Label Text="{x:Static properties:AppResources.打印预览}" VerticalOptions="Center" />
             <!--<Button Command="{Binding AutoFillCommand}" Text="自适应高宽" />-->
         </StackLayout>
         <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="打印预览高度：" />
+            <Label Text="{x:Static properties:AppResources.打印预览高度}" />
             <Label Text="{Binding IPreviewImage.Height}" />
-            <Label Text="打印预览宽度：" />
+            <Label Text="{x:Static properties:AppResources.打印预览宽度}" />
             <Label Text="{Binding IPreviewImage.Width}" />
         </StackLayout>
         <Image
             HorizontalOptions="Fill"
             Source="{Binding PreviewImage}"
             VerticalOptions="Fill" />
-        <Button Command="{Binding PickAndShowCommand}" Text="选择图片" />
+        <Button Command="{Binding PickAndShowCommand}" Text="{x:Static properties:AppResources.选择图片}" />
     </StackLayout>
 </ContentView>

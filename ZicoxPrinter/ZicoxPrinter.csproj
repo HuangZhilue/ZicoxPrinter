@@ -53,6 +53,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Raw\CPCLCommand_CPCLRules.txt" />
+	  <None Remove="resources\raw\CPCLCommand_HelloWorld.txt" />
 	  <None Remove="Resources\xml\file_paths.xml" />
 	</ItemGroup>
 
@@ -81,6 +83,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Properties\AppResources.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>AppResources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Views\CustomCommandPage.xaml.cs">
+		  <DependentUpon>CustomCommandPage.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\SettingsPage.xaml.cs">
 		  <DependentUpon>SettingsPage.xaml</DependentUpon>
 		</Compile>
@@ -93,6 +103,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Properties\AppResources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\CPCLCommand_CPCLRules.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
 		<MauiXaml Update="Resources\Styles\MyDarkThemeColor.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -100,6 +123,9 @@
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Components\SettingItems\SettingItemContent.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\CustomCommandPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\SettingsPage.xaml">
@@ -114,8 +140,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.3.646.0739</AssemblyVersion>
-		<FileVersion>1.3.646.0739</FileVersion>
+		<AssemblyVersion>1.3.689.0718</AssemblyVersion>
+		<FileVersion>1.3.689.0718</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -127,6 +153,7 @@
 	
 	<PropertyGroup>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
+		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
