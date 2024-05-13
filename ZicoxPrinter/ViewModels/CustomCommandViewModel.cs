@@ -29,9 +29,18 @@ public partial class CustomCommandViewModel : BaseViewModel
 #else
         //GetBondedDevices();
 #endif
-        Task.Run(async () =>
+        Task.Run(() =>
         {
-            CustomCommand = await MauiAssetService.LoadStringAsset("CPCLCommand_HelloWorld.txt").ConfigureAwait(false);
+            StringBuilder sb = new();
+            sb.AppendLine("! 0 200 200 160 1");
+            sb.AppendLine("PAGE-WIDTH 240");
+            sb.AppendLine("TEXT 0 2 80 80 HELLO WORLD");
+            sb.AppendLine("PRINT");
+            CustomCommand = sb.ToString();
+            // 无法直接调用MauiAssetService.LoadStringAsset()方法！
+            // 可能是因为在注册服务时Asset还未加载，导致安卓实机运行时报错：android.content.res.Resources$NotFoundException
+            // 也可能是 MAUI 目前的 BUG。
+            // 故目前暂时加载上面写死的文本
         });
     }
 

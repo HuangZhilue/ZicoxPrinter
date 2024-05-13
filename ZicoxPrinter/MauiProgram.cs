@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using UraniumUI;
+﻿using UraniumUI;
 using ZicoxPrinter.Views;
 
 namespace ZicoxPrinter;

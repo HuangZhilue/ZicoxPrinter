@@ -15,9 +15,17 @@
 
 ## 测试用到的设备 / Tested devices
 
-- ```注意```，目前仅在```Zicox CC3 打印机```上进行过完整的功能测试
-  <br/>```Note```, currently full functional testing has only been carried out on ```Zicox CC3 printer```
+### Android 设备 / Android devices
 
+- ```WSA (Windows Subsystem for Android) 2311.400000.5.0```
+- ```Sony XQ-BQ72 (Android 13)```
+- ```Sony XQ-DQ72 (Android 14)``` 
+
+### Zicox 设备 / Zicox devices
+
+- ```Zicox CC3```
+- ```注意```，目前仅在 ```Zicox CC3 打印机```上进行过完整的功能测试
+  <br/>```Note```, currently full functional testing has only been carried out on ```Zicox CC3 printer```
 - 按照Zicox官方说明，理论上可以在Zicox的其它使用CPCL指令的打印机上进行使用
   <br/>According to Zicox official instructions, it can theoretically be used on other Zicox printers that use CPCL instructions.
 
@@ -52,11 +60,14 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="Sample/sample_05.png" alt="sample_05">
+      <img src="Sample/sample_07.png" alt="sample_07">
     </td>
     <td align="center">
-      <img src="Sample/sample_06.png" alt="Image 2">
+      <img src="Sample/sample_05.png" alt="sample_05">
     </td>
+    <!-- <td align="center">
+      <img src="Sample/sample_06.png" alt="sample_06">
+    </td> -->
   </tr>
 </table>
 

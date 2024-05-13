@@ -53,15 +53,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Raw\CPCLCommand_CPCLRules.txt" />
-	  <None Remove="resources\raw\CPCLCommand_HelloWorld.txt" />
-	  <None Remove="Resources\xml\file_paths.xml" />
+		<None Remove="Resources\Raw\CPCLCommand_CPCLRules.txt" />
+		<None Remove="resources\raw\CPCLCommand_HelloWorld.txt" />
+		<None Remove="Resources\xml\file_paths.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Include="Resources\xml\file_paths.xml">
-	    <Generator></Generator>
-	  </AndroidResource>
+		<AndroidResource Include="Resources\xml\file_paths.xml">
+			<Generator></Generator>
+		</AndroidResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,15 +84,15 @@
 
 	<ItemGroup>
 		<Compile Update="Properties\AppResources.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>AppResources.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppResources.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Views\CustomCommandPage.xaml.cs">
-		  <DependentUpon>CustomCommandPage.xaml</DependentUpon>
+			<DependentUpon>CustomCommandPage.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\SettingsPage.xaml.cs">
-		  <DependentUpon>SettingsPage.xaml</DependentUpon>
+			<DependentUpon>SettingsPage.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\BluetoothHelperPage.xaml.cs">
 			<DependentUpon>BluetoothHelperPage.xaml</DependentUpon>
@@ -103,33 +103,33 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Properties\AppResources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Properties\AppResources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiAsset Update="Resources\Raw\CPCLCommand_CPCLRules.txt">
-	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-	  </MauiAsset>
+		<MauiAsset Update="Resources\Raw\CPCLCommand_CPCLRules.txt">
+			<LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+		</MauiAsset>
 	</ItemGroup>
 
 	<ItemGroup>
 		<MauiXaml Update="Resources\Styles\MyDarkThemeColor.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Resources\Styles\MyLightThemeColor.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Components\SettingItems\SettingItemContent.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\CustomCommandPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\SettingsPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\BluetoothHelperPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -140,8 +140,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.3.689.0718</AssemblyVersion>
-		<FileVersion>1.3.689.0718</FileVersion>
+		<AssemblyVersion>1.3.706.0849</AssemblyVersion>
+		<FileVersion>1.3.706.0849</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -150,39 +150,41 @@
 		<VersionBuild>$([System.Version]::Parse($(AssemblyVersion)).Build)</VersionBuild>
 		<FirstThreeNumbers>$(VersionMajor).$(VersionMinor).$(VersionBuild)</FirstThreeNumbers>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidKeyStore>False</AndroidKeyStore>
-	  <ShouldCreateLogs>True</ShouldCreateLogs>
-	  <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
-	  <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
-	  <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
-	  <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-	  <UpdatePackageVersion>False</UpdatePackageVersion>
-	  <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
-	  <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<AndroidKeyStore>False</AndroidKeyStore>
+		<ShouldCreateLogs>True</ShouldCreateLogs>
+		<AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+		<UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+		<UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+		<UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+		<UpdatePackageVersion>False</UpdatePackageVersion>
+		<AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+		<InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+		<ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <AndroidKeyStore>False</AndroidKeyStore>
-	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<AndroidKeyStore>False</AndroidKeyStore>
+		<ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
-	  <ApplicationVersion>$(VersionBuild)</ApplicationVersion>
+		<ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|AnyCPU'">
-	  <ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
-	  <ApplicationVersion>$(VersionBuild)</ApplicationVersion>
+		<ApplicationDisplayVersion>$(FirstThreeNumbers)</ApplicationDisplayVersion>
+		<ApplicationVersion>$(VersionBuild)</ApplicationVersion>
 	</PropertyGroup>
 
 </Project>

@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{BB1B1A
 		Sample\sample_04.png = Sample\sample_04.png
 		Sample\sample_05.png = Sample\sample_05.png
 		Sample\sample_06.png = Sample\sample_06.png
+		Sample\sample_07.png = Sample\sample_07.png
 	EndProjectSection
 EndProject
 Global
