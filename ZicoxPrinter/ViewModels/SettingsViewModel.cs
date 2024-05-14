@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using ZicoxPrinter.Services;
 
 namespace ZicoxPrinter.ViewModels;
@@ -87,10 +86,7 @@ public partial class SettingsViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    _ = Toast.Make($"{AppResources.更新下载失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-                });
+                ApplicationEx.ToastMakeOnUIThread($"{AppResources.更新下载失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
                 Debug.WriteLine($"Download Error: {ex.Message}");
             }
         };
@@ -127,10 +123,7 @@ public partial class SettingsViewModel : BaseViewModel
             Version? version = await AutoUpdate.GetNewVersion().ConfigureAwait(false);
             if (version is null) return;
 
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
 #if !DEBUG
@@ -141,10 +134,7 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
             Debug.WriteLine($"CheckVersion Error: {ex.Message}");
         }
         finally

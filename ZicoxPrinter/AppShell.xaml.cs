@@ -12,10 +12,7 @@ public partial class AppShell : Shell
             Version? version = await AutoUpdate.GetNewVersion().ConfigureAwait(false);
             if (version is null) return;
 #if DEBUG
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = CommunityToolkit.Maui.Alerts.Toast.Make($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
 #endif
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion(true).ConfigureAwait(false);
 #if !DEBUG

@@ -1,7 +1,6 @@
 ﻿#if ANDROID
 using Android.Content;
 #endif
-using CommunityToolkit.Maui.Alerts;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
@@ -43,11 +42,7 @@ public class AutoUpdate
         catch (Exception ex)
         {
             Debug.WriteLine($"GetNewVersion Error: {ex.Message}");
-
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
         }
         finally
         {
@@ -75,13 +70,7 @@ public class AutoUpdate
                 if (ignoreVersion >= NewVersion) return false;
             }
 
-            TaskCompletionSource<string> tcs = new();
-            Application.Current!.Dispatcher.Dispatch(async () =>
-            {
-                string action = await Application.Current!.MainPage!.DisplayActionSheet($"{AppResources.发现新版本}: {NewVersion}", null, null, AppResources.立即更新, AppResources.暂不更新, AppResources.忽略该更新);
-                tcs.SetResult(action);
-            });
-            string action = await tcs.Task;
+            string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync($"{AppResources.发现新版本}: {NewVersion}", null, null, AppResources.立即更新, AppResources.暂不更新, AppResources.忽略该更新).ConfigureAwait(false);
 
             if (string.IsNullOrWhiteSpace(action) || action == AppResources.暂不更新) return false;
             if (action == AppResources.忽略该更新)
@@ -95,10 +84,7 @@ public class AutoUpdate
         {
             Debug.WriteLine($"ReadyDownloadNewVersion Error: {ex.Message}");
 
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.准备下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.准备下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
         }
         finally
         {
@@ -145,10 +131,7 @@ public class AutoUpdate
             }
 
             Debug.WriteLine($"DownloadNewVersion Error: {ex.Message}");
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
         }
         finally
         {
@@ -183,10 +166,7 @@ public class AutoUpdate
         catch (Exception ex)
         {
             Debug.WriteLine($"InstallNewVersion Error: {ex.Message}");
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Toast.Make($"{AppResources.安装更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
-            });
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.安装更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
         }
         finally
         {

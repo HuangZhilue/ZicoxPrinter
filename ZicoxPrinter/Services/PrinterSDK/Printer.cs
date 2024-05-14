@@ -10,29 +10,26 @@ public class Printer
     {
         if (status == 0) return;
 
-        Application.Current!.Dispatcher.Dispatch(() =>
+        if (status == -2)
         {
-            if (status == -2)
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.SDK初始化失败, "OK");
-            }
-            else if (status == -1)
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.蓝牙打印机连接失败, "OK");
-            }
-            else if (status == 1)
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.无法打印打印机缺纸, "OK");
-            }
-            else if (status == 2)
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.无法打印打印机开盖, "OK");
-            }
-            else
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, AppResources.打印失败, "OK");
-            }
-        });
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.SDK初始化失败, "OK");
+        }
+        else if (status == -1)
+        {
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.蓝牙打印机连接失败, "OK");
+        }
+        else if (status == 1)
+        {
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.无法打印打印机缺纸, "OK");
+        }
+        else if (status == 2)
+        {
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.无法打印打印机开盖, "OK");
+        }
+        else
+        {
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.打印失败, "OK");
+        }
     }
 
     public static bool PrintCPCLRuler(string address, int width, int height)
@@ -45,10 +42,7 @@ public class Printer
         }
         catch (Exception ex)
         {
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-            });
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
             return false;
         }
     }
@@ -201,10 +195,7 @@ public class Printer
         }
         catch (Exception ex)
         {
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-            });
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
             return false;
         }
     }
@@ -219,10 +210,7 @@ public class Printer
         }
         catch (Exception ex)
         {
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-            });
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
             return false;
         }
     }
@@ -237,10 +225,7 @@ public class Printer
         }
         catch (Exception ex)
         {
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-            });
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
             return false;
         }
     }

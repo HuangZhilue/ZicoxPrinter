@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
 
 namespace ZicoxPrinter.Views.Components;
@@ -80,7 +81,7 @@ public partial class DrawParametersContent : ContentView
     {
         if (sender == null) return;
         if (sender is not PrintParametersBase parameter) return;
-        bool answer = await Application.Current!.MainPage!.DisplayAlert(AppResources.提示, $"{AppResources.确定移除该参数}: {parameter.DrawType}", AppResources.是, AppResources.否);
+        bool answer = await ApplicationEx.DisplayAlertOnUIThreadAsync(AppResources.提示, $"{AppResources.确定移除该参数}: {parameter.DrawType}", AppResources.是, AppResources.否).ConfigureAwait(false);
         Debug.WriteLine("Answer: " + answer);
         if (answer)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using ZicoxPrinter.Services;
 
 namespace ZicoxPrinter.ViewModels;
 
@@ -88,7 +89,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
 #if ANDROID
         try
         {
-            //_ = Application.Current!.MainPage!.DisplayAlert("Info", "Try to scan", "OK");
+            //ApplicationEx.DisplayAlertOnUIThread("Info", "Try to scan", "OK");
             BluetoothScanner.UnregisterReceiver();
             BluetoothScanner.RegisterReceiver();
             NotBondedDevices.Clear();
@@ -115,7 +116,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert("Error", "Scan Failed!\t" + ex.Message, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, "Scan Failed!\t" + ex.Message, "OK");
         }
         finally
         {
@@ -135,7 +136,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
         catch (Exception ex)
         {
             // 连接失败，处理异常
-            _ = Application.Current!.MainPage!.DisplayAlert("Error", "Failed to connect: " + ex.Message, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, "Failed to connect: " + ex.Message, "OK");
         }
 #endif
     }

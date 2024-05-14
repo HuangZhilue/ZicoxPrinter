@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
 
 namespace ZicoxPrinter.ViewModels;
@@ -67,7 +68,7 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
         BondedDevices.Clear();
         if (!BluetoothScanner.IsBluetoothAvailable)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
@@ -94,12 +95,12 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
     {
         if (BondedDevices == null || BondedDevices.Count == 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.没有可用的设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.没有可用的设备, "OK");
             return;
         }
         if (SelectedBondedDeviceIndex < 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.请选择设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.请选择设备, "OK");
             return;
         }
 
@@ -110,10 +111,7 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
                 //CustomPrintParameters = JsonConvert.DeserializeObject<ObservableCollection<PrintParametersBase>>(CustomPrintParametersJsonString, JsonSerializerSettings) ?? [];
                 if (CustomPrintParameters.Count == 0)
                 {
-                    Application.Current!.Dispatcher.Dispatch(() =>
-                    {
-                        _ = Application.Current.MainPage!.DisplayAlert(AppResources.提示, AppResources.没有有效的打印参数, "OK");
-                    });
+                    ApplicationEx.DisplayAlertOnUIThread(AppResources.提示, AppResources.没有有效的打印参数, "OK");
                     return;
                 }
                 PrintInfo.PrintParameters = [.. CustomPrintParameters];
@@ -127,10 +125,7 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-                });
+                ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
                 IsPrinting = false;
             }
         });
@@ -141,12 +136,12 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
     {
         if (BondedDevices == null || BondedDevices.Count == 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.没有可用的设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.没有可用的设备, "OK");
             return;
         }
         if (SelectedBondedDeviceIndex < 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.请选择设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.请选择设备, "OK");
             return;
         }
 
@@ -163,96 +158,10 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    _ = Application.Current.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-                });
+                ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
+
                 IsPrinting = false;
             }
         });
     }
-
-    /*
-    private CancellationTokenSource CancellationTokenSource { get; set; } = null!;
-
-    public async Task CustomPrintParametersChanged(object sender)
-    {
-        if (sender == null) return;
-        if (sender is not PrintParametersBase parameter) return;
-        Debug.WriteLine(nameof(CustomPrintParametersChanged) + "\t:\t" + parameter.DrawType.ToString());
-        try
-        {
-            try
-            {
-                CancellationTokenSource?.Cancel();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"CustomPrintParametersChanged Error: {ex.Message}");
-            }
-
-            CancellationTokenSource = new CancellationTokenSource();
-
-            // 处理请求的逻辑
-            await Task.Delay(1000);
-
-            try
-            {
-                // 检查请求是否已被取消
-                CancellationTokenSource.Token.ThrowIfCancellationRequested();
-            }
-            catch (Exception ex)
-            {
-                // The CancellationTokenSource has been disposed.
-                return;
-            }
-
-            await Task.Run(() =>
-            {
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    try
-                    {
-                        CustomPrintParametersJsonString = JsonConvert.SerializeObject(CustomPrintParameters, Formatting.Indented, JsonSerializerSettings);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"CustomPrintParametersChanged Error: {ex.Message}");
-                        // The user canceled or something went wrong
-
-                        if (Application.Current is null || Application.Current.MainPage is null) return;
-                        _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
-                    }
-                });
-            }).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"CustomPrintParametersChanged Error: {ex.Message}");
-            // The user canceled or something went wrong
-            Application.Current!.Dispatcher.Dispatch(() =>
-            {
-                if (Application.Current is null || Application.Current.MainPage is null) return;
-                _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
-            });
-        }
-        finally
-        {
-            try
-            {
-                CancellationTokenSource.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"CustomPrintParametersChanged Error: {ex.Message}");
-                // The user canceled or something went wrong
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    if (Application.Current is null || Application.Current.MainPage is null) return;
-                    _ = Application.Current.MainPage.DisplayAlert(AppResources.错误, ex.Message, "OK");
-                });
-            }
-        }
-    }
-    */
 }

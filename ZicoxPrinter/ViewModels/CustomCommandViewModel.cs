@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using ZicoxPrinter.Services;
-using ZicoxPrinter.Services.PrinterSDK;
 
 namespace ZicoxPrinter.ViewModels;
 
@@ -51,7 +50,7 @@ public partial class CustomCommandViewModel : BaseViewModel
         BondedDevices.Clear();
         if (!BluetoothScanner.IsBluetoothAvailable)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
@@ -93,12 +92,12 @@ public partial class CustomCommandViewModel : BaseViewModel
     {
         if (BondedDevices == null || BondedDevices.Count == 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.没有可用的设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.没有可用的设备, "OK");
             return;
         }
         if (SelectedBondedDeviceIndex < 0)
         {
-            _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, AppResources.请选择设备, "OK");
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.请选择设备, "OK");
             return;
         }
 
@@ -108,16 +107,13 @@ public partial class CustomCommandViewModel : BaseViewModel
             {
 #if ANDROID
                 IsPrinting = true;
-                Printer.PrintCommand(BondedDevices[SelectedBondedDeviceIndex].Mac, CustomCommand);
+                Services.PrinterSDK.Printer.PrintCommand(BondedDevices[SelectedBondedDeviceIndex].Mac, CustomCommand);
                 IsPrinting = false;
 #endif
             }
             catch (Exception ex)
             {
-                Application.Current!.Dispatcher.Dispatch(() =>
-                {
-                    _ = Application.Current!.MainPage!.DisplayAlert(AppResources.错误, ex.Message, "OK");
-                });
+                ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
                 IsPrinting = false;
             }
         });
