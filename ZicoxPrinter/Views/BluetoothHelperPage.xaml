@@ -15,7 +15,7 @@
         <toolkit:EventToCommandBehavior Command="{Binding NavigatedFromCommand}" EventName="NavigatedFrom" />
     </ContentPage.Behaviors>-->
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="25">
+        <VerticalStackLayout Padding="30" Spacing="10">
             <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.检查蓝牙是否可用}">
                 <settingComponents:SettingItemContent.IconSource>
                     <FontImageSource
@@ -24,7 +24,10 @@
                         Color="{DynamicResource Primary}" />
                 </settingComponents:SettingItemContent.IconSource>
                 <settingComponents:SettingItemContent.RightContent>
-                    <Label BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}">
+                    <Label
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        HeightRequest="30"
+                        VerticalTextAlignment="Center">
                         <Label.Style>
                             <Style TargetType="Label">
                                 <Style.Triggers>
@@ -32,7 +35,6 @@
                                         Binding="{Binding IsBluetoothAvailable}"
                                         TargetType="Label"
                                         Value="true">
-                                        <!--<Setter Property="TextColor" Value="Green" />-->
                                         <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙可用}" />
                                     </DataTrigger>
                                     <DataTrigger
@@ -62,12 +64,13 @@
                         按照后者覆盖前者的渲染顺序，ContentView会渲染在Swich的前景上，同时给ContentView添加TapGestureRecognizer以便触发后台事件，
                         这样做既可以做到触发后台事件，还能变更Switch的IsToggled属性
                     -->
-                    <Grid>
+                    <Grid HeightRequest="30">
+                        <!--  Windows 平台上的Switch，目前使用样式的是与Android平台上的不一致的，开发调式时，暂时忽略Windows平台上的“对不齐”的问题  -->
                         <Switch
+                            Margin="0"
                             BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
                             IsEnabled="False"
                             IsToggled="{Binding IsBluetoothEnabled}"
-                            MinimumHeightRequest="30"
                             MinimumWidthRequest="0">
                             <Switch.Style>
                                 <Style TargetType="Switch">
@@ -108,7 +111,7 @@
                             BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
                             Command="{Binding GetBondedDevicesCommand}"
                             MinimumHeightRequest="30"
-                            WidthRequest="75">
+                            WidthRequest="55">
                             <ImageButton.Source>
                                 <FontImageSource
                                     FontFamily="MaterialRegular"
@@ -186,7 +189,7 @@
                             BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
                             Command="{Binding ScanClassicDevicesCommand}"
                             MinimumHeightRequest="30"
-                            WidthRequest="75">
+                            WidthRequest="55">
                             <ImageButton.Source>
                                 <FontImageSource
                                     FontFamily="MaterialRegular"

@@ -93,23 +93,30 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public void SetAppTheme()
+    public async Task SetAppTheme()
     {
         if (Application.Current is null) return;
-        if (CurrentTheme == AppResources.跟随系统)
-        {
-            Application.Current.UserAppTheme = AppTheme.Unspecified;
-        }
-        else if (CurrentTheme == AppTheme.Light.ToString())
-        {
-            Application.Current.UserAppTheme = AppTheme.Light;
-        }
-        else if (CurrentTheme == AppTheme.Dark.ToString())
-        {
-            Application.Current.UserAppTheme = AppTheme.Dark;
-        }
 
-        Preferences.Default.Set(nameof(AppTheme), Application.Current.UserAppTheme.ToString());
+        string theme = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.应用主题, null, null, AppThemes.ToArray()).ConfigureAwait(false);
+        if (string.IsNullOrWhiteSpace(theme)) return;
+        CurrentTheme = theme;
+        Application.Current.Dispatcher.Dispatch(() =>
+        {
+            if (CurrentTheme == AppResources.跟随系统)
+            {
+                Application.Current.UserAppTheme = AppTheme.Unspecified;
+            }
+            else if (CurrentTheme == AppTheme.Light.ToString())
+            {
+                Application.Current.UserAppTheme = AppTheme.Light;
+            }
+            else if (CurrentTheme == AppTheme.Dark.ToString())
+            {
+                Application.Current.UserAppTheme = AppTheme.Dark;
+            }
+
+            Preferences.Default.Set(nameof(AppTheme), Application.Current.UserAppTheme.ToString());
+        });
     }
 
     [RelayCommand]
