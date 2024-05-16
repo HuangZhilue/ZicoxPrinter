@@ -188,7 +188,7 @@
     <value>Update download failed</value>
   </data>
   <data name="检查蓝牙是否可用" xml:space="preserve">
-    <value>Check whether Bluetooth is available</value>
+    <value>Is bluetooth available</value>
   </data>
   <data name="蓝牙可用" xml:space="preserve">
     <value>Bluetooth available</value>
@@ -197,7 +197,7 @@
     <value>Bluetooth unavailable</value>
   </data>
   <data name="检查蓝牙是否开启" xml:space="preserve">
-    <value>Check whether Bluetooth opens</value>
+    <value>Bluetooth state</value>
   </data>
   <data name="蓝牙开启" xml:space="preserve">
     <value>Bluetooth opening</value>

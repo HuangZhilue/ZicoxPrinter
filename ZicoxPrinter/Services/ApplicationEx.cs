@@ -13,6 +13,7 @@ public static class ApplicationEx
             _ = Application.Current.MainPage.DisplayAlert(title, message, cancel);
         });
     }
+
     public static async Task<bool> DisplayAlertOnUIThreadAsync(string title, string message, string accept, string cancel)
     {
         if (Application.Current is null || Application.Current.MainPage is null) return false;

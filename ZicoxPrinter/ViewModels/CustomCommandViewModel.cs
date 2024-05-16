@@ -75,7 +75,7 @@ public partial class CustomCommandViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoadCPCLExampleAsync()
     {
-        string action = await Application.Current!.MainPage!.DisplayActionSheet(AppResources.加载CPCL示例, AppResources.取消, null, [AppResources.HelloWorld, AppResources.CPCL尺子]);
+        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.加载CPCL示例, AppResources.取消, null, [AppResources.HelloWorld, AppResources.CPCL尺子]);
         if (string.IsNullOrWhiteSpace(action) || action == AppResources.取消) return;
         if (action == AppResources.HelloWorld)
         {

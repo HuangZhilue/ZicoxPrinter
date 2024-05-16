@@ -208,7 +208,7 @@
     <value>更新下载失败</value>
   </data>
   <data name="检查蓝牙是否可用" xml:space="preserve">
-    <value>检查蓝牙是否可用</value>
+    <value>蓝牙是否可用</value>
   </data>
   <data name="蓝牙可用" xml:space="preserve">
     <value>蓝牙可用</value>
@@ -217,7 +217,7 @@
     <value>蓝牙不可用</value>
   </data>
   <data name="检查蓝牙是否开启" xml:space="preserve">
-    <value>检查蓝牙是否开启</value>
+    <value>蓝牙状态</value>
   </data>
   <data name="蓝牙关闭" xml:space="preserve">
     <value>蓝牙关闭</value>

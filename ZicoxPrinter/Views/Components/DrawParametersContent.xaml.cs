@@ -26,7 +26,7 @@ public partial class DrawParametersContent : ContentView
     [RelayCommand]
     public async Task AddNewParameterAsync()
     {
-        string action = await Application.Current!.MainPage!.DisplayActionSheet(AppResources.新增参数, AppResources.取消, null, DrawTypes.Select(t => t.ToString()).ToArray());
+        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.新增参数, AppResources.取消, null, DrawTypes.Select(t => t.ToString()).ToArray());
         Debug.WriteLine("Action: " + action);
         if (string.IsNullOrWhiteSpace(action) || action == AppResources.取消) return;
         if (!Enum.TryParse(typeof(DrawType), action, true, out object? obj))

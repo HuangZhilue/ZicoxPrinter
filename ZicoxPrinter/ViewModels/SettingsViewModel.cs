@@ -126,9 +126,9 @@ public partial class SettingsViewModel : BaseViewModel
             ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
-#if !DEBUG
+            //#if !DEBUG
             if (!needUpdate) return;
-#endif
+            //#endif
             IsDownloadingUpdate = true;
             await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
         }

@@ -77,13 +77,14 @@
             DrawText2Template="{StaticResource DrawText2Template}" />
     </ContentView.Resources>
 
-    <StackLayout BindingContext="{x:Reference this}">
-        <StackLayout Orientation="Vertical" Spacing="25">
-            <CollectionView ItemTemplate="{StaticResource DrawTypeTemplateSelector}" ItemsSource="{Binding CustomPrintParameters}" />
-            <Button
-                Command="{Binding AddNewParameterCommand}"
-                HorizontalOptions="CenterAndExpand"
-                Text="{x:Static properties:AppResources.增加新的打印参数}" />
-        </StackLayout>
+    <StackLayout
+        BindingContext="{x:Reference this}"
+        Orientation="Vertical"
+        Spacing="25">
+        <CollectionView ItemTemplate="{StaticResource DrawTypeTemplateSelector}" ItemsSource="{Binding CustomPrintParameters}" />
+        <Button
+            Command="{Binding AddNewParameterCommand}"
+            HorizontalOptions="CenterAndExpand"
+            Text="{x:Static properties:AppResources.增加新的打印参数}" />
     </StackLayout>
 </ContentView>

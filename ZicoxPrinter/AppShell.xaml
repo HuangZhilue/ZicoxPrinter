@@ -6,7 +6,8 @@
     xmlns:local="clr-namespace:ZicoxPrinter"
     xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
-    xmlns:views="clr-namespace:ZicoxPrinter.Views">
+    xmlns:views="clr-namespace:ZicoxPrinter.Views"
+    Navigated="Shell_Navigated">
     <TabBar>
         <Tab Title="{x:Static properties:AppResources.打印大图}">
             <Tab.Icon>

@@ -34,7 +34,9 @@
                 <Image
                     Grid.Row="0"
                     Grid.Column="0"
-                    Source="{Binding IconSource}" />
+                    HeightRequest="20"
+                    Source="{Binding IconSource}"
+                    WidthRequest="20" />
                 <Label
                     Grid.Row="0"
                     Grid.Column="1"

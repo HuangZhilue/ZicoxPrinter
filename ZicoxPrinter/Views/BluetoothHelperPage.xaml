@@ -3,104 +3,277 @@
     x:Class="ZicoxPrinter.Views.BluetoothHelperPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:properties="clr-namespace:ZicoxPrinter.Properties"
+    xmlns:settingComponents="clr-namespace:ZicoxPrinter.Views.Components.SettingItems"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ZicoxPrinter.ViewModels"
     x:DataType="vm:BluetoothHelperViewModel">
+    <!--  TODO : NavigatedTo can work, but NavigatedFrom can not work, so I try to use Code-behind in AppShell.xaml.cs  -->
+    <!--<ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding NavigatedToCommand}" EventName="NavigatedTo" />
+        <toolkit:EventToCommandBehavior Command="{Binding NavigatedFromCommand}" EventName="NavigatedFrom" />
+    </ContentPage.Behaviors>-->
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
-            <Button Command="{Binding CheckBluetoothAvailableCommand}" Text="{x:Static properties:AppResources.检查蓝牙是否可用}">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding IsBluetoothAvailable}"
-                                TargetType="Button"
-                                Value="true">
-                                <Setter Property="BackgroundColor" Value="Green" />
-                                <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙可用}" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding IsBluetoothAvailable}"
-                                TargetType="Button"
-                                Value="false">
-                                <Setter Property="BackgroundColor" Value="Red" />
-                                <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙不可用}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Command="{Binding CheckBluetoothEnableCommand}" Text="{x:Static properties:AppResources.检查蓝牙是否开启}">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding IsBluetoothEnabled}"
-                                TargetType="Button"
-                                Value="true">
-                                <Setter Property="BackgroundColor" Value="Green" />
-                                <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙开启}" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding IsBluetoothEnabled}"
-                                TargetType="Button"
-                                Value="false">
-                                <Setter Property="BackgroundColor" Value="Red" />
-                                <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙关闭}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Command="{Binding TryEnableBluetoothCommand}" Text="{x:Static properties:AppResources.尝试打开蓝牙}" />
-            <Button Command="{Binding TryDisableBluetoothCommand}" Text="{x:Static properties:AppResources.尝试关闭蓝牙}" />
-            <Button Command="{Binding GetBondedDevicesCommand}" Text="{x:Static properties:AppResources.获取配对设备}" />
-            <ListView ItemsSource="{Binding BondedDevices}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Name}" />
-                                <Label Text="{Binding Mac}" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Command="{Binding ScanClassicDevicesCommand}" Text="{x:Static properties:AppResources.扫描蓝牙设备}">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding IsScanning}"
-                                TargetType="Button"
-                                Value="true">
-                                <Setter Property="Text" Value="{x:Static properties:AppResources.扫描中}" />
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <ListView ItemsSource="{Binding NotBondedDevices}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
-                        <ViewCell>
-                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                <StackLayout HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding Name}" />
-                                    <Label Text="{Binding Mac}" />
-                                </StackLayout>
-                                <Button
-                                    Command="{Binding Path=BindingContext.ConnectToDeviceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                    CommandParameter="{Binding Mac}"
-                                    Text="{x:Static properties:AppResources.配对}"
-                                    WidthRequest="100" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.检查蓝牙是否可用}">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Bluetooth}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <Label BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsBluetoothAvailable}"
+                                        TargetType="Label"
+                                        Value="true">
+                                        <!--<Setter Property="TextColor" Value="Green" />-->
+                                        <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙可用}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding IsBluetoothAvailable}"
+                                        TargetType="Label"
+                                        Value="false">
+                                        <Setter Property="TextColor" Value="Red" />
+                                        <Setter Property="Text" Value="{x:Static properties:AppResources.蓝牙不可用}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </settingComponents:SettingItemContent.RightContent>
+            </settingComponents:SettingItemContent>
+            <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.检查蓝牙是否开启}">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Bluetooth}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <!--  TODO : 同时为 Switch 设置 IsToggled属性 和 Toggled事件 之后，触发Toggled事件 或者 更改IsToggled属性 都会同时触发另外一方，导致死循环  -->
+                    <!--
+                        目前的解决方案是，在Grid中添加一个Switch，并添加ContentView在Switch后方，
+                        按照后者覆盖前者的渲染顺序，ContentView会渲染在Swich的前景上，同时给ContentView添加TapGestureRecognizer以便触发后台事件，
+                        这样做既可以做到触发后台事件，还能变更Switch的IsToggled属性
+                    -->
+                    <Grid>
+                        <Switch
+                            BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                            IsEnabled="False"
+                            IsToggled="{Binding IsBluetoothEnabled}"
+                            MinimumHeightRequest="30"
+                            MinimumWidthRequest="0">
+                            <Switch.Style>
+                                <Style TargetType="Switch">
+                                    <Setter Property="VisualStateManager.VisualStateGroups">
+                                        <VisualStateGroupList>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Disabled">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray200}}" />
+                                                        <Setter Property="ThumbColor" Value="{StaticResource Primary}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupList>
+                                    </Setter>
+                                </Style>
+                            </Switch.Style>
+                        </Switch>
+                        <ContentView BackgroundColor="Transparent">
+                            <ContentView.GestureRecognizers>
+                                <TapGestureRecognizer BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" Command="{Binding SwitchBluetoothToggleCommand}" />
+                            </ContentView.GestureRecognizers>
+                        </ContentView>
+                    </Grid>
+                </settingComponents:SettingItemContent.RightContent>
+            </settingComponents:SettingItemContent>
+            <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.获取配对设备}">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Bluetooth_searching}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <Border StrokeShape="RoundRectangle 5" StrokeThickness="0">
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                            Command="{Binding GetBondedDevicesCommand}"
+                            MinimumHeightRequest="30"
+                            WidthRequest="75">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                    FontFamily="MaterialRegular"
+                                    Glyph="{x:Static m:MaterialRegular.Refresh}"
+                                    Color="{DynamicResource Primary}" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </Border>
+                </settingComponents:SettingItemContent.RightContent>
+                <settingComponents:SettingItemContent.BottomContent>
+                    <StackLayout
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="True">
+                        <StackLayout.Style>
+                            <Style TargetType="StackLayout">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding BondedDevices.Count}"
+                                        TargetType="StackLayout"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackLayout.Style>
+                        <Grid Margin="0,15,0,0" IsVisible="True">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding BondedDevices.Count}"
+                                            TargetType="Grid"
+                                            Value="0">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <CollectionView
+                                Margin="0"
+                                HorizontalOptions="CenterAndExpand"
+                                ItemsSource="{Binding BondedDevices}"
+                                MinimumHeightRequest="0">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
+                                        <Border
+                                            Margin="0"
+                                            Padding="5"
+                                            StrokeThickness="0">
+                                            <StackLayout Spacing="5">
+                                                <Label FontSize="Default" Text="{Binding Name}" />
+                                                <Label FontSize="Micro" Text="{Binding Mac}" />
+                                                <Border HeightRequest="1" Stroke="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" />
+                                            </StackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </settingComponents:SettingItemContent.BottomContent>
+            </settingComponents:SettingItemContent>
+            <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.扫描蓝牙设备}">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Bluetooth_searching}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <Border StrokeShape="RoundRectangle 5" StrokeThickness="0">
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                            Command="{Binding ScanClassicDevicesCommand}"
+                            MinimumHeightRequest="30"
+                            WidthRequest="75">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                    FontFamily="MaterialRegular"
+                                    Glyph="{x:Static m:MaterialRegular.Refresh}"
+                                    Color="{DynamicResource Primary}" />
+                            </ImageButton.Source>
+                            <ImageButton.Style>
+                                <Style TargetType="ImageButton">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsScanning}"
+                                            TargetType="ImageButton"
+                                            Value="true">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ImageButton.Style>
+                        </ImageButton>
+                    </Border>
+                </settingComponents:SettingItemContent.RightContent>
+                <settingComponents:SettingItemContent.BottomContent>
+                    <StackLayout
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="True">
+                        <StackLayout.Style>
+                            <Style TargetType="StackLayout">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding NotBondedDevices.Count}"
+                                        TargetType="StackLayout"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackLayout.Style>
+                        <Grid Margin="0,15,0,0" IsVisible="True">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding NotBondedDevices.Count}"
+                                            TargetType="Grid"
+                                            Value="0">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <CollectionView
+                                Margin="0"
+                                HorizontalOptions="CenterAndExpand"
+                                ItemsSource="{Binding NotBondedDevices}"
+                                MinimumHeightRequest="0">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:SampleBluetoothDevice">
+                                        <Border
+                                            Margin="0"
+                                            Padding="5"
+                                            StrokeThickness="0">
+                                            <StackLayout
+                                                HorizontalOptions="FillAndExpand"
+                                                Orientation="Horizontal"
+                                                Spacing="15">
+                                                <StackLayout HorizontalOptions="FillAndExpand" Spacing="5">
+                                                    <Label FontSize="Default" Text="{Binding Name}" />
+                                                    <Label FontSize="Micro" Text="{Binding Mac}" />
+                                                    <Border HeightRequest="1" Stroke="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" />
+                                                </StackLayout>
+                                                <Button
+                                                    Margin="0,0,0,0"
+                                                    Command="{Binding Path=BindingContext.ConnectToDeviceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                    CommandParameter="{Binding Mac}"
+                                                    HorizontalOptions="End"
+                                                    Text="{x:Static properties:AppResources.配对}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </settingComponents:SettingItemContent.BottomContent>
+            </settingComponents:SettingItemContent>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

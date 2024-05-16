@@ -448,7 +448,7 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Check whether Bluetooth is available 的本地化字符串。
+        ///   查找类似 Is bluetooth available 的本地化字符串。
         /// </summary>
         public static string 检查蓝牙是否可用 {
             get {
@@ -457,7 +457,7 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Check whether Bluetooth opens 的本地化字符串。
+        ///   查找类似 Bluetooth state 的本地化字符串。
         /// </summary>
         public static string 检查蓝牙是否开启 {
             get {
