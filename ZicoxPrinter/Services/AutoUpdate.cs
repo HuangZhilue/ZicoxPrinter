@@ -16,6 +16,7 @@ public class AutoUpdate
     public static event EventHandler<bool>? IsCheckingUpdateChanged;
     public static event EventHandler<bool>? IsDownloadingUpdateChanged;
     public static event EventHandler<bool>? IsInstallingUpdateChanged;
+    public static event EventHandler<string>? NewReleaseMessageChanged;
 
     private static Octokit.Release NewRelease { get; set; } = null!;
     private static Version NewVersion { get; set; } = null!;
@@ -23,6 +24,7 @@ public class AutoUpdate
 
     public static async Task<Version?> GetNewVersion()
     {
+        NewReleaseMessageChanged?.Invoke(null, string.Empty);
         if (IsCheckingUpdate) return null;
 
         try
@@ -32,6 +34,7 @@ public class AutoUpdate
 
             Octokit.GitHubClient client = new(new Octokit.ProductHeaderValue("ZicoxPrinter"));
             NewRelease = await client.Repository.Release.GetLatest("HuangZhilue", "ZicoxPrinter");
+            NewReleaseMessageChanged?.Invoke(null, $"{AppResources.发现新版本}: {NewRelease.TagName}{Environment.NewLine}{NewRelease.Body}");
             Debug.WriteLine(JsonConvert.SerializeObject(NewRelease));
             Debug.WriteLine($"The latest release is tagged at {NewRelease.TagName} and is named {NewRelease.Name}");
 

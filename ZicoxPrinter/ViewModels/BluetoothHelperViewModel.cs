@@ -158,7 +158,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     [RelayCommand]
     public void ScanClassicDevices()
     {
-        if(IsScanning) return;
+        if (IsScanning) return;
 
         NotBondedDevices.Clear();
         try

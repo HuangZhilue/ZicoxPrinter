@@ -8,6 +8,8 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string currentTheme = AppResources.跟随系统;
     [ObservableProperty]
+    private string newReleaseMessage = string.Empty;
+    [ObservableProperty]
     private string appVersion = AppInfo.Current.VersionString;
     [ObservableProperty]
     private bool isCheckingUpdate = false;
@@ -57,6 +59,10 @@ public partial class SettingsViewModel : BaseViewModel
         {
             IsDownloadingUpdate = change;
         };
+        AutoUpdate.NewReleaseMessageChanged += (sender, change) =>
+        {
+            NewReleaseMessage = change;
+        };
         AutoUpdate.DownloadProgressChanged += (sender, p) =>
         {
             try
@@ -97,7 +103,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         if (Application.Current is null) return;
 
-        string theme = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.应用主题, null, null, AppThemes.ToArray()).ConfigureAwait(false);
+        string theme = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.应用主题, null, null, [.. AppThemes]).ConfigureAwait(false);
         if (string.IsNullOrWhiteSpace(theme)) return;
         CurrentTheme = theme;
         Application.Current.Dispatcher.Dispatch(() =>
@@ -133,9 +139,9 @@ public partial class SettingsViewModel : BaseViewModel
             ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
 
             bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
-            //#if !DEBUG
+#if !DEBUG
             if (!needUpdate) return;
-            //#endif
+#endif
             IsDownloadingUpdate = true;
             await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
         }

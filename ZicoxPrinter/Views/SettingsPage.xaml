@@ -137,19 +137,7 @@
                     </StackLayout>
                 </settingComponents:SettingItemContent.RightContent>
                 <settingComponents:SettingItemContent.BottomContent>
-                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" IsVisible="False">
-                        <StackLayout.Style>
-                            <Style TargetType="StackLayout">
-                                <Style.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding IsDownloadingUpdate}"
-                                        TargetType="StackLayout"
-                                        Value="true">
-                                        <Setter Property="IsVisible" Value="True" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackLayout.Style>
+                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" IsVisible="True">
                         <Grid
                             Margin="0,15,0,0"
                             ColumnSpacing="15"
@@ -161,6 +149,12 @@
                                             Binding="{Binding IsDownloadingUpdate}"
                                             TargetType="Grid"
                                             Value="true">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding DownloadProgress}"
+                                            TargetType="Grid"
+                                            Value="1">
                                             <Setter Property="IsVisible" Value="True" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -192,6 +186,20 @@
                                 HorizontalOptions="FillAndExpand"
                                 Progress="{Binding DownloadProgress}" />
                         </Grid>
+                        <Label Margin="0,15,0,0" Text="{Binding NewReleaseMessage}">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding NewReleaseMessage.Length}"
+                                            TargetType="Label"
+                                            Value="0">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
                     </StackLayout>
                 </settingComponents:SettingItemContent.BottomContent>
             </settingComponents:SettingItemContent>
