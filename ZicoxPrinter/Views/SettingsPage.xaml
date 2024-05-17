@@ -137,35 +137,115 @@
                     </StackLayout>
                 </settingComponents:SettingItemContent.RightContent>
                 <settingComponents:SettingItemContent.BottomContent>
-                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" IsVisible="True">
-                        <Grid
-                            Margin="0,15,0,0"
-                            ColumnSpacing="15"
-                            IsVisible="False">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsDownloadingUpdate}"
-                                            TargetType="Grid"
-                                            Value="true">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                        <DataTrigger
-                                            Binding="{Binding DownloadProgress}"
-                                            TargetType="Grid"
-                                            Value="1">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{x:Static properties:AppResources.正在下载更新}">
+                    <StackLayout
+                        Margin="0,15,0,0"
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        Spacing="15">
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <StackLayout
+                                HorizontalOptions="StartAndExpand"
+                                Orientation="Horizontal"
+                                Spacing="10"
+                                VerticalOptions="CenterAndExpand">
+                                <Label Text="{x:Static properties:AppResources.最新版本}" />
+                                <Label Text="{Binding NewReleaseVersion}" />
+                                <Border
+                                    Padding="10,0"
+                                    BackgroundColor="{DynamicResource Tertiary}"
+                                    IsVisible="{Binding IsPreviewRelease}"
+                                    StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="1">
+                                    <Label Text="preview" TextColor="{DynamicResource Black}" />
+                                </Border>
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                                <Button
+                                    Margin="0"
+                                    Padding="15,0"
+                                    Command="{Binding DownloadNewVersionCommand}"
+                                    HeightRequest="30"
+                                    IsVisible="{Binding IsNewReleaseAvailable}"
+                                    MinimumHeightRequest="0"
+                                    MinimumWidthRequest="0"
+                                    Text="{x:Static properties:AppResources.下载更新}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsCheckingUpdate}"
+                                                    TargetType="Button"
+                                                    Value="true">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding IsDownloadingUpdate}"
+                                                    TargetType="Button"
+                                                    Value="true">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding DownloadProgress}"
+                                                    TargetType="Button"
+                                                    Value="1">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button
+                                    Margin="0"
+                                    Padding="15,0"
+                                    Command="{Binding InstallNewVersionCommand}"
+                                    HeightRequest="30"
+                                    IsVisible="False"
+                                    MinimumHeightRequest="0"
+                                    MinimumWidthRequest="0"
+                                    Text="{x:Static properties:AppResources.安装更新}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding DownloadProgress}"
+                                                    TargetType="Button"
+                                                    Value="1">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Start"
+                            Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalOptions="CenterAndExpand">
+                            <Label IsVisible="{Binding IsNewReleaseAvailable}" Text="{x:Static properties:AppResources.文件大小}" />
+                            <Label IsVisible="{Binding IsNewReleaseAvailable}" Text="{Binding NewReleaseFileSize}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                IsVisible="True"
+                                Orientation="Horizontal">
+                                <StackLayout.Style>
+                                    <Style TargetType="StackLayout">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding DownloadProgress}"
+                                                TargetType="StackLayout"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackLayout.Style>
+                                <Label Margin="0,0,10,0" Text="{x:Static properties:AppResources.正在下载更新}">
                                     <Label.Style>
                                         <Style TargetType="Label">
                                             <Style.Triggers>
@@ -182,24 +262,42 @@
                                 <Label Text="{Binding DownloadProgressString}" />
                             </StackLayout>
                             <ProgressBar
+                                Grid.Row="1"
                                 Grid.Column="1"
                                 HorizontalOptions="FillAndExpand"
-                                Progress="{Binding DownloadProgress}" />
-                        </Grid>
-                        <Label Margin="0,15,0,0" Text="{Binding NewReleaseMessage}">
-                            <Label.Style>
-                                <Style TargetType="Label">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding NewReleaseMessage.Length}"
-                                            TargetType="Label"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Label.Style>
-                        </Label>
+                                IsVisible="True"
+                                Progress="{Binding DownloadProgress}">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding DownloadProgress}"
+                                                TargetType="ProgressBar"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="{x:Static properties:AppResources.更新日志}" />
+                            <Label Text="{Binding NewReleaseMessage}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding NewReleaseMessage.Length}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </StackLayout>
                     </StackLayout>
                 </settingComponents:SettingItemContent.BottomContent>
             </settingComponents:SettingItemContent>

@@ -122,35 +122,8 @@
                     </Border>
                 </settingComponents:SettingItemContent.RightContent>
                 <settingComponents:SettingItemContent.BottomContent>
-                    <StackLayout
-                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
-                        HorizontalOptions="FillAndExpand"
-                        IsVisible="True">
-                        <StackLayout.Style>
-                            <Style TargetType="StackLayout">
-                                <Style.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding BondedDevices.Count}"
-                                        TargetType="StackLayout"
-                                        Value="0">
-                                        <Setter Property="IsVisible" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackLayout.Style>
-                        <Grid Margin="0,15,0,0" IsVisible="True">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding BondedDevices.Count}"
-                                            TargetType="Grid"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
+                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" HorizontalOptions="FillAndExpand">
+                        <Grid Margin="0,15,0,0">
                             <CollectionView
                                 Margin="0"
                                 HorizontalOptions="CenterAndExpand"
@@ -174,6 +147,18 @@
                         </Grid>
                     </StackLayout>
                 </settingComponents:SettingItemContent.BottomContent>
+                <settingComponents:SettingItemContent.Style>
+                    <Style TargetType="settingComponents:SettingItemContent">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding BondedDevices.Count}"
+                                TargetType="settingComponents:SettingItemContent"
+                                Value="0">
+                                <Setter Property="ShowBottomContent" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </settingComponents:SettingItemContent.Style>
             </settingComponents:SettingItemContent>
             <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.扫描蓝牙设备}">
                 <settingComponents:SettingItemContent.IconSource>
@@ -212,35 +197,8 @@
                     </Border>
                 </settingComponents:SettingItemContent.RightContent>
                 <settingComponents:SettingItemContent.BottomContent>
-                    <StackLayout
-                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
-                        HorizontalOptions="FillAndExpand"
-                        IsVisible="True">
-                        <StackLayout.Style>
-                            <Style TargetType="StackLayout">
-                                <Style.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding NotBondedDevices.Count}"
-                                        TargetType="StackLayout"
-                                        Value="0">
-                                        <Setter Property="IsVisible" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackLayout.Style>
-                        <Grid Margin="0,15,0,0" IsVisible="True">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding NotBondedDevices.Count}"
-                                            TargetType="Grid"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
+                    <StackLayout BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}" HorizontalOptions="FillAndExpand">
+                        <Grid Margin="0,15,0,0">
                             <CollectionView
                                 Margin="0"
                                 HorizontalOptions="CenterAndExpand"
@@ -276,6 +234,18 @@
                         </Grid>
                     </StackLayout>
                 </settingComponents:SettingItemContent.BottomContent>
+                <settingComponents:SettingItemContent.Style>
+                    <Style TargetType="settingComponents:SettingItemContent">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding NotBondedDevices.Count}"
+                                TargetType="settingComponents:SettingItemContent"
+                                Value="0">
+                                <Setter Property="ShowBottomContent" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </settingComponents:SettingItemContent.Style>
             </settingComponents:SettingItemContent>
         </VerticalStackLayout>
     </ScrollView>

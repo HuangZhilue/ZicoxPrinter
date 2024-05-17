@@ -97,6 +97,15 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Download 的本地化字符串。
+        /// </summary>
+        public static string 下载更新 {
+            get {
+                return ResourceManager.GetString("下载更新", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Download update failure 的本地化字符串。
         /// </summary>
         public static string 下载更新失败 {
@@ -201,6 +210,15 @@ namespace ZicoxPrinter.Properties {
         public static string 增加新的打印参数 {
             get {
                 return ResourceManager.GetString("增加新的打印参数", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Install 的本地化字符串。
+        /// </summary>
+        public static string 安装更新 {
+            get {
+                return ResourceManager.GetString("安装更新", resourceCulture);
             }
         }
         
@@ -367,6 +385,15 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
+        ///   查找类似 File size 的本地化字符串。
+        /// </summary>
+        public static string 文件大小 {
+            get {
+                return ResourceManager.GetString("文件大小", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 New parameter 的本地化字符串。
         /// </summary>
         public static string 新增参数 {
@@ -417,6 +444,15 @@ namespace ZicoxPrinter.Properties {
         public static string 更新下载失败 {
             get {
                 return ResourceManager.GetString("更新下载失败", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Change log 的本地化字符串。
+        /// </summary>
+        public static string 更新日志 {
+            get {
+                return ResourceManager.GetString("更新日志", resourceCulture);
             }
         }
         

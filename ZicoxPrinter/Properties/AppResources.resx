@@ -310,4 +310,16 @@
   <data name="发送指令" xml:space="preserve">
     <value>Send Command</value>
   </data>
+  <data name="文件大小" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="下载更新" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="安装更新" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="更新日志" xml:space="preserve">
+    <value>Change log</value>
+  </data>
 </root>

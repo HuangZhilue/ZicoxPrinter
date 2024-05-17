@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using ZicoxPrinter.Services;
 
 namespace ZicoxPrinter.ViewModels;
@@ -8,9 +9,17 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string currentTheme = AppResources.跟随系统;
     [ObservableProperty]
+    private string appVersion = AppInfo.Current.VersionString;
+    [ObservableProperty]
+    private bool isNewReleaseAvailable = false;
+    [ObservableProperty]
+    private bool isPreviewRelease = false;
+    [ObservableProperty]
+    private string newReleaseVersion = string.Empty;
+    [ObservableProperty]
     private string newReleaseMessage = string.Empty;
     [ObservableProperty]
-    private string appVersion = AppInfo.Current.VersionString;
+    private string newReleaseFileSize = string.Empty;
     [ObservableProperty]
     private bool isCheckingUpdate = false;
     [ObservableProperty]
@@ -23,6 +32,7 @@ public partial class SettingsViewModel : BaseViewModel
     public ObservableCollection<string> AppThemes { get; } = [];
 
     private bool CanRefeshUI { get; set; } = true;
+    private NewReleaseModel NewRelease { get; set; } = null!;
 
     public SettingsViewModel()
     {
@@ -51,6 +61,10 @@ public partial class SettingsViewModel : BaseViewModel
 
         IsCheckingUpdate = AutoUpdate.IsCheckingUpdate;
         IsDownloadingUpdate = AutoUpdate.IsDownloadingUpdate;
+        string newReleaseString = Preferences.Default.Get(nameof(NewReleaseModel), string.Empty);
+        NewRelease = JsonConvert.DeserializeObject<NewReleaseModel>(newReleaseString) ?? null!;
+        SetNewRelease();
+
         AutoUpdate.IsCheckingUpdateChanged += (sender, change) =>
         {
             IsCheckingUpdate = change;
@@ -59,9 +73,13 @@ public partial class SettingsViewModel : BaseViewModel
         {
             IsDownloadingUpdate = change;
         };
-        AutoUpdate.NewReleaseMessageChanged += (sender, change) =>
+        AutoUpdate.NewReleaseChanged += (sender, change) =>
         {
-            NewReleaseMessage = change;
+            NewRelease = change;
+            IsDownloadingUpdate = false;
+            DownloadProgress = 0;
+            DownloadProgressString = string.Empty;
+            SetNewRelease();
         };
         AutoUpdate.DownloadProgressChanged += (sender, p) =>
         {
@@ -76,7 +94,7 @@ public partial class SettingsViewModel : BaseViewModel
                     DownloadProgress = localP;
                     Debug.WriteLine("Download complete!");
                     // 安装更新包
-                    AutoUpdate.InstallNewVersion();
+                    //AutoUpdate.InstallNewVersion();
                 }
 
                 if (!CanRefeshUI) return;
@@ -130,30 +148,64 @@ public partial class SettingsViewModel : BaseViewModel
     {
         try
         {
-            //IsCheckingUpdate = true;
-            //IsDownloadingUpdate = false;
-
-            Version? version = await AutoUpdate.GetNewVersion().ConfigureAwait(false);
-            if (version is null) return;
-
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
-
-            bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion().ConfigureAwait(false);
-#if !DEBUG
-            if (!needUpdate) return;
-#endif
-            IsDownloadingUpdate = true;
-            await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
+            _ = await AutoUpdate.GetNewRelease().ConfigureAwait(false);
+            Debug.WriteLine($"CheckVersion: {NewRelease.Version}");
         }
         catch (Exception ex)
         {
             ApplicationEx.ToastMakeOnUIThread($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
             Debug.WriteLine($"CheckVersion Error: {ex.Message}");
         }
-        finally
+    }
+
+    [RelayCommand]
+    public async Task DownloadNewVersion()
+    {
+        try
         {
-            //IsCheckingUpdate = false;
-            //IsDownloadingUpdate = false;
+            await AutoUpdate.DownloadNewVersion(NewRelease).ConfigureAwait(false);
         }
+        catch (Exception ex)
+        {
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            Debug.WriteLine($"DownloadNewVersion Error: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    public void InstallNewVersion()
+    {
+        try
+        {
+            AutoUpdate.InstallNewVersion(NewRelease);
+        }
+        catch (Exception ex)
+        {
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.安装更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            Debug.WriteLine($"InstallNewVersion Error: {ex.Message}");
+        }
+    }
+
+    private void SetNewRelease()
+    {
+        if (NewRelease is null) return;
+
+        Version newVersion = AutoUpdate.StringToVersion(NewRelease.TagName);
+        if (newVersion is null) return;
+        //#if !DEBUG
+        if (newVersion > AppInfo.Current.Version)
+        //#endif
+        {
+            IsNewReleaseAvailable = true;
+            long fileSize = NewRelease.AssetSize;
+            if (fileSize > 0)
+            {
+                NewReleaseFileSize = AutoUpdate.FormatFileSize(fileSize);
+            }
+        }
+
+        NewReleaseVersion = newVersion.ToString();
+        NewReleaseMessage = NewRelease.Body;
+        IsPreviewRelease = NewRelease.Prerelease;
     }
 }

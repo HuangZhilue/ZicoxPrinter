@@ -330,4 +330,16 @@
   <data name="发送指令" xml:space="preserve">
     <value>发送指令</value>
   </data>
+  <data name="文件大小" xml:space="preserve">
+    <value>文件大小</value>
+  </data>
+  <data name="下载更新" xml:space="preserve">
+    <value>下载更新</value>
+  </data>
+  <data name="安装更新" xml:space="preserve">
+    <value>安装更新</value>
+  </data>
+  <data name="更新日志" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
 </root>

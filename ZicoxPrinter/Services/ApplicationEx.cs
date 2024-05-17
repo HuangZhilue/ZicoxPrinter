@@ -36,7 +36,7 @@ public static class ApplicationEx
         TaskCompletionSource<string> tcs = new();
         Application.Current.Dispatcher.Dispatch(async () =>
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
+            string action = await Application.Current.MainPage.DisplayActionSheet(title, cancel, destruction, buttons).ConfigureAwait(false);
             tcs.SetResult(action);
         });
         string action = await tcs.Task.ConfigureAwait(false);

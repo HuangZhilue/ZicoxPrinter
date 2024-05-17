@@ -11,20 +11,18 @@ public partial class AppShell : Shell
         InitializeComponent();
         Task.Run(async () =>
         {
-            Version? version = await AutoUpdate.GetNewVersion().ConfigureAwait(false);
-            if (version is null) return;
+            NewReleaseModel? newRelease = await AutoUpdate.GetNewRelease().ConfigureAwait(false);
+            if (newRelease is null) return;
 #if DEBUG
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread($"{AppResources.当前版本}: {AppInfo.Current.VersionString}, {AppResources.最新版本}: {newRelease.Version}", CommunityToolkit.Maui.Core.ToastDuration.Long);
 #endif
-            bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion(true).ConfigureAwait(false);
-            //#if !DEBUG
+            bool needUpdate = await AutoUpdate.ReadyDownloadNewVersion(newRelease, true).ConfigureAwait(false);
             if (!needUpdate) return;
-            //#endif
-            await AutoUpdate.DownloadNewVersion().ConfigureAwait(false);
+            await AutoUpdate.DownloadNewVersion(newRelease).ConfigureAwait(false);
 
             Debug.WriteLine("Download complete!");
             // 安装更新包
-            AutoUpdate.InstallNewVersion();
+            AutoUpdate.InstallNewVersion(newRelease);
         });
     }
 

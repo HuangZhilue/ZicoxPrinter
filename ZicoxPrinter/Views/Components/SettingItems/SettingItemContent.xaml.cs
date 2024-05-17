@@ -6,6 +6,7 @@ public partial class SettingItemContent : ContentView
     public static readonly BindableProperty IconSourceProperty = BindableProperty.Create(nameof(IconSource), typeof(ImageSource), typeof(SettingItemContent), null);
     public static readonly BindableProperty RightContentProperty = BindableProperty.Create(nameof(RightContent), typeof(View), typeof(SettingItemContent), null);
     public static readonly BindableProperty BottomContentProperty = BindableProperty.Create(nameof(BottomContent), typeof(View), typeof(SettingItemContent), null);
+    public static readonly BindableProperty ShowBottomContentProperty = BindableProperty.Create(nameof(ShowBottomContent), typeof(bool), typeof(SettingItemContent), true);
 
     public string Title
     {
@@ -29,6 +30,12 @@ public partial class SettingItemContent : ContentView
     {
         get { return (View)GetValue(BottomContentProperty); }
         set { SetValue(BottomContentProperty, value); }
+    }
+
+    public bool ShowBottomContent
+    {
+        get { return (bool)GetValue(ShowBottomContentProperty); }
+        set { SetValue(ShowBottomContentProperty, value); }
     }
 
     public SettingItemContent()

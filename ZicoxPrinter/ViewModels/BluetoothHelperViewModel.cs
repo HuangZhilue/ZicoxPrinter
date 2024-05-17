@@ -26,7 +26,6 @@ public partial class BluetoothHelperViewModel : BaseViewModel
         {
             if (sender is AppShell shell && shell.CurrentPage.BindingContext.GetType() == typeof(BluetoothHelperViewModel))
             {
-                // TODO 安卓实机上会出现
                 NavigatedTo();
             }
             else
