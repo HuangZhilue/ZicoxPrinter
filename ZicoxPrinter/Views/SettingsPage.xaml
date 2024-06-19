@@ -24,28 +24,13 @@
                         Padding="10,0"
                         BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
                         HeightRequest="30"
-                        MinimumWidthRequest="110"
+                        MinimumWidthRequest="85"
                         StrokeShape="RoundRectangle 8"
                         StrokeThickness="0">
                         <ContentView>
-                            <Grid ColumnSpacing="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image HeightRequest="20" WidthRequest="20">
-                                    <Image.Source>
-                                        <FontImageSource
-                                            FontFamily="MaterialRegular"
-                                            Glyph="{AppThemeBinding Dark={x:Static m:MaterialRegular.Dark_mode},
-                                                                    Light={x:Static m:MaterialRegular.Light_mode}}"
-                                            Color="{AppThemeBinding Dark={DynamicResource OffBlack},
-                                                                    Light={DynamicResource White}}" />
-                                    </Image.Source>
-                                </Image>
+                            <Grid HorizontalOptions="CenterAndExpand">
                                 <Label
-                                    Grid.Column="1"
-                                    HorizontalOptions="EndAndExpand"
+                                    HorizontalOptions="CenterAndExpand"
                                     Text="{Binding CurrentTheme}"
                                     TextColor="{AppThemeBinding Light={StaticResource White},
                                                                 Dark={StaticResource PrimaryDarkText}}" />
@@ -266,7 +251,8 @@
                                 Grid.Column="1"
                                 HorizontalOptions="FillAndExpand"
                                 IsVisible="True"
-                                Progress="{Binding DownloadProgress}">
+                                Progress="{Binding DownloadProgress}"
+                                ProgressColor="{DynamicResource Primary}">
                                 <ProgressBar.Style>
                                     <Style TargetType="ProgressBar">
                                         <Style.Triggers>

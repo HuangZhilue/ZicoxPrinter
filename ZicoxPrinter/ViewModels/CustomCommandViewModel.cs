@@ -48,13 +48,13 @@ public partial class CustomCommandViewModel : BaseViewModel
     {
 #if ANDROID
         BondedDevices.Clear();
-        if (!BluetoothScanner.IsBluetoothAvailable)
+        if (BluetoothScanner.IsBluetoothAvailable() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
         {
             ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
-        if (!BluetoothScanner.IsBluetoothEnabled)
+        if (BluetoothScanner.IsBluetoothEnabled() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
         {
             Task.Run(() =>
             {

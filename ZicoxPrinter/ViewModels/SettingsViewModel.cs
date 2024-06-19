@@ -72,6 +72,7 @@ public partial class SettingsViewModel : BaseViewModel
         AutoUpdate.IsDownloadingUpdateChanged += (sender, change) =>
         {
             IsDownloadingUpdate = change;
+            IsCheckingUpdate = change;
         };
         AutoUpdate.NewReleaseChanged += (sender, change) =>
         {

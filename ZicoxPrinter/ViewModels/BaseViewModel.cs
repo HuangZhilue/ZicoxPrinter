@@ -33,4 +33,10 @@ public partial class BaseViewModel : ObservableObject
         }
     }
 #endif
+
+    public BaseViewModel()
+    {
+        if (Application.Current is not null)
+            App.SetStatusBar(Application.Current.UserAppTheme);
+    }
 }

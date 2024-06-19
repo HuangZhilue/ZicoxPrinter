@@ -95,7 +95,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     public void CheckBluetoothAvailable()
     {
 #if ANDROID
-        IsBluetoothAvailable = BluetoothScanner.IsBluetoothAvailable;
+        IsBluetoothAvailable = BluetoothScanner.IsBluetoothAvailable() == Com.Api.MyBluetoothLibrary.MyCustomResults.Success;
         if (IsBluetoothAvailable)
             CheckBluetoothEnable();
 #else
@@ -107,7 +107,7 @@ public partial class BluetoothHelperViewModel : BaseViewModel
     public void CheckBluetoothEnable()
     {
 #if ANDROID
-        IsBluetoothEnabled = BluetoothScanner.IsBluetoothEnabled;
+        IsBluetoothEnabled = BluetoothScanner.IsBluetoothEnabled() == Com.Api.MyBluetoothLibrary.MyCustomResults.Success;
 #else
         IsBluetoothEnabled = false;
 #endif
@@ -165,7 +165,9 @@ public partial class BluetoothHelperViewModel : BaseViewModel
 #if ANDROID
             BluetoothScanner.UnregisterReceiver();
             BluetoothScanner.RegisterReceiver();
-            if (BluetoothScanner.ScanClassicDevices())
+            var result = BluetoothScanner.ScanClassicDevices();
+            Debug.WriteLine($"BluetoothScanner.ScanClassicDevices :\t{result}");
+            if (result == Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
 #else
             if (true)
 #endif
