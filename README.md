@@ -20,7 +20,7 @@
 - ```WSA (Windows Subsystem for Android) 2311.400000.5.0```
 - ```Sony XQ-BQ72 (Android 13)```
 - ```Sony XQ-DQ72 (Android 14)``` 
-- ```UROVO DT50DQ72 (Android 11)``` 
+- ```UROVO DT50 (Android 11)``` 
 
 ### Zicox 设备 / Zicox devices
 
