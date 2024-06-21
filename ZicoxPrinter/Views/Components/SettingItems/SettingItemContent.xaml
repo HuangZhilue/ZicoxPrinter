@@ -39,7 +39,7 @@
                         Wrap="Wrap">
                         <StackLayout
                             MinimumHeightRequest="30"
-                            Orientation="Vertical"
+                            Orientation="Horizontal"
                             VerticalOptions="CenterAndExpand">
                             <Label
                                 Text="{Binding Title}"

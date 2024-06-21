@@ -4,8 +4,8 @@
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.135.0230</AssemblyVersion>
-    <FileVersion>1.0.135.0230</FileVersion>
+    <AssemblyVersion>1.0.136.1027</AssemblyVersion>
+    <FileVersion>1.0.136.1027</FileVersion>
     <Version>$(AssemblyVersion)</Version>
     <Authors>huangzhilue@outlook.com</Authors>
     <Title>$(AssemblyName)</Title>
