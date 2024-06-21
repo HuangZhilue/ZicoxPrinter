@@ -21,6 +21,7 @@
 - ```Sony XQ-BQ72 (Android 13)```
 - ```Sony XQ-DQ72 (Android 14)``` 
 - ```UROVO DT50 (Android 11)``` 
+- ```UROVO DT40 (Android 9)``` 
 
 ### Zicox 设备 / Zicox devices
 

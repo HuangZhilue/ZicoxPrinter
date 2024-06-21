@@ -73,7 +73,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.60" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="MyBluetoothLibrary" Version="1.0.156.710" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+		<PackageReference Include="MyBluetoothLibrary" Version="1.0.157.155" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 		<PackageReference Include="MyZpSDK" Version="1.0.128.126" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Octokit" Version="12.0.0" />
@@ -141,8 +141,8 @@
 		<wizardVersion>v1.4.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Tabs</framework>
-		<AssemblyVersion>1.3.997.0940</AssemblyVersion>
-		<FileVersion>1.3.997.0940</FileVersion>
+		<AssemblyVersion>1.3.1031.1011</AssemblyVersion>
+		<FileVersion>1.3.1031.1011</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

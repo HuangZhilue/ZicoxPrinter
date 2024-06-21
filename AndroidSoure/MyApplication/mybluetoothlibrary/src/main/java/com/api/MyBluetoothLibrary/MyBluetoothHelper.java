@@ -128,14 +128,18 @@ public class MyBluetoothHelper {
 
         if (this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
 
-        this.bluetoothAdapter.enable();
+        if (VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            this.bluetoothAdapter.enable();
+            if (this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
+        }
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(enableBtIntent);
+            return MyCustomResults.TryStartActivity;
+        }
 
-        if (this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
-
-        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.context.startActivity(enableBtIntent);
-        return MyCustomResults.TryStartActivity;
+        return MyCustomResults.FAILURE;
     }
 
     public MyCustomResults TryDisableBluetooth() {
@@ -145,14 +149,18 @@ public class MyBluetoothHelper {
 
         if (!this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
 
-        this.bluetoothAdapter.disable();
+        if (VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            this.bluetoothAdapter.disable();
+            if (!this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
+        }
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Intent enableBtIntent = new Intent("android.bluetooth.adapter.action.REQUEST_DISABLE");
+            enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(enableBtIntent);
+            return MyCustomResults.TryStartActivity;
+        }
 
-        if (!this.bluetoothAdapter.isEnabled()) return MyCustomResults.SUCCESS;
-
-        Intent enableBtIntent = new Intent("android.bluetooth.adapter.action.REQUEST_DISABLE");
-        enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.context.startActivity(enableBtIntent);
-        return MyCustomResults.TryStartActivity;
+        return MyCustomResults.FAILURE;
     }
 
     public MyCustomResults TryEnableBluetoothLocation() {

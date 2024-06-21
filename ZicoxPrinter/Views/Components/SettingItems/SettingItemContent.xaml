@@ -21,35 +21,39 @@
             HorizontalOptions="FillAndExpand"
             StrokeShape="RoundRectangle 5"
             StrokeThickness="0">
-            <Grid ColumnSpacing="15" HorizontalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Image
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    HeightRequest="20"
-                    Source="{Binding IconSource}"
-                    WidthRequest="20" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    HorizontalOptions="Start"
-                    Text="{Binding Title}"
-                    VerticalOptions="CenterAndExpand" />
-                <ContentView
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Content="{Binding RightContent}"
-                    HorizontalOptions="End"
-                    MinimumHeightRequest="30"
-                    VerticalOptions="Center" />
+            <StackLayout Orientation="Vertical">
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="15">
+                    <Image
+                        Margin="0,5,0,0"
+                        HeightRequest="20"
+                        Source="{Binding IconSource}"
+                        VerticalOptions="Start"
+                        WidthRequest="20" />
+                    <FlexLayout
+                        Direction="Row"
+                        HorizontalOptions="FillAndExpand"
+                        JustifyContent="SpaceBetween"
+                        Wrap="Wrap">
+                        <StackLayout
+                            MinimumHeightRequest="30"
+                            Orientation="Vertical"
+                            VerticalOptions="CenterAndExpand">
+                            <Label
+                                Text="{Binding Title}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+                        <ContentView
+                            Content="{Binding RightContent}"
+                            FlexLayout.Grow="1"
+                            HorizontalOptions="End"
+                            MinimumHeightRequest="30"
+                            VerticalOptions="Center" />
+                    </FlexLayout>
+                </StackLayout>
                 <ContentView
                     Grid.Row="1"
                     Grid.Column="0"
@@ -59,7 +63,7 @@
                     IsVisible="{Binding ShowBottomContent}"
                     MinimumHeightRequest="0"
                     VerticalOptions="FillAndExpand" />
-            </Grid>
+            </StackLayout>
         </Border>
     </StackLayout>
     <!--</ControlTemplate>
