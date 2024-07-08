@@ -26,6 +26,7 @@
 ### Zicox 设备 / Zicox devices
 
 - ```Zicox CC3```
+- ```Zicox CC4```
 - ```注意```，目前仅在 ```Zicox CC3 打印机```上进行过完整的功能测试
   <br/>```Note```, currently full functional testing has only been carried out on ```Zicox CC3 printer```
 - 按照Zicox官方说明，理论上可以在Zicox的其它使用CPCL指令的打印机上进行使用
