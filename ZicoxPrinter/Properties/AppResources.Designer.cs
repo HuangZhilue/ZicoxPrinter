@@ -385,6 +385,15 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Support 的本地化字符串。
+        /// </summary>
+        public static string 支持 {
+            get {
+                return ResourceManager.GetString("支持", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 File size 的本地化字符串。
         /// </summary>
         public static string 文件大小 {

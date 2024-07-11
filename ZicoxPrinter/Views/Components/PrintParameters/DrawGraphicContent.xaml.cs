@@ -85,6 +85,7 @@ public partial class DrawGraphicContent : ContentView
         {
             if (string.IsNullOrWhiteSpace(Parameters.Base64) || Image is null || IsPreview) return;
             IsPreview = true;
+            PreviewImage = null!;
             OnPropertyChanged(nameof(IsPreview));
             Task.Run(() =>
             {
@@ -104,7 +105,6 @@ public partial class DrawGraphicContent : ContentView
                         Parameters.Base64);
                     if (string.IsNullOrWhiteSpace(previewImage))
                     {
-                        PreviewImage = Image;
                         throw new Exception(AppResources.Éú³ÉÔ¤ÀÀÍ¼Ê§°Ü);
                     }
 
@@ -139,6 +139,7 @@ public partial class DrawGraphicContent : ContentView
                 {
                     Application.Current!.Dispatcher.Dispatch(() =>
                     {
+                        PreviewImage = null!;
                         IsPreview = false;
                         OnPropertyChanged(nameof(IsPreview));
                     });
@@ -150,6 +151,7 @@ public partial class DrawGraphicContent : ContentView
         }
         catch (Exception ex)
         {
+            PreviewImage = null!;
             IsPreview = false;
             OnPropertyChanged(nameof(IsPreview));
             Debug.WriteLine($"FilePicker Error: {ex.Message}");

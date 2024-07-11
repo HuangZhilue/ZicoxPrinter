@@ -54,10 +54,10 @@ public enum TextRotate
 
 public enum BarcodeType
 {
-    Code39 = 0,
-    Code128 = 1,
-    Code93 = 2,
-    Codabar = 3,
+    CODE39 = 0,
+    CODE128 = 1,
+    CODE93 = 2,
+    CODABAR = 3,
     EAN8 = 4,
     EAN13 = 5,
     UPCA = 6,
@@ -154,7 +154,7 @@ public class DrawBarCodeParameters : PrintParametersBase
 {
     public int StartX { get; set; }
     public int StartY { get; set; }
-    public BarcodeType Type { get; set; } = BarcodeType.Code39;
+    public BarcodeType Type { get; set; } = BarcodeType.CODE128;
     public string Text { get; set; } = string.Empty;
     public int LineWidth { get; set; } = 2;
     public int Height { get; set; } = 80;

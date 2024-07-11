@@ -209,4 +209,10 @@ public partial class SettingsViewModel : BaseViewModel
         NewReleaseMessage = NewRelease.Body;
         IsPreviewRelease = NewRelease.Prerelease;
     }
+
+    [RelayCommand]
+    public async Task OpenGithub()
+    {
+        await Launcher.OpenAsync("https://github.com/HuangZhilue/ZicoxPrinter").ConfigureAwait(false);
+    }
 }

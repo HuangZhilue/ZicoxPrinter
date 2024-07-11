@@ -239,6 +239,7 @@
                 BackgroundColor="{StaticResource Gray500}"
                 HorizontalOptions="Center"
                 IsRunning="{Binding IsPreview}"
+                IsVisible="{Binding IsPreview}"
                 VerticalOptions="Center"
                 Color="{StaticResource Primary}" />
         </Grid>

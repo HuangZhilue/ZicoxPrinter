@@ -296,6 +296,20 @@
                     </StackLayout>
                 </settingComponents:SettingItemContent.BottomContent>
             </settingComponents:SettingItemContent>
+            <settingComponents:SettingItemContent Title="{x:Static properties:AppResources.支持}">
+                <settingComponents:SettingItemContent.IconSource>
+                    <FontImageSource
+                        FontFamily="MaterialRegular"
+                        Glyph="{x:Static m:MaterialRegular.Star}"
+                        Color="{DynamicResource Primary}" />
+                </settingComponents:SettingItemContent.IconSource>
+                <settingComponents:SettingItemContent.RightContent>
+                    <Button
+                        BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext}"
+                        Command="{Binding OpenGithubCommand}"
+                        Text="Github" />
+                </settingComponents:SettingItemContent.RightContent>
+            </settingComponents:SettingItemContent>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

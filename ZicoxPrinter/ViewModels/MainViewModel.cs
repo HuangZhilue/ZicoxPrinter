@@ -153,6 +153,7 @@ public partial class MainViewModel : BaseViewModel
         {
             if (string.IsNullOrWhiteSpace(ImageBase64) || Image is null || IsPreview) return;
             IsPreview = true;
+            PreviewImage = null!;
             Task.Run(() =>
             {
                 try
@@ -172,7 +173,6 @@ public partial class MainViewModel : BaseViewModel
                         ImageBase64);
                     if (string.IsNullOrWhiteSpace(previewImage))
                     {
-                        PreviewImage = Image;
                         throw new Exception(AppResources.生成预览图失败);
                     }
 
@@ -203,6 +203,7 @@ public partial class MainViewModel : BaseViewModel
                 {
                     Application.Current!.Dispatcher.Dispatch(() =>
                     {
+                        PreviewImage = null!;
                         IsPreview = false;
                     });
                     Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
@@ -213,6 +214,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
+            PreviewImage = null!;
             IsPreview = false;
             Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
             // The user canceled or something went wrong

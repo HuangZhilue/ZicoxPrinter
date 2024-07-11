@@ -328,4 +328,7 @@
   <data name="生成缩略图失败" xml:space="preserve">
     <value>Failed to generate thumbnail</value>
   </data>
+  <data name="支持" xml:space="preserve">
+    <value>Support</value>
+  </data>
 </root>
