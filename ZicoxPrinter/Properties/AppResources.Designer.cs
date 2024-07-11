@@ -529,6 +529,24 @@ namespace ZicoxPrinter.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Failed to generate thumbnail 的本地化字符串。
+        /// </summary>
+        public static string 生成缩略图失败 {
+            get {
+                return ResourceManager.GetString("生成缩略图失败", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to generate preview 的本地化字符串。
+        /// </summary>
+        public static string 生成预览图失败 {
+            get {
+                return ResourceManager.GetString("生成预览图失败", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 OK to remove this parameter 的本地化字符串。
         /// </summary>
         public static string 确定移除该参数 {

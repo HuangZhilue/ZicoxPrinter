@@ -26,6 +26,7 @@ public partial class DrawGraphicContent : ContentView
     public Microsoft.Maui.Graphics.IImage IPreviewImage { get; set; } = null!;
     public int ImageHeight { get; set; } = 0;
     public int ImageWidth { get; set; } = 0;
+    public bool IsPreview { get; set; } = false;
 
     public DrawGraphicContent()
     {
@@ -65,7 +66,7 @@ public partial class DrawGraphicContent : ContentView
             fileStream.CopyTo(memoryStream);
             byte[] bytes = memoryStream.ToArray();
             Parameters.Base64 = Convert.ToBase64String(bytes);
-            await PrinterImagePreview().ConfigureAwait(false);
+            PrinterImagePreview();
             OnPropertyChanged(nameof(Image));
             OnPropertyChanged(nameof(ImageHeight));
             OnPropertyChanged(nameof(ImageWidth));
@@ -77,34 +78,18 @@ public partial class DrawGraphicContent : ContentView
         }
     }
 
-    private CancellationTokenSource CancellationTokenSource { get; set; } = null!;
     [RelayCommand]
-    public async Task PrinterImagePreview()
+    public void PrinterImagePreview()
     {
         try
         {
-            try
-            {
-                CancellationTokenSource?.Cancel();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
-            }
-
-            CancellationTokenSource = new CancellationTokenSource();
-
-            // 处理请求的逻辑
-            await Task.Delay(1000);
-
-            // 检查请求是否已被取消
-            CancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-            await Task.Run(() =>
+            if (string.IsNullOrWhiteSpace(Parameters.Base64) || Image is null || IsPreview) return;
+            IsPreview = true;
+            OnPropertyChanged(nameof(IsPreview));
+            Task.Run(() =>
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(Parameters.Base64)) return;
 #if ANDROID
                     string? previewImage = Com.Api.MyZpSDK.PrinterCore.ProcessImageToBase64(
                         -1,
@@ -115,18 +100,23 @@ public partial class DrawGraphicContent : ContentView
                         Parameters.BmpSizeHPercentage,
                         Parameters.Rotate,
                         Parameters.Threshold,
-                        Com.Api.MyZpSDK.PrinterCore.DitheringType.Values()![(int)Parameters.DitheringType],
+                        Com.Api.MyZpSDK.PrinterCore.DitheringType.ValueOf(Parameters.DitheringType.ToString()),
                         Parameters.Base64);
                     if (string.IsNullOrWhiteSpace(previewImage))
                     {
                         PreviewImage = Image;
-                        return;
+                        throw new Exception(AppResources.生成预览图失败);
                     }
 
                     byte[] bytes = Convert.FromBase64String(previewImage);
-                    // 创建一个ImageSource对象
-                    PreviewImage = ImageSource.FromStream(() => new MemoryStream(bytes));
                     IPreviewImage = PlatformImage.FromStream(new MemoryStream(bytes));
+                    #region 生成缩略图
+                    // 在页面显示图片之前，先限制图片大小，防止内存溢出，比如将图片等比例缩小到屏幕合适的尺寸
+                    byte[] resizedImageBytes = IPreviewImage.CreatePreviewImage(bytes);
+                    if (resizedImageBytes.Length == 0) throw new Exception(AppResources.生成缩略图失败);
+
+                    PreviewImage = ImageSource.FromStream(() => new MemoryStream(resizedImageBytes));
+                    #endregion
 #else
                     PreviewImage = Image;
                     IPreviewImage = PlatformImage.FromStream(new MemoryStream(Convert.FromBase64String(Parameters.Base64)));
@@ -139,34 +129,31 @@ public partial class DrawGraphicContent : ContentView
                         TipsBmpSizeH = $"≈ {(int)(ImageHeight * ((double)Parameters.BmpSizeHPercentage / 100))} / {ImageHeight}";
                         OnPropertyChanged(nameof(TipsBmpSizeW));
                         OnPropertyChanged(nameof(TipsBmpSizeH));
+                        IsPreview = false;
+                        OnPropertyChanged(nameof(IsPreview));
                     });
 
                     ParametersChanged?.Invoke(Parameters, EventArgs.Empty);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"FilePicker Error: {ex.Message}");
+                    Application.Current!.Dispatcher.Dispatch(() =>
+                    {
+                        IsPreview = false;
+                        OnPropertyChanged(nameof(IsPreview));
+                    });
+                    Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
+                    // The user canceled or something went wrong
                     ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
                 }
-            }).ConfigureAwait(false);
+            });
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
+            IsPreview = false;
+            OnPropertyChanged(nameof(IsPreview));
+            Debug.WriteLine($"FilePicker Error: {ex.Message}");
             ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
-
-        }
-        finally
-        {
-            try
-            {
-                CancellationTokenSource.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"PrinterImagePreview Error: {ex.Message}");
-                ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, ex.Message, "OK");
-            }
         }
     }
 }

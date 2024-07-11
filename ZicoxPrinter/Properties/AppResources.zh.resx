@@ -342,4 +342,10 @@
   <data name="更新日志" xml:space="preserve">
     <value>更新日志</value>
   </data>
+  <data name="生成预览图失败" xml:space="preserve">
+    <value>生成预览图失败</value>
+  </data>
+  <data name="生成缩略图失败" xml:space="preserve">
+    <value>生成缩略图失败</value>
+  </data>
 </root>

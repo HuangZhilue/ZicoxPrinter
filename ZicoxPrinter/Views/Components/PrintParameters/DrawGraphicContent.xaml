@@ -66,9 +66,9 @@
                 Grid.Column="1"
                 Keyboard="Numeric"
                 Text="{Binding Parameters.StartX}">
-                <Entry.Behaviors>
+                <!--<Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
-                </Entry.Behaviors>
+                </Entry.Behaviors>-->
             </Entry>
             <Label
                 Grid.Row="2"
@@ -81,9 +81,9 @@
                 Grid.Column="1"
                 Keyboard="Numeric"
                 Text="{Binding Parameters.StartY}">
-                <Entry.Behaviors>
+                <!--<Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
-                </Entry.Behaviors>
+                </Entry.Behaviors>-->
             </Entry>
             <Label
                 Grid.Row="3"
@@ -96,9 +96,9 @@
                 Grid.Column="1"
                 Keyboard="Numeric"
                 Text="{Binding Parameters.BmpSizeWPercentage}">
-                <Entry.Behaviors>
+                <!--<Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
-                </Entry.Behaviors>
+                </Entry.Behaviors>-->
             </Entry>
             <Label
                 Grid.Row="4"
@@ -123,9 +123,9 @@
                 Grid.Column="1"
                 Keyboard="Numeric"
                 Text="{Binding Parameters.BmpSizeHPercentage}">
-                <Entry.Behaviors>
+                <!--<Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="TextChanged" />
-                </Entry.Behaviors>
+                </Entry.Behaviors>-->
             </Entry>
             <Label
                 Grid.Row="6"
@@ -159,9 +159,9 @@
                 Maximum="360"
                 Minimum="0"
                 Value="{Binding Parameters.Rotate}">
-                <Slider.Behaviors>
+                <!--<Slider.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="ValueChanged" />
-                </Slider.Behaviors>
+                </Slider.Behaviors>-->
             </Slider>
             <Label
                 Grid.Row="9"
@@ -183,9 +183,9 @@
                 Maximum="255"
                 Minimum="0"
                 Value="{Binding Parameters.Threshold}">
-                <Slider.Behaviors>
+                <!--<Slider.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="ValueChanged" />
-                </Slider.Behaviors>
+                </Slider.Behaviors>-->
             </Slider>
             <Label
                 Grid.Row="11"
@@ -197,9 +197,9 @@
                 Grid.Column="1"
                 ItemsSource="{Binding DitheringTypes}"
                 SelectedItem="{Binding Parameters.DitheringType}">
-                <Picker.Behaviors>
+                <!--<Picker.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{Binding PrinterImagePreviewCommand}" EventName="SelectedIndexChanged" />
-                </Picker.Behaviors>
+                </Picker.Behaviors>-->
             </Picker>
         </Grid>
         <Image
@@ -216,8 +216,13 @@
             HorizontalOptions="FillAndExpand"
             Orientation="Horizontal"
             Spacing="10">
-            <Label Text="{x:Static properties:AppResources.打印预览}" VerticalOptions="Center" />
+            <!--<Label Text="{x:Static properties:AppResources.打印预览}" VerticalOptions="Center" />-->
             <!--<Button Command="{Binding AutoFillCommand}" Text="自适应高宽" />-->
+            <Button
+                Command="{Binding PrinterImagePreviewCommand}"
+                IsEnabled="{Binding IsPreview, Converter={toolkit:InvertedBoolConverter}}"
+                Text="打印预览"
+                VerticalOptions="Center" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="{x:Static properties:AppResources.打印预览高度}" />
@@ -225,10 +230,18 @@
             <Label Text="{x:Static properties:AppResources.打印预览宽度}" />
             <Label Text="{Binding IPreviewImage.Width}" />
         </StackLayout>
-        <Image
-            HorizontalOptions="Fill"
-            Source="{Binding PreviewImage}"
-            VerticalOptions="Fill" />
+        <Grid>
+            <Image
+                HorizontalOptions="FillAndExpand"
+                Source="{Binding PreviewImage}"
+                VerticalOptions="FillAndExpand" />
+            <ActivityIndicator
+                BackgroundColor="{StaticResource Gray500}"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsPreview}"
+                VerticalOptions="Center"
+                Color="{StaticResource Primary}" />
+        </Grid>
         <Button Command="{Binding PickAndShowCommand}" Text="{x:Static properties:AppResources.选择图片}" />
     </StackLayout>
 </ContentView>

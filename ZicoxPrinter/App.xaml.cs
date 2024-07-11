@@ -10,6 +10,22 @@ public partial class App : Application
     {
         InitializeComponent();
 
+        AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+        {
+            Debug.WriteLine("UnhandledException\tAppDomain:\t" + e.ExceptionObject.ToString());
+            string message = AppResources.错误;
+            if (e.ExceptionObject is Exception ex)
+            {
+                message = ex.Message;
+            }
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, message, "OK");
+        };
+        TaskScheduler.UnobservedTaskException += (s, e) =>
+        {
+            Debug.WriteLine("UnhandledException\tTaskScheduler:\t" + e.Exception.Message);
+            ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, e.Exception.Message, "OK");
+        };
+
         MainPage = new AppShell();
 
         if (Preferences.Default.ContainsKey(nameof(AppTheme)) && Current != null)
@@ -48,7 +64,7 @@ public partial class App : Application
     public static void SetStatusBar(AppTheme appTheme)
     {
 #if ANDROID
-        if (!OperatingSystem.IsAndroidVersionAtLeast(23, 0) || Current is null || Platform.CurrentActivity is null ) 
+        if (!OperatingSystem.IsAndroidVersionAtLeast(23, 0) || Current is null || Platform.CurrentActivity is null)
             return;
         if (appTheme == AppTheme.Light)
         {

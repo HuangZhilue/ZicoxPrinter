@@ -47,7 +47,7 @@ public enum TextRotate
 {
     T = 0,
     VT = 1,
-    T90 = 1,
+    //T90 = 1,
     T180 = 2,
     T270 = 3
 }
