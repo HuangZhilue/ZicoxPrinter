@@ -55,7 +55,7 @@ function print(callback) {
         text_x: 0,
         text_y: 0,
         text: "",
-        fontSize: "EN7", // 有效值[EN0,EN1,EN2,EN3,EN4,EN5,EN6,EN7,CN16,CN24]，其它值默认变更为EN0
+        fontSize: "EN0", // 有效值[EN0,EN1,EN2,EN3,EN4,EN5,EN6,EN7,CN16,CN24]，其它值默认变更为EN0
         rotate: "T", // 有效值[T,VT,T90,T180,T270]（其中的VT与T90相同），其它值默认变更为T
         bold: false,
         reverse: false,
@@ -68,7 +68,7 @@ function print(callback) {
         text: "",
         width: 0,
         height: 0,
-        fontSize: "EN6", // 有效值[EN0,EN1,EN2,EN3,EN4,EN5,EN6,EN7,CN16,CN24]，其它值默认变更为EN0
+        fontSize: "EN0", // 有效值[EN0,EN1,EN2,EN3,EN4,EN5,EN6,EN7,CN16,CN24]，其它值默认变更为EN0
         rotate: "T", // 有效值[T,VT,T90,T180,T270]（其中的VT与T90相同），其它值默认变更为T
         bold: false,
         reverse: false,
