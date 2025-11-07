@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
 
@@ -9,42 +9,53 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
 {
     [ObservableProperty]
     private int selectedBondedDeviceIndex = 0;
+
     [ObservableProperty]
-    private PrintInfo printInfo = new()
-    {
-        PageHeight = 300,
-        PageWidth = 576
-    };
+    private PrintInfo printInfo = new() { PageHeight = 300, PageWidth = 576 };
+
     //[ObservableProperty]
     //private string customPrintParametersJsonString = string.Empty;
     [ObservableProperty]
     private string lastPrintData = string.Empty;
+
     [ObservableProperty]
     private bool isPrinting = false;
 
     public ObservableCollection<SampleBluetoothDevice> BondedDevices { get; set; } = [];
 
     public ObservableCollection<PrintParametersBase> CustomPrintParameters { get; set; } = [];
-    private JsonSerializerSettings JsonSerializerSettings { get; } = new() { TypeNameHandling = TypeNameHandling.All };
+    private JsonSerializerSettings JsonSerializerSettings { get; } =
+        new() { TypeNameHandling = TypeNameHandling.All };
 
     public CustomJsonPrinterViewModel()
     {
 #if !ANDROID
-        BondedDevices = [
+        BondedDevices =
+        [
             new SampleBluetoothDevice("Test1", "CC3-1234-5678"),
             new SampleBluetoothDevice("ABCD", "CC3-1234-5678"),
             new SampleBluetoothDevice("1a1s", "CC3-1234-5678"),
             new SampleBluetoothDevice("qwsedrfg", "CC3-1234-5678"),
             new SampleBluetoothDevice("Honeywell", "CC3-1234-5678")
-            ];
+        ];
 #else
         //GetBondedDevices();
 #endif
 
-        CustomPrintParameters = [
+        CustomPrintParameters =
+        [
             //new DrawBoxParameters() { LineWidth = 1, TopLeftX = 10, TopLeftY = 10, BottomRightX = PrintInfo.PageWidth - 10, BottomRightY = PrintInfo.PageHeight - 10 },
-            new DrawText1Parameters() { Text = nameof(ZicoxPrinter), FontSize = TextFont.EN1, TextX = 20, TextY = 20, Reverse = false, Rotate = 0, Underline = false, Bold = false },
-
+            new DrawText1Parameters()
+            {
+                Text = nameof(ZicoxPrinter),
+                FontSize = TextFont.EN1,
+                TextX = 20,
+                TextY = 20,
+                Reverse = false,
+                Rotate = 0,
+                Underline = false,
+                Bold = false
+            },
             //new DrawBoxParameters(){ LineWidth = 1, TopLeftX = 10, TopLeftY = 10, BottomRightX = 566, BottomRightY = 290 },
             //new DrawLineParameters(){ StartX = 10, StartY = 10, EndX = 566, EndY = 290, LineWidth = 1 },
             //new DrawText2Parameters(){ Text = "this is DrawText2,with height and width", TextX = 20, TextY = 120,Width=250,Height=200,FontSize= TextFont.EN1},
@@ -66,13 +77,19 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
     {
 #if ANDROID
         BondedDevices.Clear();
-        if (BluetoothScanner.IsBluetoothAvailable() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
+        if (
+            BluetoothScanner.IsBluetoothAvailable()
+            != Com.Api.MyBluetoothLibrary.MyCustomResults.Success
+        )
         {
             ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
-        if (BluetoothScanner.IsBluetoothEnabled() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
+        if (
+            BluetoothScanner.IsBluetoothEnabled()
+            != Com.Api.MyBluetoothLibrary.MyCustomResults.Success
+        )
         {
             Task.Run(() =>
             {
@@ -82,7 +99,8 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
         }
 
         // 搜索蓝牙设备
-        Dictionary<string, string> devices = BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? [];//.GetBondedDevices();
+        Dictionary<string, string> devices =
+            BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? []; //.GetBondedDevices();
         foreach (var device in devices)
         {
             BondedDevices.Add(new(device.Key, device.Value));
@@ -111,7 +129,11 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
                 //CustomPrintParameters = JsonConvert.DeserializeObject<ObservableCollection<PrintParametersBase>>(CustomPrintParametersJsonString, JsonSerializerSettings) ?? [];
                 if (CustomPrintParameters.Count == 0)
                 {
-                    ApplicationEx.DisplayAlertOnUIThread(AppResources.提示, AppResources.没有有效的打印参数, "OK");
+                    ApplicationEx.DisplayAlertOnUIThread(
+                        AppResources.提示,
+                        AppResources.没有有效的打印参数,
+                        "OK"
+                    );
                     return;
                 }
                 PrintInfo.PrintParameters = [.. CustomPrintParameters];
@@ -152,7 +174,11 @@ public partial class CustomJsonPrinterViewModel : BaseViewModel
 #if ANDROID
                 IsPrinting = true;
                 PrintInfo.Address = BondedDevices[SelectedBondedDeviceIndex].Mac;
-                Printer.PrintCPCLRuler(PrintInfo.Address, PrintInfo.PageWidth, PrintInfo.PageHeight);
+                Printer.PrintCPCLRuler(
+                    PrintInfo.Address,
+                    PrintInfo.PageWidth,
+                    PrintInfo.PageHeight
+                );
                 IsPrinting = false;
 #endif
             }

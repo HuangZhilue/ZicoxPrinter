@@ -1,10 +1,10 @@
 # ZicoxPrinter
 
 使用 .Net Core MAUI 开发的 Zicox CPCL打印机App
-<br/>Using .Net Core MAUI develop Zicox CPCL printer App
+<br/>An Android App developed using .Net Core MAUI for Zicox CPCL printers.
 
 - 安卓设备的系统要求 / System requirements for Android devices
-    - 安卓版本 >= Android 5.0 (API 21 Lollipop)
+  - 安卓版本 >= Android 5.0 (API 21 Lollipop)
     <br/>Android version >= Android 5.0 (API 21 Lollipop)
 
 - 使用.Net MAUI开发，限制了平台为 Windows 和 安卓。
@@ -79,25 +79,35 @@
 
 ![Sample/sample_04_01.jpg](Sample/sample_04_01.jpg)
 
+---
+
+## 使用注意 / Note
+
+**注意**:<br/>
+当使用 `DRAWBIGGRAPHIC` 参数打印大图时，建议将 `PageHeight` 设置为 `0`。实际打印高度将由图片渲染高度（即 `ImageHeight * bmp_size_h_percentage`）决定。如果 `PageHeight` 被设置为大于 `0` 的值，它将被视为一个额外的底部边距，并可能导致在图片打印完成后额外输出设定高度的空白页面。此外，在使用 `DRAWBIGGRAPHIC` 参数时，请勿同时添加其他打印参数，因为 `DRAWBIGGRAPHIC` 在SDK层面会独立触发一次打印操作，与其他可统一配置并一次性打印的参数处理方式不同。
+<br/>**Note**:<br/>When using the `DRAWBIGGRAPHIC` parameter for printing large images, it is recommended to set `PageHeight` to `0`. The actual print height will be determined by the image rendering height (i.e., `ImageHeight * bmp_size_h_percentage`). If `PageHeight` is set to a value greater than `0`, it will be treated as an additional bottom margin and may result in an extra blank page of the specified height being output after the image is printed. Furthermore, when using the `DRAWBIGGRAPHIC` parameter, do not include other print parameters simultaneously, as `DRAWBIGGRAPHIC` independently triggers a print operation at the SDK level, which differs from how other parameters are handled (where they can be uniformly configured and printed at once).
+
+---
+
 ## 项目说明 / Project description
 
 - [```ZicoxPrinter```](ZicoxPrinter)
-    - 使用 ```.Net Core``` ```MAUI``` 开发的Android App 
+  - 使用 ```.Net Core``` ```MAUI``` 开发的Android App
     <br/>An Android App developed using ```.Net Core``` ```MAUI```
 
 - [```MyZpSDK```](AndroidSoure/MyApplication/MyZpSDK)
-    - 自行二次封装的Zicox CPCL SDK，并加入了一些自定义的功能
+  - 自行二次封装的Zicox CPCL SDK，并加入了一些自定义的功能
     <br/>Self-packaged Zicox CPCL SDK and added some custom functions
 
-    - 基础的Zicox CPCL SDK是Zicox官方提供的 [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
+  - 基础的Zicox CPCL SDK是Zicox官方提供的 [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
     <br/>The basic Zicox CPCL SDK is the Zicox official provided [```zp_cpcl_new_打印通用版大图片.jar```](AndroidSoure/MyApplication/MyZpSDK/libs/zp_cpcl_new_common_bigimage.jar)
 
-    - 因为是.Net Core MAUI的项目，故还需要再次通过[ .Net 的安卓绑定库](MyZpSDK)封装成.Net可使用的类库
+  - 因为是.Net Core MAUI的项目，故还需要再次通过[.Net 的安卓绑定库](MyZpSDK)封装成.Net可使用的类库
     <br/>Because it is a .Net Core MAUI project, it needs to be packaged into a .Net usable class library through [.Net Android binding library](MyZpSDK) again.
 
 - [```MyBluetoothLibrary```](AndroidSoure/MyApplication/mybluetoothlibrary)
-    - 自行编写的安卓蓝牙简易功能库，仅支持经典蓝牙的搜索与配对功能，不支持蓝牙数据的传输相关的功能
+  - 自行编写的安卓蓝牙简易功能库，仅支持经典蓝牙的搜索与配对功能，不支持蓝牙数据的传输相关的功能
     <br/>The self-written Android Bluetooth simple function library only supports search and pairing functions of classic Bluetooth and does not support functions related to Bluetooth data transmission.
     
-    - 因为主要是在安卓平台上使用，且目前并没有符合我预期功能的简易蓝牙功能库，所以才自行编写了单独的安卓蓝牙功能库，并再次通过[ .Net 的安卓绑定库](MyBluetoothLibrary)封装成.Net可使用的类库
+  - 因为主要是在安卓平台上使用，且目前并没有符合我预期功能的简易蓝牙功能库，所以才自行编写了单独的安卓蓝牙功能库，并再次通过[.Net 的安卓绑定库](MyBluetoothLibrary)封装成.Net可使用的类库
     <br/>Because it is mainly used on the Android platform, and there is currently no simple Bluetooth function library that meets my expected functions, so I wrote a separate Android Bluetooth function library by myself, and again passed [.Net Android binding library](MyBluetoothLibrary) Encapsulated into a .Net usable class library

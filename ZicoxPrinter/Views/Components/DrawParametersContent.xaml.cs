@@ -6,9 +6,19 @@ namespace ZicoxPrinter.Views.Components;
 
 public partial class DrawParametersContent : ContentView
 {
-    private List<DrawType> DrawTypes { get; set; } = [.. Enum.GetValues(typeof(DrawType)).Cast<DrawType>().Where(t => t is not DrawType.DrawCommand && t is not DrawType.DrawBigGraphic)];
+    private List<DrawType> DrawTypes { get; set; } =
+        [
+            .. Enum.GetValues<DrawType>()
+                .Cast<DrawType>()
+                .Where(t => t is not DrawType.DrawCommand && t is not DrawType.DrawBigGraphic)
+        ];
 
-    public static readonly BindableProperty CustomPrintParametersProperty = BindableProperty.Create(nameof(CustomPrintParameters), typeof(ObservableCollection<PrintParametersBase>), typeof(ObservableCollection<PrintParametersBase>), null);
+    public static readonly BindableProperty CustomPrintParametersProperty = BindableProperty.Create(
+        nameof(CustomPrintParameters),
+        typeof(ObservableCollection<PrintParametersBase>),
+        typeof(ObservableCollection<PrintParametersBase>),
+        null
+    );
 
     public ObservableCollection<PrintParametersBase> CustomPrintParameters
     {
@@ -26,12 +36,19 @@ public partial class DrawParametersContent : ContentView
     [RelayCommand]
     public async Task AddNewParameterAsync()
     {
-        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.–¬‘ˆ≤Œ ˝, AppResources.»°œ˚, null, DrawTypes.Select(t => t.ToString()).ToArray());
+        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(
+            AppResources.Êñ∞Â¢ûÂèÇÊï∞,
+            AppResources.ÂèñÊ∂à,
+            null,
+            [.. DrawTypes.Select(t => t.ToString())]
+        );
         Debug.WriteLine("Action: " + action);
-        if (string.IsNullOrWhiteSpace(action) || action == AppResources.»°œ˚) return;
+        if (string.IsNullOrWhiteSpace(action) || action == AppResources.ÂèñÊ∂à)
+            return;
         if (!Enum.TryParse(typeof(DrawType), action, true, out object? obj))
             return;
-        if (obj == null || obj is not DrawType drawType) return;
+        if (obj == null || obj is not DrawType drawType)
+            return;
 
         CustomPrintParameters ??= [];
 
@@ -68,7 +85,8 @@ public partial class DrawParametersContent : ContentView
     [RelayCommand]
     public void DeleteParameter(PrintParametersBase parameter)
     {
-        if (parameter == null) return;
+        if (parameter == null)
+            return;
         DrawContent_ParametersRemoving(parameter, EventArgs.Empty);
     }
 
@@ -79,9 +97,18 @@ public partial class DrawParametersContent : ContentView
 
     private async void DrawContent_ParametersRemoving(object sender, EventArgs e)
     {
-        if (sender == null) return;
-        if (sender is not PrintParametersBase parameter) return;
-        bool answer = await ApplicationEx.DisplayAlertOnUIThreadAsync(AppResources.Ã· æ, $"{AppResources.»∑∂®“∆≥˝∏√≤Œ ˝}: {parameter.DrawType}", AppResources. «, AppResources.∑Ò).ConfigureAwait(false);
+        if (sender == null)
+            return;
+        if (sender is not PrintParametersBase parameter)
+            return;
+        bool answer = await ApplicationEx
+            .DisplayAlertOnUIThreadAsync(
+                AppResources.ÊèêÁ§∫,
+                $"{AppResources.Á°ÆÂÆöÁßªÈô§ËØ•ÂèÇÊï∞}: {parameter.DrawType}",
+                AppResources.ÊòØ,
+                AppResources.Âê¶
+            )
+            .ConfigureAwait(false);
         Debug.WriteLine("Answer: " + answer);
         if (answer)
         {

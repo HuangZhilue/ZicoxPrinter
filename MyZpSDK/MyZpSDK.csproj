@@ -3,8 +3,8 @@
     <TargetFramework>net9.0-android</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.146.1015</AssemblyVersion>
-    <FileVersion>1.0.146.1015</FileVersion>
+    <AssemblyVersion>1.0.147.0350</AssemblyVersion>
+    <FileVersion>1.0.147.0350</FileVersion>
     <Version>$(AssemblyVersion)</Version>
     <Authors>huangzhilue@outlook.com</Authors>
     <Title>$(AssemblyName)</Title>

@@ -4,6 +4,7 @@ using SkiaSharp;
 
 namespace ZicoxPrinter.Services;
 
+#pragma warning disable CS0618 // 类型或成员已过时
 public static class ApplicationEx
 {
     private static int ScreenWidth { get; set; } = 500; //1920;
@@ -40,15 +41,11 @@ public static class ApplicationEx
 
     public static void DisplayAlertOnUIThread(string title, string message, string cancel)
     {
-        if (
-            Application.Current is null
-            || Application.Current.Windows.Count > 0
-            || Application.Current.Windows[0].Page is null
-        )
+        if (Application.Current is null || Application.Current.MainPage is null)
             return;
         Application.Current.Dispatcher.Dispatch(() =>
         {
-            _ = Application.Current.Windows[0].Page!.DisplayAlert(title, message, cancel);
+            _ = Application.Current.MainPage.DisplayAlert(title, message, cancel);
         });
     }
 
@@ -59,19 +56,14 @@ public static class ApplicationEx
         string cancel
     )
     {
-        if (
-            Application.Current is null
-            || Application.Current.Windows.Count > 0
-            || Application.Current.Windows[0].Page is null
-        )
+        if (Application.Current is null || Application.Current.MainPage is null)
             return false;
 
         TaskCompletionSource<bool> tcs = new();
         Application.Current.Dispatcher.Dispatch(async () =>
         {
             bool r = await Application
-                .Current.Windows[0]
-                .Page!.DisplayAlert(title, message, accept, cancel)
+                .Current.MainPage.DisplayAlert(title, message, accept, cancel)
                 .ConfigureAwait(false);
             tcs.SetResult(r);
         });
@@ -87,19 +79,14 @@ public static class ApplicationEx
         params string[] buttons
     )
     {
-        if (
-            Application.Current is null
-            || Application.Current.Windows.Count > 0
-            || Application.Current.Windows[0].Page is null
-        )
+        if (Application.Current is null || Application.Current.MainPage is null)
             return string.Empty;
 
         TaskCompletionSource<string> tcs = new();
         Application.Current.Dispatcher.Dispatch(async () =>
         {
             string action = await Application
-                .Current.Windows[0]
-                .Page!.DisplayActionSheet(title, cancel, destruction, buttons)
+                .Current.MainPage.DisplayActionSheet(title, cancel, destruction, buttons)
                 .ConfigureAwait(false);
             tcs.SetResult(action);
         });
@@ -113,11 +100,7 @@ public static class ApplicationEx
         double textSize = 14.0
     )
     {
-        if (
-            Application.Current is null
-            || Application.Current.Windows.Count > 0
-            || Application.Current.Windows[0].Page is null
-        )
+        if (Application.Current is null || Application.Current.MainPage is null)
             return;
         Application.Current.Dispatcher.Dispatch(() =>
         {
@@ -125,3 +108,4 @@ public static class ApplicationEx
         });
     }
 }
+#pragma warning restore CS0618 // 类型或成员已过时

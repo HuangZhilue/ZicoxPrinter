@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Text;
 using ZicoxPrinter.Services;
 
@@ -8,8 +8,10 @@ public partial class CustomCommandViewModel : BaseViewModel
 {
     [ObservableProperty]
     private int selectedBondedDeviceIndex = 0;
+
     [ObservableProperty]
     private bool isPrinting = false;
+
     [ObservableProperty]
     private string customCommand = string.Empty;
 
@@ -18,13 +20,14 @@ public partial class CustomCommandViewModel : BaseViewModel
     public CustomCommandViewModel()
     {
 #if !ANDROID
-        BondedDevices = [
+        BondedDevices =
+        [
             new SampleBluetoothDevice("Test1", "CC3-1234-5678"),
             new SampleBluetoothDevice("ABCD", "CC3-1234-5678"),
             new SampleBluetoothDevice("1a1s", "CC3-1234-5678"),
             new SampleBluetoothDevice("qwsedrfg", "CC3-1234-5678"),
             new SampleBluetoothDevice("Honeywell", "CC3-1234-5678")
-            ];
+        ];
 #else
         //GetBondedDevices();
 #endif
@@ -48,13 +51,19 @@ public partial class CustomCommandViewModel : BaseViewModel
     {
 #if ANDROID
         BondedDevices.Clear();
-        if (BluetoothScanner.IsBluetoothAvailable() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
+        if (
+            BluetoothScanner.IsBluetoothAvailable()
+            != Com.Api.MyBluetoothLibrary.MyCustomResults.Success
+        )
         {
             ApplicationEx.DisplayAlertOnUIThread(AppResources.错误, AppResources.当前设备的蓝牙不可用, "OK");
             return;
         }
 
-        if (BluetoothScanner.IsBluetoothEnabled() != Com.Api.MyBluetoothLibrary.MyCustomResults.Success)
+        if (
+            BluetoothScanner.IsBluetoothEnabled()
+            != Com.Api.MyBluetoothLibrary.MyCustomResults.Success
+        )
         {
             Task.Run(() =>
             {
@@ -64,7 +73,8 @@ public partial class CustomCommandViewModel : BaseViewModel
         }
 
         // 搜索蓝牙设备
-        Dictionary<string, string> devices = BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? [];//.GetBondedDevices();
+        Dictionary<string, string> devices =
+            BluetoothScanner.BondedDevices?.ToDictionary(x => x.Key, x => x.Value) ?? []; //.GetBondedDevices();
         foreach (var device in devices)
         {
             BondedDevices.Add(new(device.Key, device.Value));
@@ -75,15 +85,25 @@ public partial class CustomCommandViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoadCPCLExampleAsync()
     {
-        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.加载CPCL示例, AppResources.取消, null, [AppResources.HelloWorld, AppResources.CPCL尺子]);
-        if (string.IsNullOrWhiteSpace(action) || action == AppResources.取消) return;
+        string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(
+            AppResources.加载CPCL示例,
+            AppResources.取消,
+            null,
+            [AppResources.HelloWorld, AppResources.CPCL尺子]
+        );
+        if (string.IsNullOrWhiteSpace(action) || action == AppResources.取消)
+            return;
         if (action == AppResources.HelloWorld)
         {
-            CustomCommand = await MauiAssetService.LoadStringAsset("CPCLCommand_HelloWorld.txt").ConfigureAwait(false);
+            CustomCommand = await MauiAssetService
+                .LoadStringAsset("CPCLCommand_HelloWorld.txt")
+                .ConfigureAwait(false);
         }
         else if (action == AppResources.CPCL尺子)
         {
-            CustomCommand = await MauiAssetService.LoadStringAsset("CPCLCommand_CPCLRules.txt").ConfigureAwait(false);
+            CustomCommand = await MauiAssetService
+                .LoadStringAsset("CPCLCommand_CPCLRules.txt")
+                .ConfigureAwait(false);
         }
     }
 
@@ -107,7 +127,10 @@ public partial class CustomCommandViewModel : BaseViewModel
             {
 #if ANDROID
                 IsPrinting = true;
-                Services.PrinterSDK.Printer.PrintCommand(BondedDevices[SelectedBondedDeviceIndex].Mac, CustomCommand);
+                Services.PrinterSDK.Printer.PrintCommand(
+                    BondedDevices[SelectedBondedDeviceIndex].Mac,
+                    CustomCommand
+                );
                 IsPrinting = false;
 #endif
             }

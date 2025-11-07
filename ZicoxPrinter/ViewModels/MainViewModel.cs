@@ -1,10 +1,11 @@
 using System.Collections.ObjectModel;
-#if ANDROID
-using Android.Util;
-#endif
 using Microsoft.Maui.Graphics.Platform;
 using ZicoxPrinter.Services;
 using ZicoxPrinter.Services.PrinterSDK;
+#if ANDROID
+using Android.Util;
+#endif
+
 
 namespace ZicoxPrinter.ViewModels;
 

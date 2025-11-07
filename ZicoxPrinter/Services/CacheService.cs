@@ -1,11 +1,13 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 namespace ZicoxPrinter.Services;
 
 public static class CacheService
 {
-    public static string ImageManagerDiskCacheDirectory { get; } = Path.Combine(FileSystem.CacheDirectory, "image_manager_disk_cache");
-    public static string TempDataDirectory { get; } = Path.Combine(FileSystem.AppDataDirectory, "temp");
+    public static string ImageManagerDiskCacheDirectory { get; } =
+        Path.Combine(FileSystem.CacheDirectory, "image_manager_disk_cache");
+    public static string TempDataDirectory { get; } =
+        Path.Combine(FileSystem.AppDataDirectory, "temp");
 
     public static void InitAllCacheDirectories()
     {
@@ -17,7 +19,8 @@ public static class CacheService
 
     public static void InitCacheDirectories(string directory)
     {
-        if (string.IsNullOrWhiteSpace(directory)) return;
+        if (string.IsNullOrWhiteSpace(directory))
+            return;
         string cacheDir = Path.Combine(directory);
 
         if (Directory.Exists(cacheDir))
@@ -59,10 +62,12 @@ public static class CacheService
 
     public static long GetCacheSize(string directory)
     {
-        if (string.IsNullOrWhiteSpace(directory)) return 0;
+        if (string.IsNullOrWhiteSpace(directory))
+            return 0;
         string cacheDir = Path.Combine(directory);
 
-        if (!Directory.Exists(cacheDir)) return 0;
+        if (!Directory.Exists(cacheDir))
+            return 0;
 
         return CalculateFolderSize(cacheDir);
     }
@@ -71,13 +76,21 @@ public static class CacheService
     {
         long totalSize = 0;
 
-        foreach (string filePath in Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories))
+        foreach (
+            string filePath in Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories)
+        )
         {
             FileInfo fileInfo = new(filePath);
             totalSize += fileInfo.Length;
         }
 
-        foreach (string subfolderPath in Directory.GetDirectories(folderPath, "*", SearchOption.AllDirectories))
+        foreach (
+            string subfolderPath in Directory.GetDirectories(
+                folderPath,
+                "*",
+                SearchOption.AllDirectories
+            )
+        )
         {
             totalSize += CalculateFolderSize(subfolderPath);
         }
@@ -88,7 +101,9 @@ public static class CacheService
     private static List<string> GetAllCacheDirectories()
     {
         Type staticType = typeof(CacheService);
-        PropertyInfo[] properties = staticType.GetProperties(BindingFlags.Static | BindingFlags.Public);
+        PropertyInfo[] properties = staticType.GetProperties(
+            BindingFlags.Static | BindingFlags.Public
+        );
         List<string> directories = [];
         foreach (PropertyInfo property in properties)
         {

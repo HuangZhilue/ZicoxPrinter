@@ -1,4 +1,4 @@
-﻿#if ANDROID
+#if ANDROID
 using Com.Api.MyBluetoothLibrary;
 #endif
 
@@ -15,14 +15,19 @@ public partial class BaseViewModel : ObservableObject
         {
             try
             {
-                bluetoothScanner ??= MyBluetoothHelper.Instance ?? MyBluetoothHelper.Init(Platform.AppContext, Platform.CurrentActivity) ?? throw new Exception(AppResources.初始化蓝牙模块失败);
+                bluetoothScanner ??=
+                    MyBluetoothHelper.Instance
+                    ?? MyBluetoothHelper.Init(Platform.AppContext, Platform.CurrentActivity)
+                    ?? throw new Exception(AppResources.初始化蓝牙模块失败);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
                 try
                 {
-                    bluetoothScanner ??= MyBluetoothHelper.Init(Platform.AppContext, Platform.CurrentActivity) ?? throw new Exception(AppResources.初始化蓝牙模块失败);
+                    bluetoothScanner ??=
+                        MyBluetoothHelper.Init(Platform.AppContext, Platform.CurrentActivity)
+                        ?? throw new Exception(AppResources.初始化蓝牙模块失败);
                 }
                 catch (Exception ex2)
                 {

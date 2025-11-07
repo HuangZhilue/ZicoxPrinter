@@ -1,11 +1,12 @@
-﻿#if ANDROID
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+#if ANDROID
 using Android.Content;
 #endif
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 
 namespace ZicoxPrinter.Services;
 
+#pragma warning disable CS0618 // 类型或成员已过时
 public static class AutoUpdate
 {
     public static bool IsCheckingUpdate { get; private set; } = false;
@@ -20,7 +21,8 @@ public static class AutoUpdate
 
     public static async Task<NewReleaseModel?> GetNewRelease()
     {
-        if (IsCheckingUpdate) return null;
+        if (IsCheckingUpdate)
+            return null;
 
         try
         {
@@ -28,31 +30,46 @@ public static class AutoUpdate
             IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
 
             Octokit.GitHubClient client = new(new Octokit.ProductHeaderValue("ZicoxPrinter"));
-            Octokit.Release NewRelease = await client.Repository.Release.GetLatest("HuangZhilue", "ZicoxPrinter");
+            Octokit.Release NewRelease = await client.Repository.Release.GetLatest(
+                "HuangZhilue",
+                "ZicoxPrinter"
+            );
 
             Debug.WriteLine(JsonConvert.SerializeObject(NewRelease));
-            Debug.WriteLine($"The latest release is tagged at {NewRelease.TagName} and is named {NewRelease.Name}");
+            Debug.WriteLine(
+                $"The latest release is tagged at {NewRelease.TagName} and is named {NewRelease.Name}"
+            );
 
-            Octokit.ReleaseAsset? assets = NewRelease.Assets.FirstOrDefault(a => a.Name.EndsWith(".apk", StringComparison.OrdinalIgnoreCase));
-            NewReleaseModel newReleaseModel = new()
-            {
-                TagName = NewRelease.TagName,
-                Name = NewRelease.Name,
-                Version = StringToVersion(NewRelease.TagName),
-                Body = NewRelease.Body,
-                Prerelease = NewRelease.Prerelease,
-                PublishedAt = NewRelease.PublishedAt.HasValue ? NewRelease.PublishedAt.Value.DateTime : DateTime.MinValue,
-                AssetSize = assets is null ? 0 : assets.Size,
-                AssetFileName = assets is null ? string.Empty : assets.Name,
-                AsseBrowserDownloadUrltSize = assets is null ? string.Empty : assets.BrowserDownloadUrl
-            };
+            Octokit.ReleaseAsset? assets = NewRelease.Assets.FirstOrDefault(a =>
+                a.Name.EndsWith(".apk", StringComparison.OrdinalIgnoreCase)
+            );
+            NewReleaseModel newReleaseModel =
+                new()
+                {
+                    TagName = NewRelease.TagName,
+                    Name = NewRelease.Name,
+                    Version = StringToVersion(NewRelease.TagName),
+                    Body = NewRelease.Body,
+                    Prerelease = NewRelease.Prerelease,
+                    PublishedAt = NewRelease.PublishedAt.HasValue
+                        ? NewRelease.PublishedAt.Value.DateTime
+                        : DateTime.MinValue,
+                    AssetSize = assets is null ? 0 : assets.Size,
+                    AssetFileName = assets is null ? string.Empty : assets.Name,
+                    AsseBrowserDownloadUrltSize = assets is null
+                        ? string.Empty
+                        : assets.BrowserDownloadUrl
+                };
 #if DEBUG
             newReleaseModel.TagName = "1.4.0";
             newReleaseModel.Name = "1.4.0";
             newReleaseModel.Version = StringToVersion("1.4.0");
             newReleaseModel.Prerelease = true;
 #endif
-            Preferences.Default.Set(nameof(NewReleaseModel), JsonConvert.SerializeObject(newReleaseModel) ?? string.Empty);
+            Preferences.Default.Set(
+                nameof(NewReleaseModel),
+                JsonConvert.SerializeObject(newReleaseModel) ?? string.Empty
+            );
             NewReleaseChanged?.Invoke(null, newReleaseModel);
 
             return newReleaseModel;
@@ -60,7 +77,10 @@ public static class AutoUpdate
         catch (Exception ex)
         {
             Debug.WriteLine($"GetNewVersion Error: {ex.Message}");
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.检查更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
         }
         finally
         {
@@ -71,27 +91,46 @@ public static class AutoUpdate
         return null;
     }
 
-    public static async Task<bool> ReadyDownloadNewVersion(NewReleaseModel newReleaseModel, bool checkIgnore = false)
+    public static async Task<bool> ReadyDownloadNewVersion(
+        NewReleaseModel newReleaseModel,
+        bool checkIgnore = false
+    )
     {
-        if (IsCheckingUpdate || newReleaseModel is null) return false;
+        if (IsCheckingUpdate || newReleaseModel is null)
+            return false;
 
         try
         {
             IsCheckingUpdate = true;
             IsCheckingUpdateChanged?.Invoke(null, IsCheckingUpdate);
 
-            if (newReleaseModel.Version <= AppInfo.Current.Version || Application.Current is null || Application.Current.MainPage is null)
+            if (
+                newReleaseModel.Version <= AppInfo.Current.Version
+                || Application.Current is null
+                || Application.Current.MainPage is null
+            )
                 return false;
             if (checkIgnore)
             {
                 string ignoreUpdate = Preferences.Default.Get("IgnoreUpdate", "0.0.0");
                 Version ignoreVersion = new(ignoreUpdate);
-                if (ignoreVersion >= newReleaseModel.Version) return false;
+                if (ignoreVersion >= newReleaseModel.Version)
+                    return false;
             }
 
-            string action = await ApplicationEx.DisplayActionSheetOnUIThreadAsync($"{AppResources.发现新版本}: {newReleaseModel.Version}", null, null, AppResources.立即更新, AppResources.暂不更新, AppResources.忽略该更新).ConfigureAwait(false);
+            string action = await ApplicationEx
+                .DisplayActionSheetOnUIThreadAsync(
+                    $"{AppResources.发现新版本}: {newReleaseModel.Version}",
+                    null,
+                    null,
+                    AppResources.立即更新,
+                    AppResources.暂不更新,
+                    AppResources.忽略该更新
+                )
+                .ConfigureAwait(false);
 
-            if (string.IsNullOrWhiteSpace(action) || action == AppResources.暂不更新) return false;
+            if (string.IsNullOrWhiteSpace(action) || action == AppResources.暂不更新)
+                return false;
             if (action == AppResources.忽略该更新)
             {
                 Preferences.Default.Set("IgnoreUpdate", newReleaseModel.Version.ToString());
@@ -103,7 +142,10 @@ public static class AutoUpdate
         {
             Debug.WriteLine($"ReadyDownloadNewVersion Error: {ex.Message}");
 
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.准备下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.准备下载更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
         }
         finally
         {
@@ -115,24 +157,34 @@ public static class AutoUpdate
 
     public static async Task DownloadNewVersion(NewReleaseModel newReleaseModel)
     {
-        if (IsDownloadingUpdate || newReleaseModel is null) return;
+        if (IsDownloadingUpdate || newReleaseModel is null)
+            return;
         string newReleaseFilePath = string.Empty;
         try
         {
             string downloadUrl = newReleaseModel.AsseBrowserDownloadUrltSize;
-            if (string.IsNullOrWhiteSpace(downloadUrl)) return;
+            if (string.IsNullOrWhiteSpace(downloadUrl))
+                return;
 
             // 下载更新包 && 下载进度显示
-            newReleaseFilePath = Path.Combine(CacheService.TempDataDirectory, newReleaseModel.AssetFileName); // 临时文件路径
+            newReleaseFilePath = Path.Combine(
+                CacheService.TempDataDirectory,
+                newReleaseModel.AssetFileName
+            ); // 临时文件路径
             IsDownloadingUpdate = true;
             IsDownloadingUpdateChanged?.Invoke(null, IsDownloadingUpdate);
 
-            await DownloadFileAsync(downloadUrl, newReleaseFilePath, (p) =>
-            {
-                double localP = p;
-                Debug.WriteLine($"Download progress: {localP * 100:N2}%");
-                DownloadProgressChanged?.Invoke(null, localP);
-            }, CancellationToken.None);
+            await DownloadFileAsync(
+                downloadUrl,
+                newReleaseFilePath,
+                (p) =>
+                {
+                    double localP = p;
+                    Debug.WriteLine($"Download progress: {localP * 100:N2}%");
+                    DownloadProgressChanged?.Invoke(null, localP);
+                },
+                CancellationToken.None
+            );
 
             Debug.WriteLine("Download complete!");
         }
@@ -142,7 +194,10 @@ public static class AutoUpdate
             {
                 DownloadProgressChanged?.Invoke(null, 0);
 
-                if (!string.IsNullOrWhiteSpace(newReleaseFilePath) && File.Exists(newReleaseFilePath))
+                if (
+                    !string.IsNullOrWhiteSpace(newReleaseFilePath)
+                    && File.Exists(newReleaseFilePath)
+                )
                     File.Delete(newReleaseFilePath);
             }
             finally
@@ -151,7 +206,10 @@ public static class AutoUpdate
             }
 
             Debug.WriteLine($"DownloadNewVersion Error: {ex.Message}");
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.下载更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
         }
         finally
         {
@@ -162,20 +220,35 @@ public static class AutoUpdate
 
     public static void InstallNewVersion(NewReleaseModel newReleaseModel)
     {
-        if (newReleaseModel is null || IsInstallingUpdate) return;
-        string apkFilePath = Path.Combine(CacheService.TempDataDirectory, newReleaseModel.AssetFileName); // 临时文件路径
-        if (!File.Exists(apkFilePath)) return;
+        if (newReleaseModel is null || IsInstallingUpdate)
+            return;
+        string apkFilePath = Path.Combine(
+            CacheService.TempDataDirectory,
+            newReleaseModel.AssetFileName
+        ); // 临时文件路径
+        if (!File.Exists(apkFilePath))
+            return;
         Debug.WriteLine($"Installing new version... File from: {apkFilePath}");
         try
         {
 #if ANDROID
             IsInstallingUpdate = true;
             IsInstallingUpdateChanged?.Invoke(null, IsInstallingUpdate);
-            if (Application.Current is null || Application.Current.MainPage is null || Platform.CurrentActivity is null || Platform.AppContext.ApplicationContext is null) return;
+            if (
+                Application.Current is null
+                || Application.Current.MainPage is null
+                || Platform.CurrentActivity is null
+                || Platform.AppContext.ApplicationContext is null
+            )
+                return;
             Java.IO.File apkFile = new(apkFilePath);
 
             // Use the FileProvider to get a content URI for the file
-            Android.Net.Uri? apkUri = AndroidX.Core.Content.FileProvider.GetUriForFile(Android.App.Application.Context, "[Project.Application].fileprovider", apkFile);
+            Android.Net.Uri? apkUri = AndroidX.Core.Content.FileProvider.GetUriForFile(
+                Android.App.Application.Context,
+                "[Project.Application].fileprovider",
+                apkFile
+            );
 
             // Create an Intent to install the APK
             Intent intent = new(Intent.ActionView);
@@ -189,7 +262,10 @@ public static class AutoUpdate
         catch (Exception ex)
         {
             Debug.WriteLine($"InstallNewVersion Error: {ex.Message}");
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.安装更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.安装更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
         }
         finally
         {
@@ -202,7 +278,7 @@ public static class AutoUpdate
     {
         string pattern = @"\d+";
         MatchCollection matches = Regex.Matches(input, pattern);
-        string[] numbersArray = matches.Cast<Match>().Select(m => m.Value).ToArray();
+        string[] numbersArray = [.. matches.Cast<Match>().Select(m => m.Value)];
         return string.Join(".", numbersArray);
     }
 
@@ -233,13 +309,24 @@ public static class AutoUpdate
         return $"{fileSize} {sizes[order]}";
     }
 
-    private static async Task DownloadFileAsync(string url, string savePath, Action<double> progressCallback, CancellationToken cancellationToken)
+    private static async Task DownloadFileAsync(
+        string url,
+        string savePath,
+        Action<double> progressCallback,
+        CancellationToken cancellationToken
+    )
     {
         // Step 1 : Get call
-        using HttpResponseMessage response = await new HttpClient().GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+        using HttpResponseMessage response = await new HttpClient().GetAsync(
+            url,
+            HttpCompletionOption.ResponseHeadersRead,
+            cancellationToken
+        );
 
         if (!response.IsSuccessStatusCode)
-            throw new Exception($"The request returned with HTTP status code {response.StatusCode}");
+            throw new Exception(
+                $"The request returned with HTTP status code {response.StatusCode}"
+            );
 
         // Step 3 : Get total of data
         long totalData = response.Content.Headers.ContentLength.GetValueOrDefault(-1L);
@@ -285,6 +372,7 @@ public static class AutoUpdate
     }
 }
 
+#pragma warning restore CS0618 // 类型或成员已过时
 public class NewReleaseModel
 {
     public string Name { get; set; } = string.Empty;

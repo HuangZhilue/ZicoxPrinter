@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using ZicoxPrinter.Services;
 
 namespace ZicoxPrinter.ViewModels;
@@ -8,24 +8,34 @@ public partial class SettingsViewModel : BaseViewModel
 {
     [ObservableProperty]
     private string currentTheme = AppResources.跟随系统;
+
     [ObservableProperty]
     private string appVersion = AppInfo.Current.VersionString;
+
     [ObservableProperty]
     private bool isNewReleaseAvailable = false;
+
     [ObservableProperty]
     private bool isPreviewRelease = false;
+
     [ObservableProperty]
     private string newReleaseVersion = string.Empty;
+
     [ObservableProperty]
     private string newReleaseMessage = string.Empty;
+
     [ObservableProperty]
     private string newReleaseFileSize = string.Empty;
+
     [ObservableProperty]
     private bool isCheckingUpdate = false;
+
     [ObservableProperty]
     private bool isDownloadingUpdate = false;
+
     [ObservableProperty]
     private double downloadProgress = 0;
+
     [ObservableProperty]
     private string downloadProgressString = string.Empty;
 
@@ -37,21 +47,29 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel()
     {
         AppThemes = new(
-            Enum.GetValues(typeof(AppTheme))
-            .Cast<AppTheme>()
-            .Select(x =>
-            {
-                if (x == AppTheme.Unspecified)
-                {
-                    return AppResources.跟随系统;
-                }
-                return x.ToString();
-            })
-            .ToList());
+            [
+                .. Enum.GetValues<AppTheme>()
+                    .Cast<AppTheme>()
+                    .Select(x =>
+                    {
+                        if (x == AppTheme.Unspecified)
+                        {
+                            return AppResources.跟随系统;
+                        }
+                        return x.ToString();
+                    })
+            ]
+        );
         if (Preferences.Default.ContainsKey(nameof(AppTheme)))
         {
-            AppTheme appTheme = Enum.TryParse<AppTheme>(Preferences.Default.Get(nameof(AppTheme), AppTheme.Unspecified.ToString()), out appTheme) ? appTheme : AppTheme.Unspecified;
-            CurrentTheme = appTheme == AppTheme.Unspecified ? AppResources.跟随系统 : appTheme.ToString();
+            AppTheme appTheme = Enum.TryParse<AppTheme>(
+                Preferences.Default.Get(nameof(AppTheme), AppTheme.Unspecified.ToString()),
+                out appTheme
+            )
+                ? appTheme
+                : AppTheme.Unspecified;
+            CurrentTheme =
+                appTheme == AppTheme.Unspecified ? AppResources.跟随系统 : appTheme.ToString();
         }
         else
         {
@@ -98,7 +116,8 @@ public partial class SettingsViewModel : BaseViewModel
                     //AutoUpdate.InstallNewVersion();
                 }
 
-                if (!CanRefreshUI) return;
+                if (!CanRefreshUI)
+                    return;
                 CanRefreshUI = false;
                 Task.Run(async () =>
                 {
@@ -111,7 +130,10 @@ public partial class SettingsViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                ApplicationEx.ToastMakeOnUIThread($"{AppResources.更新下载失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+                ApplicationEx.ToastMakeOnUIThread(
+                    $"{AppResources.更新下载失败}: {ex.Message}",
+                    CommunityToolkit.Maui.Core.ToastDuration.Long
+                );
                 Debug.WriteLine($"Download Error: {ex.Message}");
             }
         };
@@ -120,10 +142,14 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     public async Task SetAppTheme()
     {
-        if (Application.Current is null) return;
+        if (Application.Current is null)
+            return;
 
-        string theme = await ApplicationEx.DisplayActionSheetOnUIThreadAsync(AppResources.应用主题, null, null, [.. AppThemes]).ConfigureAwait(false);
-        if (string.IsNullOrWhiteSpace(theme)) return;
+        string theme = await ApplicationEx
+            .DisplayActionSheetOnUIThreadAsync(AppResources.应用主题, null, null, [.. AppThemes])
+            .ConfigureAwait(false);
+        if (string.IsNullOrWhiteSpace(theme))
+            return;
         CurrentTheme = theme;
         Application.Current.Dispatcher.Dispatch(() =>
         {
@@ -154,7 +180,10 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.检查更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.检查更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
             Debug.WriteLine($"CheckVersion Error: {ex.Message}");
         }
     }
@@ -168,7 +197,10 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.下载更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.下载更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
             Debug.WriteLine($"DownloadNewVersion Error: {ex.Message}");
         }
     }
@@ -182,17 +214,22 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            ApplicationEx.ToastMakeOnUIThread($"{AppResources.安装更新失败}: {ex.Message}", CommunityToolkit.Maui.Core.ToastDuration.Long);
+            ApplicationEx.ToastMakeOnUIThread(
+                $"{AppResources.安装更新失败}: {ex.Message}",
+                CommunityToolkit.Maui.Core.ToastDuration.Long
+            );
             Debug.WriteLine($"InstallNewVersion Error: {ex.Message}");
         }
     }
 
     private void SetNewRelease()
     {
-        if (NewRelease is null) return;
+        if (NewRelease is null)
+            return;
 
         Version newVersion = AutoUpdate.StringToVersion(NewRelease.TagName);
-        if (newVersion is null) return;
+        if (newVersion is null)
+            return;
         //#if !DEBUG
         if (newVersion > AppInfo.Current.Version)
         //#endif
@@ -213,6 +250,8 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     public async Task OpenGithub()
     {
-        await Launcher.OpenAsync("https://github.com/HuangZhilue/ZicoxPrinter").ConfigureAwait(false);
+        await Launcher
+            .OpenAsync("https://github.com/HuangZhilue/ZicoxPrinter")
+            .ConfigureAwait(false);
     }
 }
