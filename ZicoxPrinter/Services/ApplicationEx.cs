@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using SkiaSharp;
 
@@ -6,8 +6,8 @@ namespace ZicoxPrinter.Services;
 
 public static class ApplicationEx
 {
-    private static int ScreenWidth { get; set; } = 500;//1920;
-    private static int ScreenHeight { get; set; } = 500;//1080;
+    private static int ScreenWidth { get; set; } = 500; //1920;
+    private static int ScreenHeight { get; set; } = 500; //1080;
 
     public static byte[] CreatePreviewImage(this Microsoft.Maui.Graphics.IImage image, byte[] bytes)
     {
@@ -40,21 +40,39 @@ public static class ApplicationEx
 
     public static void DisplayAlertOnUIThread(string title, string message, string cancel)
     {
-        if (Application.Current is null || Application.Current.MainPage is null) return;
+        if (
+            Application.Current is null
+            || Application.Current.Windows.Count > 0
+            || Application.Current.Windows[0].Page is null
+        )
+            return;
         Application.Current.Dispatcher.Dispatch(() =>
         {
-            _ = Application.Current.MainPage.DisplayAlert(title, message, cancel);
+            _ = Application.Current.Windows[0].Page!.DisplayAlert(title, message, cancel);
         });
     }
 
-    public static async Task<bool> DisplayAlertOnUIThreadAsync(string title, string message, string accept, string cancel)
+    public static async Task<bool> DisplayAlertOnUIThreadAsync(
+        string title,
+        string message,
+        string accept,
+        string cancel
+    )
     {
-        if (Application.Current is null || Application.Current.MainPage is null) return false;
+        if (
+            Application.Current is null
+            || Application.Current.Windows.Count > 0
+            || Application.Current.Windows[0].Page is null
+        )
+            return false;
 
         TaskCompletionSource<bool> tcs = new();
         Application.Current.Dispatcher.Dispatch(async () =>
         {
-            bool r = await Application.Current.MainPage.DisplayAlert(title, message, accept, cancel).ConfigureAwait(false);
+            bool r = await Application
+                .Current.Windows[0]
+                .Page!.DisplayAlert(title, message, accept, cancel)
+                .ConfigureAwait(false);
             tcs.SetResult(r);
         });
 
@@ -62,23 +80,45 @@ public static class ApplicationEx
         return action;
     }
 
-    public static async Task<string> DisplayActionSheetOnUIThreadAsync(string title, string? cancel, string? destruction, params string[] buttons)
+    public static async Task<string> DisplayActionSheetOnUIThreadAsync(
+        string title,
+        string? cancel,
+        string? destruction,
+        params string[] buttons
+    )
     {
-        if (Application.Current is null || Application.Current.MainPage is null) return string.Empty;
+        if (
+            Application.Current is null
+            || Application.Current.Windows.Count > 0
+            || Application.Current.Windows[0].Page is null
+        )
+            return string.Empty;
 
         TaskCompletionSource<string> tcs = new();
         Application.Current.Dispatcher.Dispatch(async () =>
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet(title, cancel, destruction, buttons).ConfigureAwait(false);
+            string action = await Application
+                .Current.Windows[0]
+                .Page!.DisplayActionSheet(title, cancel, destruction, buttons)
+                .ConfigureAwait(false);
             tcs.SetResult(action);
         });
         string action = await tcs.Task.ConfigureAwait(false);
         return action;
     }
 
-    public static void ToastMakeOnUIThread(string message, ToastDuration duration = ToastDuration.Short, double textSize = 14.0)
+    public static void ToastMakeOnUIThread(
+        string message,
+        ToastDuration duration = ToastDuration.Short,
+        double textSize = 14.0
+    )
     {
-        if (Application.Current is null || Application.Current.MainPage is null) return;
+        if (
+            Application.Current is null
+            || Application.Current.Windows.Count > 0
+            || Application.Current.Windows[0].Page is null
+        )
+            return;
         Application.Current.Dispatcher.Dispatch(() =>
         {
             _ = Toast.Make(message, duration, textSize).Show();

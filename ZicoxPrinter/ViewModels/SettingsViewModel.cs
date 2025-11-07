@@ -31,7 +31,7 @@ public partial class SettingsViewModel : BaseViewModel
 
     public ObservableCollection<string> AppThemes { get; } = [];
 
-    private bool CanRefeshUI { get; set; } = true;
+    private bool CanRefreshUI { get; set; } = true;
     private NewReleaseModel NewRelease { get; set; } = null!;
 
     public SettingsViewModel()
@@ -98,15 +98,15 @@ public partial class SettingsViewModel : BaseViewModel
                     //AutoUpdate.InstallNewVersion();
                 }
 
-                if (!CanRefeshUI) return;
-                CanRefeshUI = false;
+                if (!CanRefreshUI) return;
+                CanRefreshUI = false;
                 Task.Run(async () =>
                 {
                     DownloadProgressString = $"{localP * 100:N2}%";
                     DownloadProgress = localP;
                     Debug.WriteLine($"Download progress: {localP * 100:N2}%");
                     await Task.Delay(100).ConfigureAwait(false);
-                    CanRefeshUI = true;
+                    CanRefreshUI = true;
                 });
             }
             catch (Exception ex)

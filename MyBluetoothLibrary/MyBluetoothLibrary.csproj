@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-android</TargetFramework>
-    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <TargetFramework>net9.0-android</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.160.0718</AssemblyVersion>
-    <FileVersion>1.0.160.0718</FileVersion>
+    <AssemblyVersion>1.0.161.0812</AssemblyVersion>
+    <FileVersion>1.0.161.0812</FileVersion>
 	<Version>$(AssemblyVersion)</Version>
 	<Authors>huangzhilue@outlook.com</Authors>
 	<Title>$(AssemblyName)</Title>

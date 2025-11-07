@@ -117,7 +117,10 @@ public class PrinterCore {
     }
 
     public void drawBigGraphic(int widthLimit, int heightLimit, int start_x, int start_y, int bmp_size_w_percentage, int bmp_size_h_percentage, int rotate, DitheringType dithering_type, int threshold, String base64Image) {
+        Log.w("PrinterCore", "drawBigGraphic: widthLimit = " + widthLimit + ", heightLimit = " + heightLimit + ", start_x = " + start_x + ", start_y = " + start_y + ", bmp_size_w_percentage = " + bmp_size_w_percentage + ", bmp_size_h_percentage = " + bmp_size_h_percentage + ", rotate = " + rotate + ", threshold = " + threshold + ", dithering_type = " + dithering_type.toString());
         Bitmap decodedByte = processImage(widthLimit, heightLimit, start_x, start_y, bmp_size_w_percentage, bmp_size_h_percentage, rotate, threshold, dithering_type, base64Image);
+        if (decodedByte != null)
+            Log.w("PrinterCore", "drawBigGraphic: " + decodedByte.getWidth() + " " + decodedByte.getHeight());
         zpSDK.Draw_Page_Bitmap_(decodedByte, 0);
     }
 
